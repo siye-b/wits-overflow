@@ -7,6 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5616ce8-332f-4990-9f96-6cab27de1c43" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/example/witsly/MainActivityTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
@@ -16,6 +17,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/witsly/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/witsly/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +65,7 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/androidTest/java/com/example/witsly" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+<<<<<<< Updated upstream
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -72,6 +78,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
+=======
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+>>>>>>> Stashed changes
   </component>
   <component name="RunManager" selected="Android Instrumented Tests.MainActivityTest">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
@@ -216,6 +225,7 @@
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+<<<<<<< Updated upstream
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial setup of travis and codecov" />
     <option name="LAST_COMMIT_MESSAGE" value="initial setup of travis and codecov" />
@@ -257,5 +267,16 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2626" y="334" width="497" height="393" key="com.intellij.testIntegration.createTest.CreateTestDialog/1920.0.1920.1080/0.27.1920.1001@1920.0.1920.1080" timestamp="1617362807829" />
+=======
+  <component name="WindowStateProjectService">
+    <state x="1575" y="76" width="1022" height="737" key="SettingsEditor" timestamp="1617377734983">
+      <screen x="1366" y="0" width="1440" height="900" />
+    </state>
+    <state x="1575" y="76" width="1022" height="737" key="SettingsEditor/1366.0.1440.900/0.132.1366.768@1366.0.1440.900" timestamp="1617377734983" />
+    <state x="1494" y="230" width="1174" height="430" key="git4idea.merge.GitPullDialog" timestamp="1617391970702">
+      <screen x="1366" y="0" width="1440" height="900" />
+    </state>
+    <state x="1494" y="230" width="1174" height="430" key="git4idea.merge.GitPullDialog/1366.0.1440.900/0.132.1366.768@1366.0.1440.900" timestamp="1617391970702" />
+>>>>>>> Stashed changes
   </component>
 </project>
