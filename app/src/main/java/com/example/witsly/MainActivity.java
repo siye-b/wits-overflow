@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final Pattern EMAIL_ADDRESS =
             Pattern.compile(
-            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + //between 1 and 256 characters which contain alphanumeric symbols and certain characters
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + //between 1 and 256 characters which contain alphanumeric characters and certain acceptable symbols
                     "\\@" + //@ sign
                     "(students.wits.ac.za|wits.ac.za)" //two Wits associated domains
     );
