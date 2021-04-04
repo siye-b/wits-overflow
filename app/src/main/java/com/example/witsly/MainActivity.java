@@ -41,7 +41,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void hello(){
-        binding.tvHello.setText("hello");
-    }
+
 }
