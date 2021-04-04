@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        binding.tvRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+
+
     }
 
 
