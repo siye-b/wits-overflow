@@ -9,53 +9,6 @@
     android:gravity="center_horizontal"
     tools:context=".MainActivity">
 
-
-    <!--<ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_marginTop="20dp"
-        app:srcCompat = "@drawable/icon"/>
-
-   <EditText
-        android:id="@+id/et_email"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="50dp"
-            android:hint="STUDENT EMAIL"
-            android:background="@color/cardview_shadow_start_color"
-            android:textSize="15dp"/>
-
-
-    <EditText
-            android:id="@+id/et_password"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            app:passwordToggleEnabled="true"
-            android:background="@color/cardview_shadow_start_color"
-            android:hint="PASSWORD"/>
-
-
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:orientation="horizontal">
-
-
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:paddingRight="20dp"
-        android:hint="Sign up"
-        android:background="@color/cardview_shadow_start_color"
-        android:layout_marginLeft="20dp"/>
-
-    </LinearLayout>
--->
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
