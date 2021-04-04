@@ -9,7 +9,7 @@ public class MainActivityTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> activityScenario = new ActivityScenarioRule<>(MainActivity.class);
-    
+
     @Test
     public void clickRegister_currentActivityIsMainActivity_currentActivityIsRegister(){
         activityScenario.getScenario().onActivity(activity -> {
