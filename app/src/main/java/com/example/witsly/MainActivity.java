@@ -1,37 +1,24 @@
 package com.example.witsly;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.witsly.databinding.ActivityMainBinding;
-
-import java.util.regex.Pattern;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Pattern EMAIL_ADDRESS =
-            Pattern.compile(
-            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + //between 1 and 256 characters which contain alphanumeric characters and certain acceptable symbols
-                    "\\@" + //@ sign
-                    "(students.wits.ac.za|wits.ac.za)" //two Wits associated domains
-    );
 
-    private static final Pattern PASSWORD_PATTERN =
-            Pattern.compile("^" +
-                    "(?=.*[0-9])" +         //at least 1 digit
-                    "(?=.*[a-z])" +         //at least 1 lower case letter
-                    "(?=.*[A-Z])" +         //at least 1 upper case letter
-                    "(?=.*[a-zA-Z])" +      //any upper or lower case letter
-                    "(?=.*[@#$%^&+=!])" +    //at least 1 special character
-                    "(?=\\S+$)" +           //no white spaces
-                    ".{8,}" +               //at least 8 characters
-                    "$"
-            );
+    private TextInputLayout loginEmail, loginPassword;
+    private FirebaseAuth mAuth;
+
 
     public ActivityMainBinding binding;
 
@@ -41,8 +28,33 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Intent intent1 = getIntent();
 
 
+        mAuth = FirebaseAuth.getInstance();
+        loginEmail = findViewById(R.id.til_email);
+        loginPassword = findViewById(R.id.til_password);
+        Button loginButton = findViewById(R.id.btn_singin);
+
+
+        if (intent1 != null) {
+            String str = intent1.getStringExtra("email");
+            loginEmail.getEditText().setText(str);
+        }
+
+
+        loginButton.setOnClickListener(login -> {
+            String email = loginEmail.getEditText().getText().toString().trim();
+            String password = loginPassword.getEditText().getText().toString().trim();
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(this, "Email is required", Toast.LENGTH_LONG).show();
+            } else if (TextUtils.isEmpty(password)) {
+                Toast.makeText(this, "Password is required", Toast.LENGTH_LONG).show();
+            } else {
+                login(email, password);
+            }
+
+        });
 
         binding.tvRegister.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
@@ -50,9 +62,18 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
-
-
     }
 
+    private void login(String email, String password1) {
+        mAuth.signInWithEmailAndPassword(email, password1)
+                .addOnCompleteListener(task -> {
+
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(this, HomeActivity.class));
+                    }
+                }).addOnFailureListener(e -> Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
+
+    }
 
 }

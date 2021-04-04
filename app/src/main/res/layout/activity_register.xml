@@ -14,16 +14,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
         android:background="@color/white"
-        app:srcCompat = "@drawable/icon"/>
-
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="50dp"
-        android:hint="Name"
-        android:background="@color/cardview_shadow_start_color"
-        android:textSize="15dp"/>
+        app:srcCompat="@drawable/icon" />
 
     <EditText
         android:id="@+id/et_email"
@@ -32,7 +23,7 @@
         android:layout_marginTop="10dp"
         android:hint="Email"
         android:background="@color/cardview_shadow_start_color"
-        android:textSize="15dp"/>
+        android:textSize="15dp" />
 
     <EditText
         android:id="@+id/et_password"
@@ -41,7 +32,7 @@
         android:layout_marginTop="10dp"
         android:hint="Enter password"
         android:background="@color/cardview_shadow_start_color"
-        android:textSize="15dp"/>
+        android:textSize="15dp" />
 
 
     <EditText
@@ -51,7 +42,7 @@
         android:layout_marginTop="10dp"
         app:passwordToggleEnabled="true"
         android:background="@color/cardview_shadow_start_color"
-        android:hint="Verify password"/>
+        android:hint="Verify password" />
 
 
     <Button
@@ -60,18 +51,19 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Sign up"/>
+        android:text="Sign up" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:text="Already have an account?"/>
+            android:text="Already have an account?" />
 
         <Button
             android:id="@+id/btn_sing_in"
@@ -80,7 +72,7 @@
             android:paddingRight="20dp"
             android:hint="Sign in"
             android:background="@color/cardview_shadow_start_color"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp" />
 
     </LinearLayout>
 
