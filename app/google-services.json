@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "597112892491",
+    "firebase_url": "https://wits-overflow-default-rtdb.firebaseio.com",
+    "project_id": "wits-overflow",
+    "storage_bucket": "wits-overflow.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597112892491:android:dcdf98b62741ba1f6f71ce",
+        "android_client_info": {
+          "package_name": "com.example.witsly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597112892491-k90f8u4tsehqu6friijbhu5rtipu3ge1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqC05QZdi1T062v4NBtlNodR5SSD_rVzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597112892491-k90f8u4tsehqu6friijbhu5rtipu3ge1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
