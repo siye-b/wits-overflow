@@ -9,13 +9,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.witsly.databinding.ActivityRegisterBinding;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText regEmail, regPasswordOne, regPasswordTwo;
+    private TextInputLayout regEmail, regPasswordOne, regPasswordTwo;
     private FirebaseAuth mAuth;
 
 
@@ -47,20 +48,18 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
-        regEmail = findViewById(R.id.et_email);
-        regPasswordOne = findViewById(R.id.et_password);
-        regPasswordTwo = findViewById(R.id.et_verify_password);
+        regEmail = findViewById(R.id.til_email);
+        regPasswordOne = findViewById(R.id.til_password);
+        regPasswordTwo = findViewById(R.id.til_verify_pass);
         Button regButton = findViewById(R.id.btn_signup);
 
 
         regButton.setOnClickListener(reg_btn -> {
-            String email = regEmail.getText().toString().trim();
-            String password1 = regPasswordOne.getText().toString().trim();
-            String password2 = regPasswordTwo.getText().toString().trim();
-            if (password1.equals(password2)) {
+            String email = regEmail.getEditText().getText().toString().trim();
+            String password1 = regPasswordOne.getEditText().getText().toString().trim();
+            String password2 = regPasswordTwo.getEditText().getText().toString().trim();
+            if (validateFields(email, password1, password2, regEmail, regPasswordOne, regPasswordTwo)){
                 registerUser(email, password1);
-            } else {
-                Toast.makeText(this, "Passwords don't match", Toast.LENGTH_LONG).show();
             }
 
         });
@@ -74,10 +73,34 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(RegisterActivity.this, "User Registered Successfully", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(this, MainActivity.class);
-                        intent.putExtra("email", regEmail.getText().toString());
+                        intent.putExtra("email", regEmail.getEditText().getText().toString());
                         startActivity(intent);
                     }
                 }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show());
-
     }
+
+    private boolean validateFields(String email, String password1, String password2, TextInputLayout emailField, TextInputLayout passwordField1, TextInputLayout passwordField2){
+        if(!EMAIL_ADDRESS.matcher(email).matches()){
+            emailField.setError("Please use a valid Wits email address!");
+            passwordField1.setError(null);
+            passwordField2.setError(null);
+            return false;
+        }else if(!PASSWORD_PATTERN.matcher(password1).matches()){
+            passwordField1.setError("Please choose a stronger password!");
+            emailField.setError(null);
+            passwordField2.setError(null);
+            return false;
+        }else if(!password2.equals(password1)){
+            emailField.setError(null);
+            passwordField1.setError(null);
+            passwordField2.setError("Passwords do not match!");
+            return false;
+        }else{
+            emailField.setError(null);
+            passwordField1.setError(null);
+            passwordField2.setError(null);
+            return true;
+        }
+    }
+
 }
