@@ -3,7 +3,6 @@ package com.example.witsly;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.witsly.databinding.ActivityRegisterBinding;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputLayout regEmail, regPasswordOne, regPasswordTwo;
+    private TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase mFirebaseDatabase;
 
 
     private static final Pattern EMAIL_ADDRESS =
@@ -48,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        regName = findViewById(R.id.til_name);
+        regSurname = findViewById(R.id.til_surname);
         regEmail = findViewById(R.id.til_email);
         regPasswordOne = findViewById(R.id.til_password);
         regPasswordTwo = findViewById(R.id.til_verify_pass);
@@ -55,11 +59,13 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         regButton.setOnClickListener(reg_btn -> {
+            String name = regName.getEditText().getText().toString().trim();
+            String surname = regSurname.getEditText().getText().toString().trim();
             String email = regEmail.getEditText().getText().toString().trim();
             String password1 = regPasswordOne.getEditText().getText().toString().trim();
             String password2 = regPasswordTwo.getEditText().getText().toString().trim();
-            if (validateFields(email, password1, password2, regEmail, regPasswordOne, regPasswordTwo)){
-                registerUser(email, password1);
+            if (validateFields(email, password1, password2, regEmail, regPasswordOne, regPasswordTwo)) {
+                registerUser(name, surname, email, password1);
             }
 
         });
@@ -67,11 +73,30 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void registerUser(String email, String password) {
+    // Register user
+    private void registerUser(String name, String surname, String email, String password) {
+
+        //Creates a new user in firebase
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(RegisterActivity.this, "User Registered Successfully", Toast.LENGTH_LONG).show();
+                        User user = new User(name, surname, email);
+
+                        // Adds the Name, Surname and Email into our Database
+
+                        mFirebaseDatabase.getReference("Users")
+                                .child(mAuth.getCurrentUser().getUid())
+                                .setValue(user).addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_LONG).show();
+
+                            }
+                        }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show());
+
+
                         Intent intent = new Intent(this, MainActivity.class);
                         intent.putExtra("email", regEmail.getEditText().getText().toString());
                         startActivity(intent);
@@ -79,23 +104,23 @@ public class RegisterActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
-    private boolean validateFields(String email, String password1, String password2, TextInputLayout emailField, TextInputLayout passwordField1, TextInputLayout passwordField2){
-        if(!EMAIL_ADDRESS.matcher(email).matches()){
+    private boolean validateFields(String email, String password1, String password2, TextInputLayout emailField, TextInputLayout passwordField1, TextInputLayout passwordField2) {
+        if (!EMAIL_ADDRESS.matcher(email).matches()) {
             emailField.setError("Please use a valid Wits email address!");
             passwordField1.setError(null);
             passwordField2.setError(null);
             return false;
-        }else if(!PASSWORD_PATTERN.matcher(password1).matches()){
+        } else if (!PASSWORD_PATTERN.matcher(password1).matches()) {
             passwordField1.setError("Please choose a stronger password!");
             emailField.setError(null);
             passwordField2.setError(null);
             return false;
-        }else if(!password2.equals(password1)){
+        } else if (!password2.equals(password1)) {
             emailField.setError(null);
             passwordField1.setError(null);
             passwordField2.setError("Passwords do not match!");
             return false;
-        }else{
+        } else {
             emailField.setError(null);
             passwordField1.setError(null);
             passwordField2.setError(null);

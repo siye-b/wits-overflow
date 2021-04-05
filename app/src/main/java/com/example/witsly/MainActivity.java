@@ -15,11 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private TextInputLayout loginEmail, loginPassword;
     private FirebaseAuth mAuth;
-
-
     public ActivityMainBinding binding;
 
     @Override
@@ -36,12 +33,10 @@ public class MainActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.til_password);
         Button loginButton = findViewById(R.id.btn_singin);
 
-
         if (intent1 != null) {
             String str = intent1.getStringExtra("email");
             loginEmail.getEditText().setText(str);
         }
-
 
         loginButton.setOnClickListener(login -> {
             String email = loginEmail.getEditText().getText().toString().trim();
@@ -63,13 +58,12 @@ public class MainActivity extends AppCompatActivity {
     private void login(String email, String password1) {
         mAuth.signInWithEmailAndPassword(email, password1)
                 .addOnCompleteListener(task -> {
-
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(this, HomeActivity.class));
                     }
-                }).addOnFailureListener(e -> Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
-
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private boolean validateFields(String email, String password, TextInputLayout emailField, TextInputLayout passwordField){
@@ -87,5 +81,4 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
-
 }
