@@ -46,14 +46,10 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(login -> {
             String email = loginEmail.getEditText().getText().toString().trim();
             String password = loginPassword.getEditText().getText().toString().trim();
-            if (TextUtils.isEmpty(email)) {
-                Toast.makeText(this, "Email is required", Toast.LENGTH_LONG).show();
-            } else if (TextUtils.isEmpty(password)) {
-                Toast.makeText(this, "Password is required", Toast.LENGTH_LONG).show();
-            } else {
+
+            if(validateFields(email, password, loginEmail, loginPassword)){
                 login(email, password);
             }
-
         });
 
         binding.tvRegister.setOnClickListener(v -> {
@@ -74,6 +70,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).addOnFailureListener(e -> Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
 
+    }
+
+    private boolean validateFields(String email, String password, TextInputLayout emailField, TextInputLayout passwordField){
+        if (TextUtils.isEmpty(email)) {
+            loginEmail.setError("Email address is required!");
+            loginPassword.setError(null);
+            return false;
+        } else if (TextUtils.isEmpty(password)) {
+            loginEmail.setError(null);
+            loginPassword.setError("Password is required!");
+            return false;
+        } else {
+            loginEmail.setError(null);
+            loginPassword.setError(null);
+            return true;
+        }
     }
 
 }
