@@ -95,7 +95,7 @@
         android:id="@+id/til_verify_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btn_singup"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signup"
         app:passwordToggleEnabled="true"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
