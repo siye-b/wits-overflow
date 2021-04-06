@@ -1,6 +1,9 @@
 package com.example.witsly;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
 
-
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private DatabaseReference mDatabaseReference;
@@ -30,7 +32,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         mAuth = FirebaseAuth.getInstance();
-
         // Testing if user is logged in
         // can be removed once tested
 
@@ -52,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
                 tvName.setText(name);
                 tvEmail.setText(email);
                 tvSurname.setText(surname);
-            
+
             }
 
             @Override
@@ -62,5 +63,24 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.logout:
+                mAuth.signOut();
+                startActivity(new Intent(HomeActivity.this, MainActivity.class));
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
