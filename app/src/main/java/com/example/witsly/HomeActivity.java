@@ -52,8 +52,7 @@ public class HomeActivity extends AppCompatActivity {
                 tvName.setText(name);
                 tvEmail.setText(email);
                 tvSurname.setText(surname);
-
-
+            
             }
 
             @Override
