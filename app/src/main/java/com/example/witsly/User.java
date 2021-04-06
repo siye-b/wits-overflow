@@ -4,6 +4,8 @@ public class User {
 
     public String name, surname, email;
 
+    // Don't remove this constructor
+
     public User() {
 
     }
