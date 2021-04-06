@@ -13,13 +13,13 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginTop="4dp"
+        android:src="@drawable/icon"
         app:layout_constraintBottom_toTopOf="@+id/til_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7"
-        app:srcCompat="@drawable/icon" />
+        app:layout_constraintVertical_bias="0.7" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_name"
