@@ -1,11 +1,13 @@
 package com.example.witsly;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout loginEmail, loginPassword;
     private FirebaseAuth mAuth;
     public ActivityMainBinding binding;
-    public ProgressDialog proDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +39,6 @@ public class MainActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.til_password);
         Button loginButton = findViewById(R.id.btn_singin);
 
-        proDialog = new ProgressDialog(MainActivity.this);
-        proDialog.setCancelable(false);
-        proDialog.setMessage("Logging in...");
-        proDialog.setProgress(0);
-        proDialog.setProgressStyle(0);
-        proDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.LTGRAY));
-
-
         if (intent1 != null) {
             String str = intent1.getStringExtra("email");
             loginEmail.getEditText().setText(str);
@@ -58,19 +51,6 @@ public class MainActivity extends AppCompatActivity {
             if(validateFields(email, password, loginEmail, loginPassword)){
                 login(email, password);
             }
-
-            proDialog.show();
-            CountDownTimer count = new CountDownTimer(2000, 500) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    proDialog.setMessage("Logging in");
-                }
-
-                @Override
-                public void onFinish() {
-                    proDialog.dismiss();
-                }
-            }.start();
         });
 
         binding.tvRegister.setOnClickListener(v -> {
