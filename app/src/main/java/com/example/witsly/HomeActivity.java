@@ -73,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        mAuth =FirebaseAuth.getInstance();
         switch (item.getItemId()) {
 
             case R.id.logout:
