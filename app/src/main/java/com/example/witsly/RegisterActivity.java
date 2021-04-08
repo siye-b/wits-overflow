@@ -3,11 +3,11 @@ package com.example.witsly;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.witsly.databinding.ActivityRegisterBinding;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,6 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
     private FirebaseAuth mAuth;
+    private TextView tv_register;
     private FirebaseDatabase mFirebaseDatabase;
 
 
@@ -41,13 +42,12 @@ public class RegisterActivity extends AppCompatActivity {
                     "$"
             );
 
-    private ActivityRegisterBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_register);
+
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         regName = findViewById(R.id.til_name);
@@ -55,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         regEmail = findViewById(R.id.til_email);
         regPasswordOne = findViewById(R.id.til_password);
         regPasswordTwo = findViewById(R.id.til_verify_pass);
+        tv_register = findViewById(R.id.tv_register);
         Button regButton = findViewById(R.id.btn_signup);
 
 
@@ -69,10 +70,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
 
-        binding.tvRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        tv_register.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-            finish();
         });
 
 
