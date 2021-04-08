@@ -2,7 +2,6 @@ package com.example.witsly;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -65,19 +64,15 @@ public class RegisterActivity extends AppCompatActivity {
             String email = regEmail.getEditText().getText().toString().trim();
             String password1 = regPasswordOne.getEditText().getText().toString().trim();
             String password2 = regPasswordTwo.getEditText().getText().toString().trim();
-            if (validateFields(email, password1, password2, regEmail, regPasswordOne, regPasswordTwo)) {
+            if (validateFields(email, password1, password2, regEmail, regPasswordOne, regPasswordTwo))
                 registerUser(name, surname, email, password1);
-            }
 
         });
 
-        binding.tvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.tvRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
 
 
@@ -98,20 +93,18 @@ public class RegisterActivity extends AppCompatActivity {
                         mFirebaseDatabase.getReference("Users")
                                 .child(mAuth.getCurrentUser().getUid())
                                 .setValue(user).addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_LONG).show();
-
-                            }
-                        }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show());
+                            if (task1.isSuccessful())
+                                Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
 
 
-                        Intent intent = new Intent(this, MainActivity.class);
+                        Intent intent = new Intent(this, LoginActivity.class);
                         intent.putExtra("email", regEmail.getEditText().getText().toString());
                         startActivity(intent);
                     }
-                }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show());
+                }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private boolean validateFields(String email, String password1, String password2, TextInputLayout emailField, TextInputLayout passwordField1, TextInputLayout passwordField2) {

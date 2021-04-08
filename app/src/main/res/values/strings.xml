@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">witsly</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
 </resources>

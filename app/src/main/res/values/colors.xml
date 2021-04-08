@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="cardview_shadow_start_color" />
+    <color name="darkGrey">#1a1a1a</color>
+
 </resources>
