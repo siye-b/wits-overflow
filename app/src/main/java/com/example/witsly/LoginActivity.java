@@ -37,7 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.btn_singin);
 
         if (mUser != null) {
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this,MainActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         }
         if (intent1 != null) {
             String str = intent1.getStringExtra("email");
@@ -58,7 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(this, MainActivity.class));
+                        startActivity(new Intent(this, MainActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());

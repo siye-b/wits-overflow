@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mUser = mAuth.getCurrentUser();
         String user = mUser.getUid();
 
+
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
         mDatabaseReference.child(user).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -95,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
