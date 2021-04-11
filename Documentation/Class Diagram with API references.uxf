@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1022</x>
+      <y>546</y>
+      <w>189</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>
+Class Controler
+
+--
+
+-dataToDisplay: new Model()
+
+--
+#switchScreens(i: int): int
+
+#showDatabaseItem(void): returns
+--
+Responsibilities
+-- Resp1
+-- Resp2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1365</x>
+      <y>434</y>
+      <w>203</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>
+Class MVCModel
+
+--
+#Member Variables/Attributes
+
+
+--
++Methods
+
+
++getAllAskedQuestions() : List&lt;Questions&gt;
+
+
++AddQuestion(Question: String) ; Boolean
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1358</x>
+      <y>840</y>
+      <w>189</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>
+Class View
+
+--
+
+-activityController = new Contoller()
+
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+-- Resp2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1204</x>
+      <y>539</y>
+      <w>175</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>230.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1204</x>
+      <y>700</y>
+      <w>168</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>220.0;230.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1204</x>
+      <y>574</y>
+      <w>168</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;120.0;220.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1204</x>
+      <y>665</y>
+      <w>175</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;230.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1561</x>
+      <y>553</y>
+      <w>322</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>440.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2240</x>
+      <y>315</y>
+      <w>189</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>
+Class Module One
+
+--
+-id: Long {composite}
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+-- Resp2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2170</x>
+      <y>602</y>
+      <w>189</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>
+Class Module Two
+
+--
+-id: Long {composite}
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+-- Resp2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1869</x>
+      <y>301</y>
+      <w>602</w>
+      <h>546</h>
+    </coordinates>
+    <panel_attributes>
+transparency=80
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>322</x>
+      <y>462</y>
+      <w>581</w>
+      <h>434</h>
+    </coordinates>
+    <panel_attributes>bg=green
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1148</x>
+      <y>1162</y>
+      <w>602</w>
+      <h>546</h>
+    </coordinates>
+    <panel_attributes>bg=blue
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>896</x>
+      <y>665</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>190.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1435</x>
+      <y>1050</y>
+      <w>21</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1624</x>
+      <y>574</y>
+      <w>140</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>Functions to Add in the next
+Sprint/update to the functionality
+
++deleteQuestion
+
++modifyQuestion</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1561</x>
+      <y>511</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1561</x>
+      <y>616</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1918</x>
+      <y>322</y>
+      <w>203</w>
+      <h>301</h>
+    </coordinates>
+    <panel_attributes>
+Class MVCModelIimplementor
+
+Extends:
+Implements: MVCModel
+
+--
+#Member Variables/Attributes
+
+
+--
+#Methods
+#Take note of the below notation
+#accepts(parameters) : returns
+
++
+--
+Responsibilities
+-- Resp1
+-- Resp2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>406</y>
+      <w>581</w>
+      <h>455</h>
+    </coordinates>
+    <panel_attributes>bg=pink
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>490</x>
+      <y>357</y>
+      <w>91</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>SPRINT Two
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>812</x>
+      <y>413</y>
+      <w>91</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>SPRINT ONE
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1967</x>
+      <y>1407</y>
+      <w>91</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>SPRINT TWO
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1456</x>
+      <y>1456</y>
+      <w>602</w>
+      <h>546</h>
+    </coordinates>
+    <panel_attributes>bg=orange
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1148</x>
+      <y>1113</y>
+      <w>91</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>SPRINT ONE
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1624</x>
+      <y>399</y>
+      <w>140</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>Note..
+Transfer all comments
+to this Note- for eligability
+
+
+#Take note of the below notation
+#accepts(parameters) : returns
+
+
++getAllAskedQuestions() : List&lt;Questions&gt;
+#i.e get questions list
+
++AddQuestion(Question: String) ; Boolean
+#i.e. add item to questions list</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2212</x>
+      <y>0</y>
+      <w>602</w>
+      <h>546</h>
+    </coordinates>
+    <panel_attributes>
+transparency=80
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1750</x>
+      <y>1162</y>
+      <w>203</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>To Create Class Diagrams from
+
+
+Initializing UI elements
+
+showAllQuestions
+
+UpdateViewOmAdd
+
+UodateViewOnRemove
+
+UpdateViewOnModify
+
+ShowErrors
+
+Binding the data with UI elements
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>609</x>
+      <y>308</y>
+      <w>203</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>To Create Class Diagrams from
+
+
+onAddButtonClicked
+
+onRemoveButtonClicked
+
+onModifyButtonClicked
+
+onViewLoaded</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1624</x>
+      <y>168</y>
+      <w>203</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>Note That this diagram is Intented 
+mainly for API references 
+
+If a developer wantes to work on i.e. the
+model side of the architecture, then they
+can clearly discern all the classes which 
+belong to the the model package
+
+Along with the sll the methos which they
+can call from the model package only</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
