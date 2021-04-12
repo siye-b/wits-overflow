@@ -67,7 +67,7 @@ To run tests we used codecov as well as Coverals for our TEst Driven Development
 
 
 # Contributors
-Ntwanano Rikhotso -[https://github/snr99]
+Ntwanano Rikhotso -[instert social media links here]
 
 Ramovha Molvin -[instert social media links here]
 
