@@ -100,6 +100,8 @@ public class RegisterActivity extends AppCompatActivity {
                         }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
 
 
+                        FirebaseAuth.getInstance().signOut();
+
                         Intent intent = new Intent(this, LoginActivity.class);
                         intent.putExtra("email", regEmail.getEditText().getText().toString());
                         startActivity(intent);
