@@ -1,6 +1,7 @@
 package com.example.witsly;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.witsly.Fragments.HomeFragment;
-import com.example.witsly.Fragments.ProfileFragment;
+import com.example.witsly.Fragments.*;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle actionDrawerToggle =
                 new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionDrawerToggle);
+        drawerLayout.setScrimColor(Color.WHITE);
         actionDrawerToggle.setDrawerIndicatorEnabled(true);
         actionDrawerToggle.syncState();
 
