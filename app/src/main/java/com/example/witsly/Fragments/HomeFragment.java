@@ -14,21 +14,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomeFragment extends Fragment {
 
-    private FloatingActionButton mFAB;
-
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mFAB = view.findViewById(R.id.btn_new_post);
+        FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
 
-        mFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PostActivity.class));
-            }
-        });
+        mFAB.setOnClickListener(v -> startActivity(new Intent(getActivity(), PostActivity.class)));
         return view;
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,13 +13,13 @@
         android:layout_height="wrap_content" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/textInputLayoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include"
-        android:paddingTop="4dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -28,17 +28,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout4"
+        android:id="@+id/textInputLayoutBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:translationY="220dp"
-        app:boxBackgroundColor="#FFF"
-        app:boxStrokeColor="#FFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTitle"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:boxStrokeColor="#FFF"
+        app:boxBackgroundColor="#FFF">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -47,18 +47,11 @@
             android:hint="BODY"
             android:singleLine="false"
             android:verticalScrollbarPosition="right"
-            app:boxBackgroundColor="#FFF"
-            app:boxStrokeColor="#FFF"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp" />
+            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeColor="#FFF"
+            app:boxBackgroundColor="#FFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_alignParentBottom="true">
 
-    </RelativeLayout>
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

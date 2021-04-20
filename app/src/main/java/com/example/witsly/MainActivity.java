@@ -3,6 +3,7 @@ package com.example.witsly;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -16,7 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.witsly.Fragments.*;
+import com.example.witsly.Fragments.HomeFragment;
+import com.example.witsly.Fragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +57,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         proDialog = new ProDialog(this);
         proDialog.startLoad();
 
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        String user = mUser.getUid();
+
+
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
@@ -72,22 +81,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.container_frag, new HomeFragment()).commit();
 
-
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        String user = mUser.getUid();
+        Log.d("TAG", mAuth.getCurrentUser().getUid());
 
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
         mDatabaseReference.child(user).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = snapshot.child("name").getValue().toString();
-                String surname = snapshot.child("surname").getValue().toString();
-                String email = snapshot.child("email").getValue().toString();
+                String name = Objects.requireNonNull(snapshot.child("name").getValue()).toString();
+                String surname = Objects.requireNonNull(snapshot.child("surname").getValue()).toString();
+                String email = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
                 hFullName.setText(name + " " + surname);
                 hEmail.setText(email);
                 proDialog.endLoad();
+
             }
 
             @Override
@@ -122,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
         }
-        
+
         return true;
     }
 }
