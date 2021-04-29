@@ -3,14 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <include
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar"
+        android:visibility="invisible"
+        layout="@layout/drawer_toolbar"
+        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="12dp"
-        android:paddingTop="?actionBarSize"
+        android:layout_below="@+id/toolbar"
         android:clipToPadding="false"
         android:background="@color/purple_700"
         />
