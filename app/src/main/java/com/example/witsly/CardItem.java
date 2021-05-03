@@ -1,37 +1,37 @@
 package com.example.witsly;
 
 public class CardItem {
-    private String mPosterDetails;
-    private String mPostTitle;
-    private String mPostBody;
-    private String mVoteCount;
-    private String mCommentCount;
+    private final String mPosterDetails;
+    private final String mPostTitle;
+    private final String mPostBody;
+    private final int mVoteCount;
 
-    public CardItem(String PosterDetails, String PostTitle, String PostBody, String VoteCount, String CommentCount){
-        mPosterDetails = PosterDetails;
-        mPostTitle = PostTitle;
-        mPostBody = PostBody;
-        mVoteCount = VoteCount;
-        mCommentCount = CommentCount;
+
+    public CardItem(String title, String body, int vote, String details) {
+
+        mPosterDetails = details;
+        mPostTitle = title;
+        mPostBody = body;
+        mVoteCount = vote;
+
     }
 
-    public String getPosterDetails(){
+
+    public String getPosterDetails() {
+
         return mPosterDetails;
     }
 
-    public String getPostTitle(){
+    public String getPostTitle() {
         return mPostTitle;
     }
 
-    public String getPostBody(){
+    public String getPostBody() {
         return mPostBody;
     }
 
-    public String getVoteCount(){
+    public int getVoteCount() {
         return mVoteCount;
     }
 
-    public String getCommentCount(){
-        return mCommentCount;
-    }
 }

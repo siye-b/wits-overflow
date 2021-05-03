@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.CardItem;
-import com.example.witsly.MainActivity;
 import com.example.witsly.PostActivity;
 import com.example.witsly.R;
 import com.example.witsly.RecyclerAdapter;
@@ -21,9 +20,6 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mRecyclerViewAdapter;
-    private RecyclerView.LayoutManager mRecyclerManager;
 
     @Override
     public View onCreateView(
@@ -31,23 +27,77 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-
         FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
-
         mFAB.setOnClickListener(v -> startActivity(new Intent(getActivity(), PostActivity.class)));
-
         ArrayList<CardItem> example = new ArrayList<>();
-        example.add(new CardItem("test", "test", "test", "test", "test"));
-        example.add(new CardItem("test", "test", "test", "test", "test"));
-        example.add(new CardItem("test", "test", "test", "test", "test"));
-        example.add(new CardItem("test", "test", "test", "test", "test"));
-        example.add(new CardItem("test", "test", "test", "test", "test"));
-        example.add(new CardItem("test", "test", "test", "test", "test"));
 
-        mRecyclerView = view.findViewById(R.id.recyclerView);
+        example.add(
+                new CardItem(
+                        "Lorem Ipsum",
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        0,
+                        "User posted on 21/21/2021"
+                )
+        );
+
+
+        example.add(
+                new CardItem(
+                        "Lorem Ipsum",
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        0,
+                        "User posted on 21/21/2021"
+                )
+        );
+
+        example.add(
+                new CardItem(
+                        "Lorem Ipsum",
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        0,
+                        "User posted on 21/21/2021"
+                )
+        );
+
+
+        example.add(
+                new CardItem(
+                        "Lorem Ipsum",
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        0,
+                        "User posted on 21/21/2021"
+                )
+        );
+
+        example.add(
+                new CardItem(
+                        "Lorem Ipsum",
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        0,
+                        "User posted on 21/21/2021"
+                )
+        );
+        example.add(
+                new CardItem(
+                        "Lorem Ipsum",
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        0,
+                        "User posted on 21/21/2021"
+                )
+        );
+        example.add(
+                new CardItem(
+                        "Lorem Ipsum",
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        0,
+                        "User posted on 21/21/2021"
+                )
+        );
+
+        RecyclerView mRecyclerView = view.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerManager = new LinearLayoutManager(view.getContext());
-        mRecyclerViewAdapter = new RecyclerAdapter(example);
+        RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
+        RecyclerView.Adapter mRecyclerViewAdapter = new RecyclerAdapter(example);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(mRecyclerManager);
 

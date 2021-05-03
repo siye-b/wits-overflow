@@ -8,12 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.witsly.databinding.ForgotDialogBinding;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,14 +84,9 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Toast.makeText(LoginActivity.this,"Reset link is sent to your email: "+ email,Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Reset link is sent to your email: " + email, Toast.LENGTH_LONG).show();
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(LoginActivity.this,"ERROR ! Reset link is not sent ,"+ e.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            });
+            }).addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "ERROR ! Reset link is not sent ," + e.getMessage(), Toast.LENGTH_LONG).show());
 
             dialog.dismiss();
         });

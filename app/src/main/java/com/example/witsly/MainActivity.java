@@ -1,5 +1,6 @@
 package com.example.witsly;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
         mDatabaseReference.child(user).addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = Objects.requireNonNull(snapshot.child("name").getValue()).toString();
@@ -110,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-
         if (item.getItemId() == R.id.user_home) {
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
@@ -124,10 +125,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (item.getItemId() == R.id.user_logout) {
             FirebaseAuth.getInstance().signOut();
-
             startActivity(new Intent(this, LoginActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-
         }
 
         return true;

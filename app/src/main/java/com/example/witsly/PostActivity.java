@@ -67,6 +67,7 @@ public class PostActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void addPost(String title, String body) {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -82,7 +83,7 @@ public class PostActivity extends AppCompatActivity {
                          * After adding a question a user should be taken somewhere
                          * please implement this
                          */
-                        
+
                     } else {
                         Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
 
