@@ -31,104 +31,100 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
+public class MainActivity extends AppCompatActivity
+    implements NavigationView.OnNavigationItemSelectedListener {
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+  private DrawerLayout drawerLayout;
+  private FragmentManager fragmentManager;
+  private FragmentTransaction fragmentTransaction;
+  private TextView hFullName, hEmail;
+  private ProDialog proDialog;
 
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
-    private TextView hFullName, hEmail;
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
-    private DatabaseReference mDatabaseReference;
-    private ProDialog proDialog;
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
+    drawerLayout = findViewById(R.id.MainDrawer);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    Toolbar toolbar = findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
 
-        drawerLayout = findViewById(R.id.MainDrawer);
+    proDialog = new ProDialog(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    proDialog.start();
 
-        proDialog = new ProDialog(this);
-        proDialog.startLoad();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser mUser = mAuth.getCurrentUser();
+    assert mUser != null;
+    String user = mUser.getUid();
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        String user = mUser.getUid();
+    NavigationView navigationView = findViewById(R.id.navigationView);
+    navigationView.setNavigationItemSelectedListener(this);
+    View headerView = navigationView.getHeaderView(0);
 
+    hFullName = headerView.findViewById(R.id.headerFullName);
+    hEmail = headerView.findViewById(R.id.headerEmail);
 
-        navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
+    ActionBarDrawerToggle actionDrawerToggle =
+        new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+    drawerLayout.addDrawerListener(actionDrawerToggle);
+    drawerLayout.setScrimColor(Color.WHITE);
+    actionDrawerToggle.setDrawerIndicatorEnabled(true);
+    actionDrawerToggle.syncState();
 
-        hFullName = headerView.findViewById(R.id.headerFullName);
-        hEmail = headerView.findViewById(R.id.headerEmail);
+    fragmentManager = getSupportFragmentManager();
+    fragmentTransaction = fragmentManager.beginTransaction();
+    fragmentTransaction.add(R.id.container_frag, new HomeFragment()).commit();
 
+    Log.d("TAG", mAuth.getCurrentUser().getUid());
 
-        ActionBarDrawerToggle actionDrawerToggle =
-                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionDrawerToggle);
-        drawerLayout.setScrimColor(Color.WHITE);
-        actionDrawerToggle.setDrawerIndicatorEnabled(true);
-        actionDrawerToggle.syncState();
-
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container_frag, new HomeFragment()).commit();
-
-        Log.d("TAG", mAuth.getCurrentUser().getUid());
-
-
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        mDatabaseReference.child(user).addListenerForSingleValueEvent(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+    DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
+    mDatabaseReference
+        .child(user)
+        .addListenerForSingleValueEvent(
+            new ValueEventListener() {
+              @SuppressLint("SetTextI18n")
+              @Override
+              public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = Objects.requireNonNull(snapshot.child("name").getValue()).toString();
-                String surname = Objects.requireNonNull(snapshot.child("surname").getValue()).toString();
-                String email = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
+                String surname =
+                    Objects.requireNonNull(snapshot.child("surname").getValue()).toString();
+                String email =
+                    Objects.requireNonNull(snapshot.child("email").getValue()).toString();
                 hFullName.setText(name + " " + surname);
                 hEmail.setText(email);
-                proDialog.endLoad();
+                proDialog.stop();
+              }
 
-            }
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {}
+            });
+  }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+  @Override
+  public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            }
-        });
+    drawerLayout.closeDrawer(GravityCompat.START);
 
+    if (item.getItemId() == R.id.user_home) {
+      fragmentManager = getSupportFragmentManager();
+      fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(R.id.container_frag, new HomeFragment()).commit();
+    }
+    if (item.getItemId() == R.id.user_profile) {
+      fragmentManager = getSupportFragmentManager();
+      fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(R.id.container_frag, new ProfileFragment());
+      fragmentTransaction.commit();
+    }
+    if (item.getItemId() == R.id.user_logout) {
+      FirebaseAuth.getInstance().signOut();
+      startActivity(
+          new Intent(this, LoginActivity.class)
+              .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-
-        if (item.getItemId() == R.id.user_home) {
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_frag, new HomeFragment()).commit();
-        }
-        if (item.getItemId() == R.id.user_profile) {
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_frag, new ProfileFragment());
-            fragmentTransaction.commit();
-        }
-        if (item.getItemId() == R.id.user_logout) {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, LoginActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-        }
-
-        return true;
-    }
+    return true;
+  }
 }

@@ -8,28 +8,26 @@ import com.example.witsly.databinding.ProDialogBinding;
 
 public class ProDialog {
 
-    private Context context;
-    private AlertDialog myAlert;
+  private final Context context;
+  private AlertDialog myAlert;
 
-    public ProDialog(final Context myContext) {
-        context = myContext;
-    }
+  public ProDialog(final Context myContext) {
+    context = myContext;
+  }
 
-    public void startLoad() {
+  public void start() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        ProDialogBinding binding = ProDialogBinding.inflate(LayoutInflater.from(context));
-        builder.setView(binding.getRoot());
-        builder.setCancelable(false);
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    ProDialogBinding binding = ProDialogBinding.inflate(LayoutInflater.from(context));
+    builder.setView(binding.getRoot());
+    builder.setCancelable(false);
 
-        myAlert = builder.create();
-        myAlert.show();
+    myAlert = builder.create();
+    myAlert.show();
+  }
 
-    }
+  public void stop() {
 
-    public void endLoad() {
-
-
-        myAlert.dismiss();
-    }
+    myAlert.dismiss();
+  }
 }
