@@ -41,9 +41,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public TextView mPostBody;
     public TextView mVoteCount;
 
-    public RadioButton mUpvoteButton;
-    public RadioButton mDownvoteButton;
-    public RadioGroup mRadioGroup;
+    private RadioButton mUpvoteButton;
+    private RadioButton mDownvoteButton;
+    private RadioGroup mRadioGroup;
 
     public RecyclerViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -51,7 +51,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
       mPostTitle = itemView.findViewById(R.id.tv_card_title2);
       mPostBody = itemView.findViewById(R.id.tv_card_body2);
       mVoteCount = itemView.findViewById(R.id.tv_vote_count2);
-
       mUpvoteButton = itemView.findViewById(R.id.btn_upvote2);
       mDownvoteButton = itemView.findViewById(R.id.btn_downvote2);
       mRadioGroup = itemView.findViewById(R.id.radioGroup);
@@ -61,7 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         public void onClick(View v) {
           //Insert Logic for Votes
             if(mDownvoteButton.isChecked()){
-              mVoteCount.setTextColor(ResourcesCompat.getColor(v.getResources(), R.color.Red, null));
+              //Do Stuff
             }else if(mUpvoteButton.isChecked()){
               //Do Stuff
             }else{
@@ -78,7 +77,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             //Do Stuff
           }else if(mUpvoteButton.isChecked()){
             //Do Stuff
-            mVoteCount.setTextColor(ResourcesCompat.getColor(v.getResources(), R.color.Green, null));
           }else{
             //Do Stuff
           }

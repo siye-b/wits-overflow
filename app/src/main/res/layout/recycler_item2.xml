@@ -33,7 +33,7 @@
                     android:id="@+id/btn_upvote2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/ic_baseline_keyboard_arrow_up_24"
+                    android:background="@drawable/like_button"
                     android:button="@android:color/transparent" />
 
                 <TextView
@@ -47,7 +47,7 @@
                     android:id="@+id/btn_downvote2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:background="@drawable/dislike_button"
                     android:button="@android:color/transparent" />
 
 

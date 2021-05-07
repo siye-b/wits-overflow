@@ -10,8 +10,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
 
 import com.example.witsly.Models.Post;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,6 +25,7 @@ public class PostActivity extends AppCompatActivity {
 
   private TextInputLayout title, body;
   private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+  private ChipGroup cGroup;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,14 @@ public class PostActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
     Objects.requireNonNull(getSupportActionBar()).setTitle("New Post");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    cGroup = findViewById(R.id.chip_group);
+    Chip chip = new Chip(this);
+    chip.setText("Working?");
+    chip.setCheckable(true);
+    chip.setCheckedIconVisible(true);
+    chip.setId(ViewCompat.generateViewId());
+    cGroup.addView(chip);
 
     title = findViewById(R.id.textInputLayoutTitle);
     body = findViewById(R.id.textInputLayoutBody);
