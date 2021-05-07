@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardPreventCornerOverlap="true"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/tv_commenter_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize="16sp"
+            android:text="Posted by: John Smith"
+            android:textStyle="bold"
+            android:textColor="@color/black">
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:textColor="@color/darkGrey"
+            android:text="Body of the comment should go here."
+            android:textSize="14sp"
+            android:layout_below="@+id/tv_commenter_name">
+
+        </TextView>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

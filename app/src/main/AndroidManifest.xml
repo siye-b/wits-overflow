@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Witsly">
+        <activity android:name=".ViewQuestion"></activity>
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -26,7 +27,6 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />

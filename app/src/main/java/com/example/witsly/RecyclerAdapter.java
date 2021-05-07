@@ -1,12 +1,19 @@
 package com.example.witsly;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
+import android.content.res.loader.ResourcesLoader;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Models.Post;
@@ -15,8 +22,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.database.collection.LLRBNode;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -33,12 +41,49 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public TextView mPostBody;
     public TextView mVoteCount;
 
+    public RadioButton mUpvoteButton;
+    public RadioButton mDownvoteButton;
+    public RadioGroup mRadioGroup;
+
     public RecyclerViewHolder(@NonNull View itemView) {
       super(itemView);
       mPosterDetails = itemView.findViewById(R.id.tv_poster2);
       mPostTitle = itemView.findViewById(R.id.tv_card_title2);
       mPostBody = itemView.findViewById(R.id.tv_card_body2);
       mVoteCount = itemView.findViewById(R.id.tv_vote_count2);
+
+      mUpvoteButton = itemView.findViewById(R.id.btn_upvote2);
+      mDownvoteButton = itemView.findViewById(R.id.btn_downvote2);
+      mRadioGroup = itemView.findViewById(R.id.radioGroup);
+
+      mDownvoteButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          //Insert Logic for Votes
+            if(mDownvoteButton.isChecked()){
+              mVoteCount.setTextColor(ResourcesCompat.getColor(v.getResources(), R.color.Red, null));
+            }else if(mUpvoteButton.isChecked()){
+              //Do Stuff
+            }else{
+              //Do Stuff
+            }
+        }
+      });
+
+      mUpvoteButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          //Insert Logic for Votes
+          if(mDownvoteButton.isChecked()){
+            //Do Stuff
+          }else if(mUpvoteButton.isChecked()){
+            //Do Stuff
+            mVoteCount.setTextColor(ResourcesCompat.getColor(v.getResources(), R.color.Green, null));
+          }else{
+            //Do Stuff
+          }
+        }
+      });
     }
   }
 
