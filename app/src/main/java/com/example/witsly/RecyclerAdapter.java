@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,8 +36,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public TextView mPostBody;
     public TextView mVoteCount;
 
-    private Button mUpvoteButton;
-    private Button mDownvoteButton;
+    private RadioButton mUpvoteButton;
+    private RadioButton mDownvoteButton;
+    private RadioGroup mRadioGroup;
 
     public RecyclerViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -45,6 +48,35 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
       mVoteCount = itemView.findViewById(R.id.tv_vote_count2);
       mUpvoteButton = itemView.findViewById(R.id.btn_upvote2);
       mDownvoteButton = itemView.findViewById(R.id.btn_downvote2);
+      mRadioGroup = itemView.findViewById(R.id.radioGroup);
+
+      mDownvoteButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          //Insert Logic for Votes
+            if(mDownvoteButton.isChecked()){
+              //Do Stuff
+            }else if(mUpvoteButton.isChecked()){
+              //Do Stuff
+            }else{
+              //Do Stuff
+            }
+        }
+      });
+
+      mUpvoteButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          //Insert Logic for Votes
+          if(mDownvoteButton.isChecked()){
+            //Do Stuff
+          }else if(mUpvoteButton.isChecked()){
+            //Do Stuff
+          }else{
+            //Do Stuff
+          }
+        }
+      });
     }
   }
 
