@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,12 +34,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public TextView mPostBody;
     public TextView mVoteCount;
 
+    private Button mUpvoteButton;
+    private Button mDownvoteButton;
+
     public RecyclerViewHolder(@NonNull View itemView) {
       super(itemView);
       mPosterDetails = itemView.findViewById(R.id.tv_poster2);
       mPostTitle = itemView.findViewById(R.id.tv_card_title2);
       mPostBody = itemView.findViewById(R.id.tv_card_body2);
       mVoteCount = itemView.findViewById(R.id.tv_vote_count2);
+      mUpvoteButton = itemView.findViewById(R.id.btn_upvote2);
+      mDownvoteButton = itemView.findViewById(R.id.btn_downvote2);
     }
   }
 

@@ -19,7 +19,8 @@
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include">
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:boxBackgroundColor="#FFF">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/chipHolder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTitle"
         app:boxStrokeWidth="0dp"
@@ -51,7 +52,90 @@
             app:boxStrokeWidthFocused="0dp"
             app:boxStrokeColor="#FFF"
             app:boxBackgroundColor="#FFF" />
+
     </com.google.android.material.textfield.TextInputLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/chipHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipCornerRadius="4dp"
+                android:text="TEST"
+                android:padding="2dp"
+                android:layout_margin="2dp">
+            </com.google.android.material.chip.Chip>
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipCornerRadius="4dp"
+                android:text="TEST"
+                android:padding="2dp"
+                android:layout_margin="2dp">
+            </com.google.android.material.chip.Chip>
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipCornerRadius="4dp"
+                android:text="TEST"
+                android:padding="2dp"
+                android:layout_margin="2dp">
+            </com.google.android.material.chip.Chip>
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipCornerRadius="4dp"
+                android:text="TEST"
+                android:padding="2dp"
+                android:layout_margin="2dp">
+            </com.google.android.material.chip.Chip>
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipCornerRadius="4dp"
+                android:text="TEST"
+                android:padding="2dp"
+                android:layout_margin="2dp">
+            </com.google.android.material.chip.Chip>
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipCornerRadius="4dp"
+                android:text="TEST"
+                android:padding="2dp"
+                android:layout_margin="2dp">
+
+            </com.google.android.material.chip.Chip>
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipCornerRadius="4dp"
+                android:text="TEST"
+                android:padding="2dp"
+                android:layout_margin="2dp">
+            </com.google.android.material.chip.Chip>
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
