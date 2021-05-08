@@ -19,9 +19,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputLayout loginEmail, loginPassword;
+    public TextInputLayout loginEmail, loginPassword;
     private FirebaseAuth mAuth;
-    private TextView tv_register, tv_forgotPW;
+    public TextView tv_register, tv_forgotPW;
+    public Button loginButton;
     FirebaseUser mUser;
 
 
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.til_password);
         tv_register = findViewById(R.id.tv_register);
         tv_forgotPW = findViewById(R.id.tv_password);
-        Button loginButton = findViewById(R.id.btn_singin);
+        loginButton = findViewById(R.id.btn_singin);
 
         if (mUser != null) startActivity(new Intent(this, MainActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
