@@ -10,5 +10,7 @@
     <color name="snow">#FFFAFA</color>
     <color name="cardview_shadow_start_color" />
     <color name="darkGrey">#1a1a1a</color>
+    <color name="Red">#F44336</color>
+    <color name="Green">#8BC34A</color>
 
 </resources>
