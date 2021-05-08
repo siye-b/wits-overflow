@@ -60,6 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         public void onClick(View v) {
           //Insert Logic for Votes
             if(mDownvoteButton.isChecked()){
+                mVoteCount.setTextColor(ResourcesCompat.getColor(v.getResources(), R.color.Red,  null));
               //Do Stuff
             }else if(mUpvoteButton.isChecked()){
               //Do Stuff
@@ -77,6 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             //Do Stuff
           }else if(mUpvoteButton.isChecked()){
             //Do Stuff
+              mVoteCount.setTextColor(ResourcesCompat.getColor(v.getResources(), R.color.Green,  null));
           }else{
             //Do Stuff
           }
