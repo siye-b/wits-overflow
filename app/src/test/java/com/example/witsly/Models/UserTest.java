@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class UserTest {
 
     private User user;
-    
+
     @Before
     public void buildObject(){
         user = new User("name","surname","email");
