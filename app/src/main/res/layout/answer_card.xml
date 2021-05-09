@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardPreventCornerOverlap="true"
     app:cardElevation="2dp"
@@ -11,10 +11,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp">
+        android:padding="4dp">
 
         <TextView
-            android:id="@+id/tv_commenter_name"
+            android:id="@+id/tv_answer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -31,12 +31,21 @@
             android:textColor="@color/black"
             android:text="Body of the comment should go here."
             android:textSize="14sp"
-            android:id="@+id/tv_commenter_body"
-            android:layout_below="@+id/tv_commenter_name">
+            android:id="@+id/tv_answer_body"
+            android:layout_below="@+id/tv_answer_name">
 
         </TextView>
 
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_comments"
+            android:layout_below="@+id/tv_answer_body"
+            android:padding="5dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

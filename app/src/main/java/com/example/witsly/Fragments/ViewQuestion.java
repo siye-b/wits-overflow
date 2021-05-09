@@ -7,13 +7,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.R;
+
+import java.util.ArrayList;
 
 public class ViewQuestion extends Fragment {
   private TextView title;
   private TextView body;
   private TextView details;
+  private RecyclerView mRecyclerView;
+  private RecyclerView.Adapter mAdapter;
+  private RecyclerView.LayoutManager mLayout;
+  private ArrayList<String> mAnswerList; //Change to model for answer
 
   @Override
   public View onCreateView(
@@ -31,6 +38,10 @@ public class ViewQuestion extends Fragment {
       details.setText(bundle.getString("body"));
       body.setText(bundle.getString("details"));
     }
+
+    mRecyclerView = view.findViewById(R.id.rv_answers);
+
+    //Initialise everything similar to what has been done in HomeFragment
 
     return view;
   }

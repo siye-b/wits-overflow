@@ -53,8 +53,19 @@
                 android:textColor="@color/darkGrey"
                 android:padding="3dp" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rv_answers"
+                android:layout_below="@+id/tv_view_body"
+                android:paddingTop="5dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
 
         </RelativeLayout>
+
+
 
     </ScrollView>
 
