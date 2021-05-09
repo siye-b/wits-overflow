@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
   private FragmentTransaction fragmentTransaction;
   private TextView hFullName, hEmail;
   private ProDialog proDialog;
+  public NavigationView navigationView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity
     assert mUser != null;
     String user = mUser.getUid();
 
-    NavigationView navigationView = findViewById(R.id.navigationView);
+    navigationView = findViewById(R.id.navigationView);
     navigationView.setNavigationItemSelectedListener(this);
     View headerView = navigationView.getHeaderView(0);
 
