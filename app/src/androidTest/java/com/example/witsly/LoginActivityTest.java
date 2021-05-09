@@ -18,6 +18,7 @@ public class LoginActivityTest {
             activity.loginEmail.getEditText().setText("sfgdfgsd");
             activity.loginPassword.getEditText().setText("sfdfdf");
             activity.loginButton.performClick();
+            activity.tv_register.performClick();
         });
     }
 
