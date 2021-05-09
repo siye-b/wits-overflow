@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -54,9 +53,13 @@ public class HomeFragment extends Fragment {
             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
               Post post = postSnapshot.getValue(Post.class);
               postArrayList.add(post);
+
+              // sorts the question according to votes
+
               Collections.sort(postArrayList, Post.VoteComparator);
             }
-            RecyclerView.Adapter mRecyclerViewAdapter = new RecyclerAdapter(postArrayList);
+            RecyclerView.Adapter mRecyclerViewAdapter =
+                new RecyclerAdapter(postArrayList, getContext());
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
             mRecyclerView.setLayoutManager(mRecyclerManager);
           }
