@@ -19,6 +19,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class PostActivity extends AppCompatActivity {
@@ -26,23 +29,33 @@ public class PostActivity extends AppCompatActivity {
   private TextInputLayout title, body;
   private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
   private ChipGroup cGroup;
+  private String[] mTags;
+  private List<String> mTagList;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_post);
-    Toolbar toolbar = findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.tool_bar);
     setSupportActionBar(toolbar);
     Objects.requireNonNull(getSupportActionBar()).setTitle("New Post");
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     cGroup = findViewById(R.id.chip_group);
-    Chip chip = new Chip(this);
-    chip.setText("Working?");
-    chip.setCheckable(true);
-    chip.setCheckedIconVisible(true);
-    chip.setId(ViewCompat.generateViewId());
-    cGroup.addView(chip);
+    mTagList = Arrays.asList(getResources().getStringArray(R.array.tags));
+
+    for (int i = 0; i < mTagList.size(); ++i){
+      Chip chip = new Chip(this);
+      chip.setText(mTagList.get(i).trim());
+      chip.setCheckable(true);
+      chip.setCheckedIconVisible(true);
+      chip.setId(ViewCompat.generateViewId());
+      cGroup.addView(chip);
+    }
+
+
+
+
 
     title = findViewById(R.id.textInputLayoutTitle);
     body = findViewById(R.id.textInputLayoutBody);
