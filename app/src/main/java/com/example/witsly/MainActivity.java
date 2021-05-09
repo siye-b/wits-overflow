@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
 
     drawerLayout = findViewById(R.id.MainDrawer);
 
-    Toolbar toolbar = findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.tool_bar);
     setSupportActionBar(toolbar);
 
     proDialog = new ProDialog(this);

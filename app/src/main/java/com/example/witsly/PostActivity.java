@@ -31,10 +31,10 @@ public class PostActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_post);
-    Toolbar toolbar = findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.tool_bar);
     setSupportActionBar(toolbar);
     Objects.requireNonNull(getSupportActionBar()).setTitle("New Post");
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     cGroup = findViewById(R.id.chip_group);
     Chip chip = new Chip(this);
