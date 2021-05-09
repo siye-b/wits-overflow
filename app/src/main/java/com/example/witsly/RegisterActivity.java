@@ -17,10 +17,11 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
-  private TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
+  public TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
   private FirebaseAuth mAuth;
-  private TextView tv_register;
-  private FirebaseDatabase mFirebaseDatabase;
+  public TextView tv_register;
+  public Button regButton;
+    private FirebaseDatabase mFirebaseDatabase;
 
   private static final Pattern EMAIL_ADDRESS =
       Pattern.compile(
@@ -64,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
     regPasswordOne = findViewById(R.id.til_password);
     regPasswordTwo = findViewById(R.id.til_verify_pass);
     tv_register = findViewById(R.id.tv_register);
-    Button regButton = findViewById(R.id.btn_signup);
+    regButton = findViewById(R.id.btn_signup);
 
     regButton.setOnClickListener(
         reg_btn -> {
