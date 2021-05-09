@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewQuestion">
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".Fragments.ViewQuestion">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tv_view_poster"
+                android:id="@+id/tv_view_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -28,27 +29,29 @@
                 android:text="Posted by: John Smith · On: 01/01/2000"
                 android:textColor="@color/darkGrey"
                 android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/tv_view_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_view_poster"
+                android:layout_below="@+id/tv_view_details"
                 android:singleLine="false"
                 android:text="Title"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:padding="3dp"/>
+                android:padding="3dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_view_title"
                 android:singleLine="false"
+                android:id="@+id/tv_view_body"
                 android:text="Body should go here!"
                 android:textSize="16sp"
                 android:textColor="@color/darkGrey"
-                android:padding="3dp"/>
+                android:padding="3dp" />
 
 
         </RelativeLayout>
