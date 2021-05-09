@@ -35,6 +35,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
   FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
   User value;
   Context context;
+  private OnItemClickListener mListener;
+
+  public interface OnItemClickListener{
+      void onItemClick(int pos);
+      //Please modify to add necessary information from dB i.e. Title, Body etc.
+      //Alternatively, pass the ID of the post at current position and we can get the necessary info
+      //Use method in HomeFragment to navigate to ViewQuestion activity
+  }
+
+  public void setOnItemClickListener(OnItemClickListener listener){
+      mListener = listener;
+  }
 
   public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -47,7 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     private final RadioButton mUpVoteButton;
     private final RadioButton mDownVoteButton;
 
-    public RecyclerViewHolder(@NonNull View itemView) {
+    public RecyclerViewHolder(@NonNull View itemView, OnItemClickListener listener) {
       super(itemView);
       mPosterDetails = itemView.findViewById(R.id.tv_poster2);
       mPostTitle = itemView.findViewById(R.id.tv_card_title2);
@@ -57,6 +69,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
       mDownVoteButton = itemView.findViewById(R.id.btn_downvote2);
       RadioGroup mRadioGroup = itemView.findViewById(R.id.radioGroup);
       card = itemView.findViewById(R.id.cardView);
+
+      itemView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            if(listener != null){
+                int pos = getAdapterPosition();
+                if(pos != RecyclerView.NO_POSITION){
+                    listener.onItemClick(pos);
+                }
+            }
+          }
+      });
 
       mDownVoteButton.setOnClickListener(
           v -> {
@@ -99,7 +123,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     View v =
         LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item2, parent, false);
 
-    return new RecyclerViewHolder(v);
+    return new RecyclerViewHolder(v, mListener);
   }
 
   @SuppressLint("SetTextI18n")
