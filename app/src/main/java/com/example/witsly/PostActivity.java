@@ -19,7 +19,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +28,6 @@ public class PostActivity extends AppCompatActivity {
   private TextInputLayout title, body;
   private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
   private ChipGroup cGroup;
-  private String[] mTags;
   private List<String> mTagList;
 
   @Override
