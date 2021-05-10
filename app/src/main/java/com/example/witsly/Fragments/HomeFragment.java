@@ -57,8 +57,6 @@ public class HomeFragment extends Fragment {
               post.setPostID(postSnapshot.getKey());
               postArrayList.add(post);
 
-              // sorts the question according to votes
-
               Collections.sort(postArrayList, Post.VoteComparator);
             }
             final RecyclerView.Adapter mRecyclerViewAdapter =
