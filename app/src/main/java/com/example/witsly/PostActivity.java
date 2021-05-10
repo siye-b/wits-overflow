@@ -11,12 +11,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
@@ -27,8 +31,11 @@ public class PostActivity extends AppCompatActivity {
 
   private TextInputLayout title, body;
   private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+  FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+  private DatabaseReference ref;
   private ChipGroup cGroup;
   private List<String> mTagList;
+  String postID;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +105,28 @@ public class PostActivity extends AppCompatActivity {
             c -> {
               if (c.isSuccessful()) {
                 Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+
+                ref = firebaseDatabase
+                        .getReference("Posts")
+                        .push();
+
+                ref.setValue(post)
+                        .addOnCompleteListener(
+                                b -> {
+                                  //String postID = ref.key;
+                                  //@sanele the key ,please look into it
+                                });
+
+
+                Bundle bundle = new Bundle();
+                bundle.putString("postID", postID);
+
+                Fragment viewQuestion = new ViewQuestion();
+                viewQuestion.setArguments(bundle);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container_frag, viewQuestion);
+                transaction.addToBackStack(null);
+                transaction.commit();
 
                 /**
                  * After adding a question a user should be taken somewhere please implement this

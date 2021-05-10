@@ -41,6 +41,8 @@ public class ViewQuestion extends Fragment {
 
     mRecyclerView = view.findViewById(R.id.rv_answers);
 
+    Bundle getpostID = getArguments();
+
     //Initialise everything similar to what has been done in HomeFragment
 
     return view;
