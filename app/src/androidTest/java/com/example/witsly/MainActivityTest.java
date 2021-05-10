@@ -7,28 +7,27 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class MainActivityTest {
 
-    @Rule
-    public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
+  @Rule
+  public ActivityScenarioRule<MainActivity> activityScenarioRule =
+      new ActivityScenarioRule<>(MainActivity.class);
 
-/*    @Test
-    public void onNavigationItemSelected() {
+  @Test
+  public void onNavigationItemSelected() {
 
-        activityScenarioRule.getScenario().onActivity(activity -> {
+    activityScenarioRule
+        .getScenario()
+        .onActivity(
+            activity -> {
+              final MenuItem home_Item = activity.navigationView.getMenu().getItem(0);
+              activity.onNavigationItemSelected(home_Item);
 
-            MenuItem homeItem = activity.navigationView.getMenu().getItem(0);
-            activity.onNavigationItemSelected(homeItem);
+              final MenuItem user_Item = activity.navigationView.getMenu().getItem(1);
+              activity.onNavigationItemSelected(user_Item);
 
-            MenuItem userItem = activity.navigationView.getMenu().getItem(1);
-            activity.onNavigationItemSelected(userItem);
-
-            MenuItem logoutItem = activity.navigationView.getMenu().getItem(2);
-            activity.onNavigationItemSelected(logoutItem);
-
-
-        });
-    }*/
+              final MenuItem logout_Item = activity.navigationView.getMenu().getItem(2);
+              activity.onNavigationItemSelected(logout_Item);
+            });
+  }
 }
