@@ -34,38 +34,41 @@ public class HomeFragment extends Fragment {
 
   @Override
   public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_home, container, false);
+      final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+    final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-    FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
+    final FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
     mFAB.setOnClickListener(v -> startActivity(new Intent(getActivity(), PostActivity.class)));
     postArrayList = new ArrayList<>();
 
-    RecyclerView mRecyclerView = view.findViewById(R.id.recyclerView);
+    final RecyclerView mRecyclerView = view.findViewById(R.id.recyclerView);
     mRecyclerView.setHasFixedSize(true);
-    RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
+    final RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
 
     databaseReference.addValueEventListener(
         new ValueEventListener() {
           @Override
-          public void onDataChange(@NonNull DataSnapshot snapshot) {
+          public void onDataChange(@NonNull final DataSnapshot snapshot) {
 
-            for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-              Post post = postSnapshot.getValue(Post.class);
+            for (final DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+              final Post post = postSnapshot.getValue(Post.class);
+              assert post != null;
+              post.setPostID(postSnapshot.getKey());
               postArrayList.add(post);
 
               // sorts the question according to votes
 
               Collections.sort(postArrayList, Post.VoteComparator);
             }
-            RecyclerView.Adapter mRecyclerViewAdapter =
+            final RecyclerView.Adapter mRecyclerViewAdapter =
                 new RecyclerAdapter(postArrayList, getContext());
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
             mRecyclerView.setLayoutManager(mRecyclerManager);
           }
 
           @Override
-          public void onCancelled(@NonNull DatabaseError error) {}
+          public void onCancelled(@NonNull final DatabaseError error) {}
         });
 
     return view;
