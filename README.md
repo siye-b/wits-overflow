@@ -2,29 +2,6 @@
  
 This is an app is intended for finding quick help with programming erros around the Wits community, FAQs and general forum-like discussions on the topics of programming-related issues and bugs. The App Infact, fucntions much like StackOverflow.
 
-## UI Sketches
-The relevant activities allow for Wits to sign up and subsequently login to use the wits app. The activities consist of: the app logo; TextInputLayouts to capture the necessary fields; clickable TextViews for navigation; and buttons which facilitate the login and signup activities.
-#### Activity One : Registration
-This activity allows any Wits student to register for the app.
-
-![](Register.jpg)
-
-#### Activity Two : Login
-This activity allows any registered Wits user to enter their credentials and login in to the app.
-
-![](Login.jpg)
-#### Activity Three : Main Activity
-
-![](MainActivity.jpg)
-
-**N.B. Initial Design subject to change**
-
-The initial design for this activity contains a drawer which allows the user to navigate to various other pages. Upon signing in the user would automatically be on the Home page which contains all the questions posted. The Home page would have a RecyclerView which will have a list of all the questions; users would also be allowed to upvote any question they think deserves to be upvoted.
-
-The user would be allowed to navigate to pages such as a page to post a question, or a page make changes to their profile.
-
-**The design will be updated to allow for more functionality.**
-
 ## Architecture
 ### Architecture Summary 
 Wits overflow is currently being designed to implement the Model-View-Control Architecture
