@@ -12,7 +12,7 @@ public class RegisterActivityTest {
     @Rule
     public ActivityScenarioRule<RegisterActivity> activityScenarioRule = new ActivityScenarioRule<>(RegisterActivity.class);
 
- /*   @Test
+   @Test
     public void registerUser_correctCredentials_loginSuccess(){
         activityScenarioRule.getScenario().onActivity(activity -> {
             activity.regName.getEditText().setText("sfgdfgsd");
@@ -24,6 +24,6 @@ public class RegisterActivityTest {
             activity.regButton.performClick();
 
         });
-    }*/
+    }
 
 }
