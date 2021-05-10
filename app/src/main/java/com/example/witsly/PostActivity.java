@@ -31,17 +31,14 @@ public class PostActivity extends AppCompatActivity {
 
   private TextInputLayout title, body;
   private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-  FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-  private DatabaseReference ref;
   private ChipGroup cGroup;
   private List<String> mTagList;
-  String postID;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_post);
-    Toolbar toolbar = findViewById(R.id.tool_bar);
+    final Toolbar toolbar = findViewById(R.id.tool_bar);
     setSupportActionBar(toolbar);
     Objects.requireNonNull(getSupportActionBar()).setTitle("New Post");
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -49,8 +46,8 @@ public class PostActivity extends AppCompatActivity {
     cGroup = findViewById(R.id.chip_group);
     mTagList = Arrays.asList(getResources().getStringArray(R.array.tags));
 
-    for (int i = 0; i < mTagList.size(); ++i){
-      Chip chip = new Chip(this);
+    for (int i = 0; i < mTagList.size(); ++i) {
+      final Chip chip = new Chip(this);
       chip.setText(mTagList.get(i).trim());
       chip.setCheckable(true);
       chip.setCheckedIconVisible(true);
@@ -58,32 +55,30 @@ public class PostActivity extends AppCompatActivity {
       cGroup.addView(chip);
     }
 
-
-
-
-
     title = findViewById(R.id.textInputLayoutTitle);
     body = findViewById(R.id.textInputLayoutBody);
   }
 
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
+  public boolean onCreateOptionsMenu(final Menu menu) {
+    final MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.post_menu, menu);
     return true;
   }
 
   @SuppressLint("NonConstantResourceId")
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  public boolean onOptionsItemSelected(final MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
         onBackPressed();
         return true;
 
       case R.id.btn_post:
-        String postTitle = Objects.requireNonNull(title.getEditText()).getText().toString().trim();
-        String postBody = Objects.requireNonNull(body.getEditText()).getText().toString().trim();
+        final String postTitle =
+            Objects.requireNonNull(title.getEditText()).getText().toString().trim();
+        final String postBody =
+            Objects.requireNonNull(body.getEditText()).getText().toString().trim();
 
         if (!TextUtils.isEmpty(postBody) || !TextUtils.isEmpty(postTitle))
           addPost(postTitle, postBody);
@@ -92,45 +87,31 @@ public class PostActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  private void addPost(String title, String body) {
-    FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+  private void addPost(final String title, final String body) {
+    final FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-    Post post = new Post(title, body, Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+    final Post post =
+        new Post(title, body, Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
-    mFirebaseDatabase
-        .getReference("Posts")
-        .push()
-        .setValue(post)
+    final DatabaseReference rel = mFirebaseDatabase.getReference("Posts").push();
+
+    rel.setValue(post)
         .addOnCompleteListener(
             c -> {
               if (c.isSuccessful()) {
+
+                final Bundle bundle = new Bundle();
+                bundle.putString("title", rel.getKey());
+
                 Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
-
-                ref = firebaseDatabase
-                        .getReference("Posts")
-                        .push();
-
-                ref.setValue(post)
-                        .addOnCompleteListener(
-                                b -> {
-                                  //String postID = ref.key;
-                                  //@sanele the key ,please look into it
-                                });
-
-
-                Bundle bundle = new Bundle();
-                bundle.putString("postID", postID);
-
-                Fragment viewQuestion = new ViewQuestion();
+                final Fragment viewQuestion = new ViewQuestion();
                 viewQuestion.setArguments(bundle);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                final FragmentTransaction transaction =
+                    getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.container_frag, viewQuestion);
                 transaction.addToBackStack(null);
                 transaction.commit();
 
-                /**
-                 * After adding a question a user should be taken somewhere please implement this
-                 */
               } else {
                 Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT)
                     .show();

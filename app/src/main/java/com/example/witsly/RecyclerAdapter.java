@@ -23,7 +23,6 @@ import com.example.witsly.Models.Post;
 import com.example.witsly.Models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
@@ -38,15 +37,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
   Context context;
   private OnItemClickListener mListener;
 
-  public interface OnItemClickListener{
-      void onItemClick(int pos);
-      //Please modify to add necessary information from dB i.e. Title, Body etc.
-      //Alternatively, pass the ID of the post at current position and we can get the necessary info
-      //Use method in HomeFragment to navigate to ViewQuestion activity
+  public interface OnItemClickListener {
+    void onItemClick(int pos);
+    // Please modify to add necessary information from dB i.e. Title, Body etc.
+    // Alternatively, pass the ID of the post at current position and we can get the necessary info
+    // Use method in HomeFragment to navigate to ViewQuestion activity
   }
 
-  public void setOnItemClickListener(OnItemClickListener listener){
-      mListener = listener;
+  public void setOnItemClickListener(final OnItemClickListener listener) {
+    mListener = listener;
   }
 
   public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     private final RadioButton mUpVoteButton;
     private final RadioButton mDownVoteButton;
 
-    public RecyclerViewHolder(@NonNull View itemView, OnItemClickListener listener) {
+    public RecyclerViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
       super(itemView);
       mPosterDetails = itemView.findViewById(R.id.tv_poster2);
       mPostTitle = itemView.findViewById(R.id.tv_card_title2);
@@ -68,20 +67,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
       mVoteCount = itemView.findViewById(R.id.tv_vote_count2);
       mUpVoteButton = itemView.findViewById(R.id.btn_upvote2);
       mDownVoteButton = itemView.findViewById(R.id.btn_downvote2);
-      RadioGroup mRadioGroup = itemView.findViewById(R.id.radioGroup);
+      final RadioGroup mRadioGroup = itemView.findViewById(R.id.radioGroup);
       card = itemView.findViewById(R.id.cardView);
 
-      itemView.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            if(listener != null){
-                int pos = getAdapterPosition();
-                if(pos != RecyclerView.NO_POSITION){
-                    listener.onItemClick(pos);
-                }
+      itemView.setOnClickListener(
+          v -> {
+            if (listener != null) {
+              final int pos = getAdapterPosition();
+              if (pos != RecyclerView.NO_POSITION) {
+                listener.onItemClick(pos);
+              }
             }
-          }
-      });
+          });
 
       mDownVoteButton.setOnClickListener(
           v -> {
@@ -113,15 +110,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     }
   }
 
-  public RecyclerAdapter(ArrayList<Post> postList, Context context) {
+  public RecyclerAdapter(final ArrayList<Post> postList, final Context context) {
     this.mPostList = postList;
     this.context = context;
   }
 
   @NonNull
   @Override
-  public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    View v =
+  public RecyclerViewHolder onCreateViewHolder(
+      @NonNull final ViewGroup parent, final int viewType) {
+    final View v =
         LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item2, parent, false);
 
     return new RecyclerViewHolder(v, mListener);
@@ -129,9 +127,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
   @SuppressLint("SetTextI18n")
   @Override
-  public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+  public void onBindViewHolder(@NonNull final RecyclerViewHolder holder, final int position) {
 
-    Post cItem = mPostList.get(position);
+    final Post cItem = mPostList.get(position);
 
     if (cItem.getTitle().length() > 15)
       holder.mPostTitle.setText((cItem.getTitle()).substring(0, 15));
@@ -145,7 +143,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         .addValueEventListener(
             new ValueEventListener() {
               @Override
-              public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+              public void onDataChange(@NonNull @NotNull final DataSnapshot snapshot) {
                 value = snapshot.getValue(User.class);
                 assert value != null;
                 holder.mPosterDetails.setText(
@@ -158,34 +156,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
               }
 
               @Override
-              public void onCancelled(@NonNull @NotNull DatabaseError error) {}
+              public void onCancelled(@NonNull @NotNull final DatabaseError error) {}
             });
 
     holder.mVoteCount.setText(cItem.getVote() + "");
     holder.card.setOnClickListener(
         v -> {
-          Bundle bundle = new Bundle();
-          bundle.putString("title", cItem.getTitle());
-          bundle.putString("body", cItem.getBody());
-          bundle.putString(
-              "details",
-              "Posted by "
-                  + value.getName()
-                  + " "
-                  + value.getSurname()
-                  + " on: "
-                  + (cItem.getDate()).substring(0, 10));
+          final Bundle bundle = new Bundle();
+          bundle.putString("postID", cItem.getPostID());
 
-          AppCompatActivity activity = (AppCompatActivity) context;
+          final AppCompatActivity activity = (AppCompatActivity) context;
 
-          Fragment viewQuestion = new ViewQuestion();
+          final Fragment viewQuestion = new ViewQuestion();
           viewQuestion.setArguments(bundle);
-          FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+          final FragmentTransaction transaction =
+              activity.getSupportFragmentManager().beginTransaction();
           transaction.replace(R.id.container_frag, viewQuestion);
           transaction.addToBackStack(null);
           transaction.commit();
         });
-
   }
 
   @Override
