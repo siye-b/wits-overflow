@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    Toast.makeText(this, "Restart Motherfucker", Toast.LENGTH_LONG).show();
-
     drawerLayout = findViewById(R.id.MainDrawer);
 
     final Toolbar toolbar = findViewById(R.id.tool_bar);
