@@ -23,6 +23,7 @@ import com.example.witsly.Models.Post;
 import com.example.witsly.Models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
@@ -184,6 +185,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
           transaction.addToBackStack(null);
           transaction.commit();
         });
+
   }
 
   @Override
