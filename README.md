@@ -107,7 +107,7 @@ Lizo Hadebe -[insert social media links here]
 
 Bonisiwe Mdletshe -[insert social media links here]
 
-Nomthandazo -[insert social media links here]
+Nomthandazo Sukazi-[insert social media links here]
 
 Bongisipho Mntambo -[insert social media links here]
 
