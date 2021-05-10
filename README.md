@@ -17,22 +17,24 @@ This activity allows any registered Wits user to enter their credentials and log
 
 ![](Documentation/Src/Login.jpg)
 
-#### Activity Three : Main Activity part one- Ask a question Activity
+
+### Activity Three : Viewing or Answering a Question Activity
 
 
-![](Documentation/Src/MainActivity.jpg)
+![](Documentation/Src/Viewing%20or%20Answering%20a%20Question%20Activity.jpg)
 
 
-#### Activity Four : Main Activity part two- View all Asked Questions Activity
+#### Activity Four : Main Activity= View all Asked Questions Activity
 
 
 ![](Documentation/Src/Viewing%20All%20Questions%20Activity.jpg)
 
 
-### Activity Five : Viewing or Answering a Question Activity
+
+#### Activity Five : Ask a question Activity
 
 
-![](Documentation/Src/Viewing%20or%20Answering%20a%20Question%20Activity.jpg)
+![](Documentation/Src/MainActivity.jpg)
 
 ### Activity Six : Asking a Question Activity
 
