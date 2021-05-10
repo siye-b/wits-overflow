@@ -20,14 +20,14 @@ public class MainActivityTest {
         .getScenario()
         .onActivity(
             activity -> {
-              final MenuItem homeItem = activity.navigationView.getMenu().getItem(0);
-              activity.onNavigationItemSelected(homeItem);
+              final MenuItem home_Item = activity.navigationView.getMenu().getItem(0);
+              activity.onNavigationItemSelected(home_Item);
 
-              final MenuItem userItem = activity.navigationView.getMenu().getItem(1);
-              activity.onNavigationItemSelected(userItem);
+              final MenuItem user_Item = activity.navigationView.getMenu().getItem(1);
+              activity.onNavigationItemSelected(user_Item);
 
-              final MenuItem logoutItem = activity.navigationView.getMenu().getItem(2);
-              activity.onNavigationItemSelected(logoutItem);
+              final MenuItem logout_Item = activity.navigationView.getMenu().getItem(2);
+              activity.onNavigationItemSelected(logout_Item);
             });
   }
 }
