@@ -14,7 +14,7 @@ public class MainActivityTest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
-/*    @Test
+    @Test
     public void onNavigationItemSelected() {
 
         activityScenarioRule.getScenario().onActivity(activity -> {
@@ -30,5 +30,5 @@ public class MainActivityTest {
 
 
         });
-    }*/
+    }
 }
