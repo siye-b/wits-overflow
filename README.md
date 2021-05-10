@@ -2,28 +2,6 @@
  
 This is an app is intended for finding quick help with programming erros around the Wits community, FAQs and general forum-like discussions on the topics of programming-related issues and bugs. The App Infact, fucntions much like StackOverflow.
 
-## Architecture
-### Architecture Summary 
-Wits overflow is currently being designed to implement the Model-View-Control Architecture
-
-
-![](MVC%20Summary%20with%20Database%20Icon.png)
-
-
-**Navigate to the documentation directory, there you will find.**
-
-1. Class Diagram with API references
-This diagram is Intended mainly for API references.If a developer wants to work on i.e. the model(back-end) side of the architecture, then they can clearly discern all the classes which belong to the the model package, along with the all the methods which they can call from the model package only
-
-2. Class Diagram specifically suited for showing Encapsulation.
-This will aid greatly in writing minimal tests whilst covering the most amount of code.
-
-3. Use Case Diagram
-
-4. Activity Diagram
-
-5. Database Schema
-
 ## Requirements
 Android Studio 3.2+ (installed on a Linux, Mac or Windows machine)
 Android device in developer mode with USB debugging enabled
