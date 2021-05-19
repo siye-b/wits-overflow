@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,13 +22,6 @@ import com.example.witsly.Fragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,33 +31,35 @@ public class MainActivity extends AppCompatActivity
   private FragmentTransaction fragmentTransaction;
   private TextView hFullName, hEmail;
   private ProDialog proDialog;
-  public NavigationView navigationView;
+  NavigationView navigationView;
+  private final FirebaseActions firebaseActions = new FirebaseActions();
 
+  @SuppressLint("SetTextI18n")
   @Override
-  protected void onCreate(final Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
     drawerLayout = findViewById(R.id.MainDrawer);
 
-    final Toolbar toolbar = findViewById(R.id.tool_bar);
+    Toolbar toolbar = findViewById(R.id.tool_bar);
     setSupportActionBar(toolbar);
 
     proDialog = new ProDialog(this);
 
     proDialog.start();
 
-    final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    final FirebaseUser mUser = mAuth.getCurrentUser();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser mUser = mAuth.getCurrentUser();
 
     navigationView = findViewById(R.id.navigationView);
     navigationView.setNavigationItemSelectedListener(this);
-    final View headerView = navigationView.getHeaderView(0);
+    View headerView = navigationView.getHeaderView(0);
 
     hFullName = headerView.findViewById(R.id.headerFullName);
     hEmail = headerView.findViewById(R.id.headerEmail);
 
-    final ActionBarDrawerToggle actionDrawerToggle =
+    ActionBarDrawerToggle actionDrawerToggle =
         new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
     drawerLayout.addDrawerListener(actionDrawerToggle);
     drawerLayout.setScrimColor(Color.WHITE);
@@ -77,36 +71,22 @@ public class MainActivity extends AppCompatActivity
     fragmentTransaction.add(R.id.container_frag, new HomeFragment()).commit();
 
     if (mUser != null) {
-      final String user = mUser.getUid();
-
-      final DatabaseReference mDatabaseReference =
-          FirebaseDatabase.getInstance().getReference("Users");
-      mDatabaseReference
-          .child(user)
-          .addListenerForSingleValueEvent(
-              new ValueEventListener() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onDataChange(@NonNull final DataSnapshot snapshot) {
-                  final String name =
-                      Objects.requireNonNull(snapshot.child("name").getValue()).toString();
-                  final String surname =
-                      Objects.requireNonNull(snapshot.child("surname").getValue()).toString();
-                  final String email =
-                      Objects.requireNonNull(snapshot.child("email").getValue()).toString();
-                  hFullName.setText(name + " " + surname);
-                  hEmail.setText(email);
-                  proDialog.stop();
-                }
-
-                @Override
-                public void onCancelled(@NonNull final DatabaseError error) {}
-              });
+      String user = mUser.getUid();
+      firebaseActions.getUserDetails(
+          user,
+          response -> {
+            String name = response.getName();
+            String surname = response.getSurname();
+            String email = response.getEmail();
+            hFullName.setText(name + " " + surname);
+            hEmail.setText(email);
+            proDialog.stop();
+          });
     }
   }
 
   @Override
-  public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
+  public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
     drawerLayout.closeDrawer(GravityCompat.START);
 

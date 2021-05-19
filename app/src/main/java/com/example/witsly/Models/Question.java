@@ -5,16 +5,17 @@ import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Question {
-  int vote;
-  public String question, uid, date, answer;
+class Question {
+  private int vote;
+  private String question, uid, date, answer;
 
   @SuppressLint("SimpleDateFormat")
-  SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
+  private final SimpleDateFormat ISO_8601_FORMAT =
+      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
 
   Question() {}
 
-  public Question(String question, String answer, String uid) {
+  Question(final String question, final String answer, final String uid) {
     this.question = question;
     this.answer = answer;
     this.uid = uid;

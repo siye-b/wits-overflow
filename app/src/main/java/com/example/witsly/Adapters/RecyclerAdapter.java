@@ -1,4 +1,4 @@
-package com.example.witsly;
+package com.example.witsly.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,24 +18,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.FirebaseActions;
 import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
-import com.example.witsly.Models.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.NotNull;
+import com.example.witsly.R;
 
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
 
   private final ArrayList<Post> mPostList;
-  FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-  User value;
-  Context context;
+  private final Context context;
   private OnItemClickListener mListener;
+  private final FirebaseActions firebaseActions = new FirebaseActions();
 
   public interface OnItemClickListener {
     void onItemClick(int pos);
@@ -48,18 +43,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     mListener = listener;
   }
 
-  public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
+  static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView mPosterDetails;
-    public TextView mPostTitle;
-    public TextView mPostBody;
-    public TextView mVoteCount;
+    TextView mPosterDetails;
+    TextView mPostTitle;
+    TextView mPostBody;
+    TextView mVoteCount;
     CardView card;
-
     private final RadioButton mUpVoteButton;
     private final RadioButton mDownVoteButton;
 
-    public RecyclerViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
+    RecyclerViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
       super(itemView);
       mPosterDetails = itemView.findViewById(R.id.tv_poster2);
       mPostTitle = itemView.findViewById(R.id.tv_card_title2);
@@ -74,9 +68,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
           v -> {
             if (listener != null) {
               final int pos = getAdapterPosition();
-              if (pos != RecyclerView.NO_POSITION) {
-                listener.onItemClick(pos);
-              }
+              if (pos != RecyclerView.NO_POSITION) listener.onItemClick(pos);
             }
           });
 
@@ -111,7 +103,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
   }
 
   public RecyclerAdapter(final ArrayList<Post> postList, final Context context) {
-    this.mPostList = postList;
+    mPostList = postList;
     this.context = context;
   }
 
@@ -138,26 +130,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     if (cItem.getBody().length() > 30) holder.mPostBody.setText((cItem.getBody()).substring(0, 30));
     else holder.mPostBody.setText(cItem.getTitle());
 
-    firebaseDatabase
-        .getReference("Users/" + cItem.getUid())
-        .addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull @NotNull final DataSnapshot snapshot) {
-                value = snapshot.getValue(User.class);
-                assert value != null;
-                holder.mPosterDetails.setText(
-                    "Posted by "
-                        + value.getName()
-                        + " "
-                        + value.getSurname()
-                        + " on: "
-                        + (cItem.getDate()).substring(0, 10));
-              }
+    firebaseActions.getUserDetails(
+        cItem.getUid(),
+        value -> {
+          // value.getTag()
 
-              @Override
-              public void onCancelled(@NonNull @NotNull final DatabaseError error) {}
-            });
+          // pass the tag we get
+          holder.mPosterDetails.setText(
+              "Posted by "
+                  + value.getName()
+                  + " "
+                  + value.getSurname()
+                  + " on: "
+                  + (cItem.getDate()).substring(0, 10));
+        });
 
     holder.mVoteCount.setText(cItem.getVote() + "");
     holder.card.setOnClickListener(
@@ -172,6 +158,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
           final FragmentTransaction transaction =
               activity.getSupportFragmentManager().beginTransaction();
           transaction.replace(R.id.container_frag, viewQuestion);
+
           transaction.addToBackStack(null);
           transaction.commit();
         });

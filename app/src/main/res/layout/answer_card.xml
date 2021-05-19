@@ -21,8 +21,7 @@
             android:textSize="12sp"
             android:text="Posted by: John Smith"
             android:textStyle="bold"
-            android:textColor="@color/darkGrey">
-        </TextView>
+            android:textColor="@color/darkGrey" />
 
         <TextView
             android:layout_width="match_parent"
@@ -32,20 +31,25 @@
             android:text="Body of the comment should go here."
             android:textSize="14sp"
             android:id="@+id/tv_answer_body"
-            android:layout_below="@+id/tv_answer_name">
+            android:layout_below="@+id/tv_answer_name" />
 
-        </TextView>
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/tv_answer_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rv_comments"
-            android:layout_below="@+id/tv_answer_body"
-            android:padding="5dp">
+            android:layout_height="wrap_content" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <!--
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:id="@+id/rv_comments"
+                    android:layout_below="@+id/tv_answer_body"
+                    android:padding="5dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                -->
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

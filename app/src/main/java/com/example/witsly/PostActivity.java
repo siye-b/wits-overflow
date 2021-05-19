@@ -20,12 +20,9 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -33,6 +30,7 @@ public class PostActivity extends AppCompatActivity {
   private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
   private ChipGroup cGroup;
   private List<String> mTagList;
+  private final FirebaseActions firebaseActions = new FirebaseActions();
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -40,8 +38,8 @@ public class PostActivity extends AppCompatActivity {
     setContentView(R.layout.activity_post);
     final Toolbar toolbar = findViewById(R.id.tool_bar);
     setSupportActionBar(toolbar);
-    Objects.requireNonNull(getSupportActionBar()).setTitle("New Post");
-    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+    (getSupportActionBar()).setTitle("New Post");
+    (getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     cGroup = findViewById(R.id.chip_group);
     mTagList = Arrays.asList(getResources().getStringArray(R.array.tags));
@@ -75,10 +73,8 @@ public class PostActivity extends AppCompatActivity {
         return true;
 
       case R.id.btn_post:
-        final String postTitle =
-            Objects.requireNonNull(title.getEditText()).getText().toString().trim();
-        final String postBody =
-            Objects.requireNonNull(body.getEditText()).getText().toString().trim();
+        final String postTitle = (title.getEditText()).getText().toString().trim();
+        final String postBody = (body.getEditText()).getText().toString().trim();
 
         if (!TextUtils.isEmpty(postBody) || !TextUtils.isEmpty(postTitle))
           addPost(postTitle, postBody);
@@ -88,36 +84,24 @@ public class PostActivity extends AppCompatActivity {
   }
 
   private void addPost(final String title, final String body) {
-    final FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-    final Post post =
-        new Post(title, body, Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+    final Post post = new Post(title, body, "", mAuth.getCurrentUser().getUid());
 
-    final DatabaseReference rel = mFirebaseDatabase.getReference("Posts").push();
-
-    rel.setValue(post)
-        .addOnCompleteListener(
-            c -> {
-              if (c.isSuccessful()) {
-
-                final Bundle bundle = new Bundle();
-                bundle.putString("title", rel.getKey());
-
-                Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
-                final Fragment viewQuestion = new ViewQuestion();
-                viewQuestion.setArguments(bundle);
-                final FragmentTransaction transaction =
-                    getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container_frag, viewQuestion);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-              } else {
-                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT)
-                    .show();
-              }
-            })
-        .addOnFailureListener(
-            e -> Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
+    firebaseActions.addPost(
+        post,
+        (added, key) -> {
+          if (added) {
+            final Bundle bundle = new Bundle();
+            bundle.putString("title", key);
+            final Fragment viewQuestion = new ViewQuestion();
+            viewQuestion.setArguments(bundle);
+            final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container_frag, viewQuestion);
+            transaction.addToBackStack(null);
+            transaction.commit();
+          } else
+            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                .show();
+        });
   }
 }

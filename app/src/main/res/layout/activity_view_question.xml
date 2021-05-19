@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,11 +8,12 @@
     tools:context=".Fragments.ViewQuestion">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,28 +36,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_view_details"
+                android:padding="3dp"
                 android:singleLine="false"
                 android:text="Title"
-                android:textSize="32sp"
-                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:padding="3dp" />
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_view_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_view_title"
+                android:padding="3dp"
                 android:singleLine="false"
-                android:id="@+id/tv_view_body"
                 android:text="Body should go here!"
-                android:textSize="16sp"
                 android:textColor="@color/darkGrey"
-                android:padding="3dp" />
+                android:textSize="16sp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_answers"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/rv_answers"
                 android:layout_below="@+id/tv_view_body"
                 android:paddingTop="5dp">
 
@@ -66,8 +67,34 @@
         </RelativeLayout>
 
 
-
     </ScrollView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="10dp"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/add_comment_et"
+                android:layout_width="300dp"
+                android:layout_height="80dp" />
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:id="@+id/add_comment_btn"
+                android:text="add" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
