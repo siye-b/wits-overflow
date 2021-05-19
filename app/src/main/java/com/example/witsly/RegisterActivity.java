@@ -94,16 +94,11 @@ public class RegisterActivity extends AppCompatActivity {
         (response, msg) -> {
           if (response) {
 
-            Toast.makeText(
-                    RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT)
-                .show();
+            Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("email", regEmail.getEditText().getText().toString());
             startActivity(intent);
-
-          } else
-            Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_SHORT)
-                .show();
+          } else Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
         });
   }
 

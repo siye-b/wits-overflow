@@ -5,8 +5,6 @@ import com.example.witsly.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Objects;
-
 class FirebaseAuthentication {
 
   private final FirebaseAuth mAuth;
@@ -27,10 +25,7 @@ class FirebaseAuthentication {
             task -> {
               if (task.isSuccessful()) f.processAuth(true, "");
             })
-        .addOnFailureListener(
-            e -> {
-              f.processAuth(false, e.getMessage());
-            });
+        .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
   }
 
   void resetPassword(String email, FirebaseAuthHandler f) {
@@ -47,28 +42,41 @@ class FirebaseAuthentication {
   }
 
   void register(String email, String name, String surname, String password, FirebaseAuthHandler f) {
-    final FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-    final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     mAuth
         .createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener(
             task -> {
               if (task.isSuccessful()) {
-                final User user = new User(name, surname, email);
+                addUser(
+                    email,
+                    name,
+                    surname,
+                    (response, msg) -> {
+                      if (response) {
+                        FirebaseAuth.getInstance().signOut();
+                        f.processAuth(true, msg);
 
-                mFirebaseDatabase
-                    .getReference("Users")
-                    .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
-                    .setValue(user)
-                    .addOnCompleteListener(
-                        task1 -> {
-                          f.processAuth(task1.isSuccessful(), "");
-                        })
-                    .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
-
-                FirebaseAuth.getInstance().signOut();
+                      } else {
+                        f.processAuth(false, msg);
+                      }
+                    });
               }
+            })
+        .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
+  }
+
+  private void addUser(String email, String name, String surname, FirebaseAuthHandler f) {
+    final User user = new User(name, surname, email);
+    final FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+    mFirebaseDatabase
+        .getReference("Users")
+        .child(mAuth.getCurrentUser().getUid())
+        .setValue(user)
+        .addOnCompleteListener(
+            task1 -> {
+              f.processAuth(true, "User registered");
             })
         .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
   }
