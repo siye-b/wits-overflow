@@ -114,11 +114,11 @@ public class FirebaseActions {
         });
   }
 
-  public void addComment(Comment comment2, AddComment a) {
+  public void addComment(Comment comment, AddComment a) {
     firebaseDatabase
         .getReference("Comments")
         .push()
-        .setValue(comment2)
+        .setValue(comment)
         .addOnCompleteListener(
             c -> {
               if (c.isSuccessful()) a.processResponse(true);

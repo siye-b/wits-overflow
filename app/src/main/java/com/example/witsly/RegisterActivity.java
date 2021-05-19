@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -64,14 +63,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     regButton.setOnClickListener(
         reg_btn -> {
-          String name = Objects.requireNonNull(regName.getEditText()).getText().toString().trim();
-          String surname =
-              Objects.requireNonNull(regSurname.getEditText()).getText().toString().trim();
-          String email = Objects.requireNonNull(regEmail.getEditText()).getText().toString().trim();
-          String password1 =
-              Objects.requireNonNull(regPasswordOne.getEditText()).getText().toString().trim();
-          String password2 =
-              Objects.requireNonNull(regPasswordTwo.getEditText()).getText().toString().trim();
+          String name = regName.getEditText().getText().toString().trim();
+          String surname = regSurname.getEditText().getText().toString().trim();
+          String email = regEmail.getEditText().getText().toString().trim();
+          String password1 = regPasswordOne.getEditText().getText().toString().trim();
+          String password2 = regPasswordTwo.getEditText().getText().toString().trim();
           if (validateFields(email, password1, password2, regEmail, regPasswordOne, regPasswordTwo))
             registerUser(name, surname, email, password1);
         });

@@ -19,6 +19,8 @@ import com.example.witsly.FirebaseActions;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.ProDialog;
 import com.example.witsly.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -80,16 +82,26 @@ public class ViewQuestion extends Fragment {
 
       add_btn.setOnClickListener(
           v -> {
-            firebaseActions.addComment(
-                new Comment(add_comment.getText().toString().trim(), userID, postID),
-                r -> {
-                  if (r) {
-                    add_comment.setText("");
-                    Toast.makeText(getActivity(), "added", Toast.LENGTH_LONG).show();
-                  } else {
-                    Toast.makeText(getActivity(), "not added", Toast.LENGTH_LONG).show();
-                  }
-                });
+            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            String comment = add_comment.getText().toString().trim();
+
+            if (!comment.equals("")) {
+              assert mUser != null;
+              firebaseActions.addComment(
+                  new Comment(comment, mUser.getUid(), postID),
+                  r -> {
+                    if (r) {
+                      add_comment.setText("");
+                      Toast.makeText(getActivity(), "added", Toast.LENGTH_LONG).show();
+                    } else {
+                      Toast.makeText(getActivity(), "not added", Toast.LENGTH_LONG).show();
+                    }
+                  });
+            } else {
+              Toast.makeText(getActivity(), "the comment section is empty", Toast.LENGTH_LONG)
+                  .show();
+            }
           });
 
       firebaseActions.getComments(

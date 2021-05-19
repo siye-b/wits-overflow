@@ -11,10 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -91,14 +88,7 @@ public class PostActivity extends AppCompatActivity {
         post,
         (added, key) -> {
           if (added) {
-            final Bundle bundle = new Bundle();
-            bundle.putString("title", key);
-            final Fragment viewQuestion = new ViewQuestion();
-            viewQuestion.setArguments(bundle);
-            final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.container_frag, viewQuestion);
-            transaction.addToBackStack(null);
-            transaction.commit();
+
           } else
             Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT)
                 .show();
