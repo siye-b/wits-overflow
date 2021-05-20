@@ -72,17 +72,26 @@ public class PostActivity extends AppCompatActivity {
       case R.id.btn_post:
         final String postTitle = (title.getEditText()).getText().toString().trim();
         final String postBody = (body.getEditText()).getText().toString().trim();
+        //final String tag = cGroup.getTag().toString().trim();
 
-        if (!TextUtils.isEmpty(postBody) || !TextUtils.isEmpty(postTitle))
-          addPost(postTitle, postBody);
-        else Toast.makeText(this, "fill in all the fields", Toast.LENGTH_LONG).show();
+        int i = cGroup.getCheckedChipId();
+        Chip chip = (Chip)cGroup.getChildAt(i - 1);
+        final String tag = chip.getText().toString().trim();
+
+
+
+
+        if (!TextUtils.isEmpty(postBody) || !TextUtils.isEmpty(postTitle) || !TextUtils.isEmpty(tag)) {
+          addPost(postTitle, postBody, tag);
+          Toast.makeText(this, tag, Toast.LENGTH_LONG).show();
+        }else Toast.makeText(this, "fill in all the fields", Toast.LENGTH_LONG).show();
     }
     return super.onOptionsItemSelected(item);
   }
 
-  private void addPost(final String title, final String body) {
+  private void addPost(final String title, final String body, final String tag) {
 
-    final Post post = new Post(title, body, "", mAuth.getCurrentUser().getUid());
+    final Post post = new Post(title, body, tag, mAuth.getCurrentUser().getUid());
 
     firebaseActions.addPost(
         post,

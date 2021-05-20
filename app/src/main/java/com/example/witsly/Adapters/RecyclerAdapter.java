@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.example.witsly.Models.Post;
 import com.example.witsly.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
 
@@ -179,4 +181,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
   public int getItemCount() {
     return mPostList.size();
   }
+
+    private Filter recyclerFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Post> filterList = new ArrayList<>();
+            if(constraint == null || constraint.length() == 0){
+                filterList.addAll(mPostList);
+            }else{
+                String query = constraint.toString().toLowerCase().trim();
+                for(Post card:mPostList){
+                    if(card.getTag().toLowerCase().trim().matches(query)){
+                        filterList.add(card);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filterList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mPostList.clear();
+            mPostList.addAll((Collection<? extends Post>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
