@@ -51,7 +51,7 @@ public class Post {
     return title;
   }
 
-  String getTag() {
+  public String getTag() {
     return tag;
   }
 
