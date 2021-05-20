@@ -83,7 +83,6 @@ public class PostActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(postBody) || !TextUtils.isEmpty(postTitle) || !TextUtils.isEmpty(tag)) {
           addPost(postTitle, postBody, tag);
-          Toast.makeText(this, tag, Toast.LENGTH_LONG).show();
         }else Toast.makeText(this, "fill in all the fields", Toast.LENGTH_LONG).show();
     }
     return super.onOptionsItemSelected(item);
