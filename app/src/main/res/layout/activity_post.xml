@@ -70,19 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:singleLine="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:chipCornerRadius="4dp"
-                android:text="TEST"
-                android:padding="2dp"
-                android:layout_margin="2dp">
-            </com.google.android.material.chip.Chip>
-
-        </com.google.android.material.chip.ChipGroup>
+            app:singleSelection="true"/>
     </HorizontalScrollView>
 
 

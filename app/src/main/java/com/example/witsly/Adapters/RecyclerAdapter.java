@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -27,14 +28,20 @@ import com.google.android.material.chip.Chip;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> implements Filterable {
 
   private final ArrayList<Post> mPostList;
   private final Context context;
   private OnItemClickListener mListener;
   private final FirebaseActions firebaseActions = new FirebaseActions();
 
-  public interface OnItemClickListener {
+    @Override
+    public Filter getFilter() {
+        return recyclerFilter;
+    }
+
+
+    public interface OnItemClickListener {
     void onItemClick(int pos);
     // Please modify to add necessary information from dB i.e. Title, Body etc.
     // Alternatively, pass the ID of the post at current position and we can get the necessary info
