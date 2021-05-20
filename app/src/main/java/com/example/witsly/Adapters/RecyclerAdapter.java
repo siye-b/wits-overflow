@@ -22,6 +22,7 @@ import com.example.witsly.FirebaseActions;
 import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.example.witsly.R;
+import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,6 +47,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
   static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
+    Chip mChip;
     TextView mPosterDetails;
     TextView mPostTitle;
     TextView mPostBody;
@@ -56,6 +58,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     RecyclerViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
       super(itemView);
+
+      mChip = itemView.findViewById(R.id.tag);
       mPosterDetails = itemView.findViewById(R.id.tv_poster2);
       mPostTitle = itemView.findViewById(R.id.tv_card_title2);
       mPostBody = itemView.findViewById(R.id.tv_card_body2);
@@ -113,6 +117,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     if (cItem.getTitle().length() > 15)
       holder.mPostTitle.setText((cItem.getTitle()).substring(0, 15));
     else holder.mPostTitle.setText(cItem.getTitle());
+
+    holder.mChip.setText(cItem.getTag());
 
     if (cItem.getBody().length() > 30) holder.mPostBody.setText((cItem.getBody()).substring(0, 30));
     else holder.mPostBody.setText(cItem.getTitle());
