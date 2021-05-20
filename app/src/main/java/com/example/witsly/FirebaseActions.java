@@ -126,6 +126,36 @@ public class FirebaseActions {
         .addOnFailureListener(e -> a.processResponse(false));
   }
 
+  public void upVote(String pid, String uid) {
+
+    // check if the user has down voted it
+    // if yes remove the down vote
+
+    // if there's no down vote
+    // vote up
+
+    // if vote up exists
+    // do nothing
+
+  }
+
+  public void downVote(String pid, String uid) {
+
+    // check if the user has up voted it
+    // if yes remove the up vote
+
+    // if there's no up vote
+    // down vote
+
+    // if down vote exists
+    // do nothing
+
+  }
+
+  public void getMyVotes(Post pid, String uid) {}
+
+  public void getVoteCount(Post postID) {}
+
   public void getUserDetails(String user, UserDetails f) {
     DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
     mDatabaseReference

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.example.witsly.FirebaseActions;
 import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.example.witsly.R;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
   private final Context context;
   private OnItemClickListener mListener;
   private final FirebaseActions firebaseActions = new FirebaseActions();
+  FirebaseDatabase firebase = FirebaseDatabase.getInstance();
 
   public interface OnItemClickListener {
     void onItemClick(int pos);
@@ -129,6 +132,42 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     if (cItem.getBody().length() > 30) holder.mPostBody.setText((cItem.getBody()).substring(0, 30));
     else holder.mPostBody.setText(cItem.getTitle());
+
+    holder.mUpVoteButton.setOnClickListener(
+        up -> {
+          firebase
+              .getReference("Likes")
+              .child(cItem.getPostID())
+              .child(cItem.getUid())
+              .setValue(true)
+              .addOnCompleteListener(
+                  task1 -> {
+                    if (task1.isSuccessful()) {
+                      Toast.makeText(context, "done", Toast.LENGTH_SHORT).show();
+                    }
+                  })
+              .addOnFailureListener(
+                  e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+
+          // Do Stuff
+
+        });
+    holder.mDownVoteButton.setOnClickListener(
+        down -> {
+          firebase
+              .getReference("Likes")
+              .child(cItem.getPostID())
+              .child(cItem.getUid())
+              .setValue(false)
+              .addOnCompleteListener(
+                  task1 -> {
+                    if (task1.isSuccessful()) {
+                      Toast.makeText(context, "done", Toast.LENGTH_SHORT).show();
+                    }
+                  })
+              .addOnFailureListener(
+                  e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+        });
 
     firebaseActions.getUserDetails(
         cItem.getUid(),
