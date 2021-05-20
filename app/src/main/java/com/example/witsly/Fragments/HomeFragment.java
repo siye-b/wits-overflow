@@ -43,9 +43,9 @@ public class HomeFragment extends Fragment {
     RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
     firebaseActions.getAllPost(
         (response) -> {
-          mRecyclerViewAdapter = new RecyclerAdapter(response, getContext());
-          mRecyclerView.setAdapter(mRecyclerViewAdapter);
+          mRecyclerViewAdapter = new RecyclerAdapter(response, getActivity());
           mRecyclerView.setLayoutManager(mRecyclerManager);
+          mRecyclerView.setAdapter(mRecyclerViewAdapter);
         });
 
     return view;

@@ -11,6 +11,7 @@ import android.widget.Filterable;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import java.util.Collection;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> implements Filterable {
 
   private final ArrayList<Post> mPostList;
+  private ArrayList<Post> mListFilter;
   private final Context context;
   private OnItemClickListener mListener;
   private final FirebaseActions firebaseActions = new FirebaseActions();
@@ -102,6 +104,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
   public RecyclerAdapter(final ArrayList<Post> postList, final Context context) {
     mPostList = postList;
+    mListFilter = new ArrayList<>(mPostList);
     this.context = context;
   }
 
@@ -200,12 +203,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Post> filterList = new ArrayList<>();
             if(constraint == null || constraint.length() == 0){
-                filterList.addAll(mPostList);
+                filterList.addAll(mListFilter);
             }else{
                 String query = constraint.toString().toLowerCase().trim();
-                for(Post card:mPostList){
-                    if(card.getTag().toLowerCase().trim().matches(query)){
+                for(Post card : mListFilter){
+                    if(card.getBody().trim().matches(query)){
                         filterList.add(card);
+                        Toast.makeText(context.getApplicationContext(), card.getTag(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
