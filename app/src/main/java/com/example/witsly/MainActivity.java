@@ -47,11 +47,6 @@ public class MainActivity extends AppCompatActivity
 
     proDialog = new ProDialog(this);
 
-    proDialog.start();
-
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser mUser = mAuth.getCurrentUser();
-
     navigationView = findViewById(R.id.navigationView);
     navigationView.setNavigationItemSelectedListener(this);
     View headerView = navigationView.getHeaderView(0);
@@ -69,6 +64,11 @@ public class MainActivity extends AppCompatActivity
     fragmentManager = getSupportFragmentManager();
     fragmentTransaction = fragmentManager.beginTransaction();
     fragmentTransaction.add(R.id.container_frag, new HomeFragment()).commit();
+
+    proDialog.start();
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser mUser = mAuth.getCurrentUser();
 
     if (mUser != null) {
       String user = mUser.getUid();

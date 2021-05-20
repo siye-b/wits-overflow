@@ -1,7 +1,6 @@
 package com.example.witsly;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -81,14 +80,6 @@ public class FirebaseActions {
               Post post = postSnapshot.getValue(Post.class);
               assert post != null;
               post.setPostID(postSnapshot.getKey());
-
-              CountVotes(
-                  snapshot.getKey(),
-                  c -> {
-                    post.setVote((int) c);
-                  });
-
-              Log.d(post.getPostID(), post.getVote() + "");
 
               postArrayList.add(post);
             }
@@ -250,23 +241,7 @@ public class FirebaseActions {
     g.processResponse(1);
   }
 
-  private void CountVotes(String pid, VoteCount cv) {
-
-    DatabaseReference dislikes = firebaseDatabase.getReference("Dislikes").child(pid);
-
-    dislikes.addValueEventListener(
-        new ValueEventListener() {
-
-          @Override
-          public void onDataChange(@NonNull DataSnapshot snapshot) {
-            long down_v = snapshot.getChildrenCount();
-            cv.processResponse(down_v);
-          }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {}
-        });
-  }
+  private void CountVotes(String pid, VoteCount cv) {}
 
   public void getVoteCount(Post postID) {}
 
