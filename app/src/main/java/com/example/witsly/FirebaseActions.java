@@ -1,6 +1,7 @@
 package com.example.witsly;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -10,6 +11,9 @@ import com.example.witsly.Interfaces.GetAllPosts;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.UserDetails;
+import com.example.witsly.Interfaces.VoteCount;
+import com.example.witsly.Interfaces.Voted;
+import com.example.witsly.Interfaces.getVoteStatus;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.User;
@@ -77,6 +81,15 @@ public class FirebaseActions {
               Post post = postSnapshot.getValue(Post.class);
               assert post != null;
               post.setPostID(postSnapshot.getKey());
+
+              CountVotes(
+                  snapshot.getKey(),
+                  c -> {
+                    post.setVote((int) c);
+                  });
+
+              Log.d(post.getPostID(), post.getVote() + "");
+
               postArrayList.add(post);
             }
             Collections.sort(postArrayList, Post.VoteComparator);
@@ -128,31 +141,132 @@ public class FirebaseActions {
 
   public void upVote(String pid, String uid) {
 
-    // check if the user has down voted it
-    // if yes remove the down vote
+    DatabaseReference likes, dislikes;
+    likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
+    dislikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
 
-    // if there's no down vote
-    // vote up
+    dislikes.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-    // if vote up exists
-    // do nothing
+            if (snapshot.exists()) {
+              dislikes.removeValue();
+            } else {
+              likes.setValue(true);
+            }
+          }
 
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
 
   public void downVote(String pid, String uid) {
 
-    // check if the user has up voted it
-    // if yes remove the up vote
+    DatabaseReference likes, dislikes;
+    likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
+    dislikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
 
-    // if there's no up vote
-    // down vote
+    likes.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-    // if down vote exists
-    // do nothing
+            if (snapshot.exists()) {
+              likes.removeValue();
+            } else {
+              dislikes.setValue(true);
+            }
+          }
 
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
 
-  public void getMyVotes(Post pid, String uid) {}
+  private void Liked(String pid, String uid, Voted vs) {
+    DatabaseReference likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
+
+    likes.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+
+              vs.processResponse(true);
+
+            } else {
+              vs.processResponse(false);
+            }
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
+  }
+
+  private void Disliked(String pid, String uid, Voted vs) {
+    DatabaseReference dislikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
+
+    dislikes.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            if (snapshot.exists()) {
+              vs.processResponse(true);
+
+            } else {
+              vs.processResponse(false);
+            }
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
+  }
+
+  public void getPostVoteState(String pid, String uid, getVoteStatus g) {
+
+    Liked(
+        pid,
+        uid,
+        v -> {
+          if (v) {
+            g.processResponse(0);
+          }
+        });
+
+    Disliked(
+        pid,
+        uid,
+        v -> {
+          if (v) {
+            g.processResponse(2);
+          }
+        });
+
+    g.processResponse(1);
+  }
+
+  private void CountVotes(String pid, VoteCount cv) {
+
+    DatabaseReference dislikes = firebaseDatabase.getReference("Dislikes").child(pid);
+
+    dislikes.addValueEventListener(
+        new ValueEventListener() {
+
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            long down_v = snapshot.getChildrenCount();
+            cv.processResponse(down_v);
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
+  }
 
   public void getVoteCount(Post postID) {}
 

@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +21,6 @@ import com.example.witsly.FirebaseActions;
 import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.example.witsly.R;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -33,7 +30,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
   private final Context context;
   private OnItemClickListener mListener;
   private final FirebaseActions firebaseActions = new FirebaseActions();
-  FirebaseDatabase firebase = FirebaseDatabase.getInstance();
 
   public interface OnItemClickListener {
     void onItemClick(int pos);
@@ -77,29 +73,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
       mDownVoteButton.setOnClickListener(
           v -> {
-            // Insert Logic for Votes
-            // Do Stuff
-            if (mDownVoteButton.isChecked())
-              mVoteCount.setTextColor(
-                  ResourcesCompat.getColor(v.getResources(), R.color.Red, null));
-            else if (mUpVoteButton.isChecked()) {
-              // Do Stuff
-            } else {
-              // Do Stuff
+            if (mUpVoteButton.isChecked()) {
+              mDownVoteButton.setChecked(false);
             }
           });
 
       mUpVoteButton.setOnClickListener(
           v -> {
-            // Insert Logic for Votes
             if (mDownVoteButton.isChecked()) {
-              // Do Stuff
-            } else // Do Stuff
-            if (mUpVoteButton.isChecked())
-              mVoteCount.setTextColor(
-                  ResourcesCompat.getColor(v.getResources(), R.color.Green, null));
-            else {
-              // Do Stuff
+              mUpVoteButton.setChecked(false);
             }
           });
     }
@@ -134,39 +116,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     else holder.mPostBody.setText(cItem.getTitle());
 
     holder.mUpVoteButton.setOnClickListener(
-        up -> {
-          firebase
-              .getReference("Likes")
-              .child(cItem.getPostID())
-              .child(cItem.getUid())
-              .setValue(true)
-              .addOnCompleteListener(
-                  task1 -> {
-                    if (task1.isSuccessful()) {
-                      Toast.makeText(context, "done", Toast.LENGTH_SHORT).show();
-                    }
-                  })
-              .addOnFailureListener(
-                  e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
-
-          // Do Stuff
-
-        });
+        up -> firebaseActions.upVote(cItem.getPostID(), cItem.getUid()));
     holder.mDownVoteButton.setOnClickListener(
-        down -> {
-          firebase
-              .getReference("Likes")
-              .child(cItem.getPostID())
-              .child(cItem.getUid())
-              .setValue(false)
-              .addOnCompleteListener(
-                  task1 -> {
-                    if (task1.isSuccessful()) {
-                      Toast.makeText(context, "done", Toast.LENGTH_SHORT).show();
-                    }
-                  })
-              .addOnFailureListener(
-                  e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+        down -> firebaseActions.downVote(cItem.getPostID(), cItem.getUid()));
+
+    firebaseActions.getPostVoteState(
+        cItem.getPostID(),
+        cItem.getUid(),
+        g -> {
+          if (g == 0) {
+
+            // up
+            holder.mUpVoteButton.setChecked(true);
+          }
+          if (g == 1) {
+            // nothing
+            holder.mDownVoteButton.setChecked(false);
+            holder.mUpVoteButton.setChecked(false);
+          }
+
+          if (g == 2) {
+            // down
+            holder.mDownVoteButton.setChecked(true);
+          }
         });
 
     firebaseActions.getUserDetails(
