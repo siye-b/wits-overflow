@@ -207,9 +207,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             }else{
                 String query = constraint.toString().toLowerCase().trim();
                 for(Post card : mListFilter){
-                    if(card.getBody().trim().matches(query)){
+                    if(card.getTag().trim().startsWith(query)){
                         filterList.add(card);
-                        Toast.makeText(context.getApplicationContext(), card.getTag(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
