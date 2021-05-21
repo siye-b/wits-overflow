@@ -248,7 +248,6 @@ public class FirebaseActions {
   }
 
   private void CountVotes(String pid, VoteCount cv) {
-
       String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
       dbRef = FirebaseDatabase.getInstance().getReference("Likes");
       String add = "Likes";
