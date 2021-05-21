@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,11 +26,17 @@ import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.example.witsly.R;
 import com.google.android.material.chip.Chip;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> implements Filterable {
+
 
   private final ArrayList<Post> mPostList;
   private ArrayList<Post> mListFilter;
@@ -88,9 +95,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
       mDownVoteButton.setOnClickListener(
           v -> {
-            if (mUpVoteButton.isChecked()) {
-              mDownVoteButton.setChecked(false);
-            }
+
+              if (mUpVoteButton.isChecked()) {
+
+                  mDownVoteButton.setChecked(false);
+              }
           });
 
       mUpVoteButton.setOnClickListener(
@@ -135,6 +144,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     holder.mUpVoteButton.setOnClickListener(
         up -> firebaseActions.upVote(cItem.getPostID(), cItem.getUid()));
+
     holder.mDownVoteButton.setOnClickListener(
         down -> firebaseActions.downVote(cItem.getPostID(), cItem.getUid()));
 
@@ -143,9 +153,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         cItem.getUid(),
         g -> {
           if (g == 0) {
-
             // up
             holder.mUpVoteButton.setChecked(true);
+
           }
           if (g == 1) {
             // nothing
@@ -156,6 +166,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
           if (g == 2) {
             // down
             holder.mDownVoteButton.setChecked(true);
+
           }
         });
 
@@ -174,7 +185,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                   + (cItem.getDate()).substring(0, 10));
         });
 
-    holder.mVoteCount.setText(cItem.getVote() + "");
+    holder.mVoteCount.setText(cItem.getVote()+"");
     holder.card.setOnClickListener(
         v -> {
           final Bundle bundle = new Bundle();
