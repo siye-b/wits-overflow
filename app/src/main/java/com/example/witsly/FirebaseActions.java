@@ -1,6 +1,7 @@
 package com.example.witsly;
 
 import android.annotation.SuppressLint;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -16,6 +17,7 @@ import com.example.witsly.Interfaces.getVoteStatus;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,8 @@ public class FirebaseActions {
   private FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
   private ArrayList<Comment> commentsArrayList;
+  int likescount;
+  DatabaseReference dbRef;
 
   public FirebaseActions() {
     firebaseDatabase = FirebaseDatabase.getInstance();
@@ -159,6 +163,7 @@ public class FirebaseActions {
     likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
     dislikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
 
+
     likes.addListenerForSingleValueEvent(
         new ValueEventListener() {
           @Override
@@ -166,6 +171,7 @@ public class FirebaseActions {
 
             if (snapshot.exists()) {
               likes.removeValue();
+
             } else {
               dislikes.setValue(true);
             }
@@ -241,7 +247,32 @@ public class FirebaseActions {
     g.processResponse(1);
   }
 
-  private void CountVotes(String pid, VoteCount cv) {}
+  private void CountVotes(String pid, VoteCount cv) {
+      String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+      dbRef = FirebaseDatabase.getInstance().getReference("Likes");
+      String add = "Likes";
+
+      dbRef.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+              if(snapshot.exists()){
+                  likescount = (int)snapshot.child(pid).getChildrenCount();
+                  String a = Integer.toString(likescount)+add;
+                  long aa = Long.parseLong(a);
+                  cv.processResponse(aa);
+              }
+              else{
+                  long b = (long)snapshot.getChildrenCount();
+                  cv.processResponse(b);
+              }
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+
+          }
+      });
+  }
 
   public void getVoteCount(Post postID) {}
 
@@ -255,7 +286,7 @@ public class FirebaseActions {
               public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User value = snapshot.getValue(User.class);
                 f.processResponse(value);
-              }
+               }
 
               @Override
               public void onCancelled(@NonNull DatabaseError error) {}

@@ -92,6 +92,7 @@
                 android:id="@+id/tv_card_body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:paddingHorizontal="5dp"
                 android:text="Body should go here."
                 android:textSize="16sp"
