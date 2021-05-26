@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class MainActivityTest {
 
-    @Rule
+    /*@Rule
     public ActivityScenarioRule<MainActivity> activityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
@@ -29,5 +29,5 @@ public class MainActivityTest {
                             final MenuItem logout_Item = activity.navigationView.getMenu().getItem(2);
                             activity.onNavigationItemSelected(logout_Item);
                         });
-    }
+    }*/
 }
