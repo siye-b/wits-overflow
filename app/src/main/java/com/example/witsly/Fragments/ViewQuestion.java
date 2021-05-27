@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +38,10 @@ public class ViewQuestion extends Fragment {
   private EditText add_comment;
   FirebaseActions firebaseActions;
   private String questionID, userID;
+  private TextView vote;
+  private ToggleButton like;
+  private ToggleButton dislike;
+  private RadioGroup radioGroup;
 
   @SuppressLint("SetTextI18n")
   @Override
@@ -51,6 +57,15 @@ public class ViewQuestion extends Fragment {
     body = view.findViewById(R.id.tv_view_details);
     title = view.findViewById(R.id.tv_view_title);
     details = view.findViewById(R.id.tv_view_body);
+
+    vote = view.findViewById(R.id.txt_vote);
+    like = view.findViewById(R.id.btn_like);
+    dislike = view.findViewById(R.id.btn_dislike);
+    radioGroup = view.findViewById(R.id.RadioGroup);
+
+    radioGroup.setOnCheckedChangeListener(onCheckedListener);
+
+
 
     mRecyclerView = view.findViewById(R.id.rv_answers);
     add_btn = view.findViewById(R.id.add_comment_btn);
@@ -117,4 +132,14 @@ public class ViewQuestion extends Fragment {
 
     return view;
   }
+
+  static final RadioGroup.OnCheckedChangeListener onCheckedListener = new RadioGroup.OnCheckedChangeListener() {
+      @Override
+      public void onCheckedChanged(RadioGroup group, int checkedId) {
+          for (int j = 0; j < group.getChildCount(); j++) {
+              final ToggleButton view = (ToggleButton) group.getChildAt(j);
+              view.setChecked(view.getId() == checkedId);
+          }
+      }
+  };
 }

@@ -69,8 +69,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     TextView mPostBody;
     TextView mVoteCount;
     CardView card;
-    private final RadioButton mUpVoteButton;
-    private final RadioButton mDownVoteButton;
 
     RecyclerViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
       super(itemView);
@@ -80,9 +78,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
       mPostTitle = itemView.findViewById(R.id.tv_card_title2);
       mPostBody = itemView.findViewById(R.id.tv_card_body2);
       mVoteCount = itemView.findViewById(R.id.tv_vote_count2);
-      mUpVoteButton = itemView.findViewById(R.id.btn_upvote2);
-      mDownVoteButton = itemView.findViewById(R.id.btn_downvote2);
-      final RadioGroup mRadioGroup = itemView.findViewById(R.id.radioGroup);
       card = itemView.findViewById(R.id.cardView);
 
       itemView.setOnClickListener(
@@ -93,21 +88,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             }
           });
 
-      mDownVoteButton.setOnClickListener(
-          v -> {
 
-              if (mUpVoteButton.isChecked()) {
 
-                  mDownVoteButton.setChecked(false);
-              }
-          });
 
-      mUpVoteButton.setOnClickListener(
-          v -> {
-            if (mDownVoteButton.isChecked()) {
-              mUpVoteButton.setChecked(false);
-            }
-          });
     }
   }
 
@@ -142,7 +125,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     if (cItem.getBody().length() > 30) holder.mPostBody.setText((cItem.getBody()).substring(0, 30));
     else holder.mPostBody.setText(cItem.getTitle());
 
-    holder.mUpVoteButton.setOnClickListener(
+    /*holder.mUpVoteButton.setOnClickListener(
         up -> firebaseActions.upVote(cItem.getPostID(), cItem.getUid()));
 
     holder.mDownVoteButton.setOnClickListener(
@@ -168,7 +151,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             holder.mDownVoteButton.setChecked(true);
 
           }
-        });
+        });*/
 
     firebaseActions.getUserDetails(
         cItem.getUid(),
