@@ -8,19 +8,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Adapters.RecyclerAdapter;
 import com.example.witsly.FirebaseActions;
+import com.example.witsly.Models.Post;
 import com.example.witsly.PostActivity;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Collections;
 
 public class HomeFragment extends Fragment {
 
@@ -32,17 +34,22 @@ public class HomeFragment extends Fragment {
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+    /*
+       if login is admin -> show the btn self
+    */
+
     FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
     mFAB.setOnClickListener(v -> startActivity(new Intent(getActivity(), PostActivity.class)));
 
-      setHasOptionsMenu(true);
-      //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
+    setHasOptionsMenu(true);
+    // ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 
     RecyclerView mRecyclerView = view.findViewById(R.id.recyclerView);
     mRecyclerView.setHasFixedSize(true);
     RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
     firebaseActions.getAllPost(
         (response) -> {
+          Collections.sort(response, Post.VoteComparator);
           mRecyclerViewAdapter = new RecyclerAdapter(response, getActivity());
           mRecyclerView.setLayoutManager(mRecyclerManager);
           mRecyclerView.setAdapter(mRecyclerViewAdapter);
@@ -51,25 +58,26 @@ public class HomeFragment extends Fragment {
     return view;
   }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.search_menu, menu);
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    inflater.inflate(R.menu.search_menu, menu);
 
-        MenuItem menuItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView)menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+    MenuItem menuItem = menu.findItem(R.id.search);
+    SearchView searchView = (SearchView) menuItem.getActionView();
+    searchView.setOnQueryTextListener(
+        new SearchView.OnQueryTextListener() {
+          @Override
+          public boolean onQueryTextSubmit(String query) {
+            return false;
+          }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mRecyclerViewAdapter.getFilter().filter(newText);
-                return false;
-            }
+          @Override
+          public boolean onQueryTextChange(String newText) {
+            mRecyclerViewAdapter.getFilter().filter(newText);
+            return false;
+          }
         });
 
-        super.onCreateOptionsMenu(menu,inflater);
-    }
+    super.onCreateOptionsMenu(menu, inflater);
+  }
 }

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.FirebaseActions;
-import com.example.witsly.Models.Comment;
+import com.example.witsly.Models.Answer;
 import com.example.witsly.R;
 import com.google.firebase.database.annotations.NotNull;
 
@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder> {
 
-  private ArrayList<Comment> mAnswerList;
+  private ArrayList<Answer> mAnswerList;
   private Context mContext;
-  FirebaseActions firebaseActions = new FirebaseActions();
+  private FirebaseActions firebaseActions = new FirebaseActions();
 
   static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -40,7 +40,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     }
   }
 
-  public AnswerAdapter(ArrayList<Comment> answerList, Context context) {
+  public AnswerAdapter(ArrayList<Answer> answerList, Context context) {
     mAnswerList = answerList;
     mContext = context;
   }
@@ -58,11 +58,11 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
   @SuppressLint("SetTextI18n")
   @Override
   public void onBindViewHolder(@NonNull @NotNull AnswerAdapter.ViewHolder holder, int position) {
-    Comment comment = mAnswerList.get(position);
-    holder.mAnswerBody.setText(comment.getAnswer());
-    holder.mAnswerDate.setText(comment.getDate());
+    Answer answer = mAnswerList.get(position);
+    holder.mAnswerBody.setText(answer.getAnswer());
+    holder.mAnswerDate.setText(answer.getDate());
     firebaseActions.getUserDetails(
-        comment.getUID(),
+        answer.getUID(),
         user -> {
           holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname());
         });

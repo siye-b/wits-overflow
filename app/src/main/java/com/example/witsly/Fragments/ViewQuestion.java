@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.FirebaseActions;
-import com.example.witsly.Models.Comment;
+import com.example.witsly.Models.Answer;
 import com.example.witsly.ProDialog;
 import com.example.witsly.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +36,7 @@ public class ViewQuestion extends Fragment {
   private ArrayList<String> mAnswerList; // Change to model for answer
   private Button add_btn;
   private EditText add_comment;
-  FirebaseActions firebaseActions;
+  private FirebaseActions firebaseActions;
   private String questionID, userID;
   private TextView vote;
   private ToggleButton like;
@@ -65,8 +65,6 @@ public class ViewQuestion extends Fragment {
 
     radioGroup.setOnCheckedChangeListener(onCheckedListener);
 
-
-
     mRecyclerView = view.findViewById(R.id.rv_answers);
     add_btn = view.findViewById(R.id.add_comment_btn);
     add_comment = view.findViewById(R.id.add_comment_et);
@@ -91,7 +89,7 @@ public class ViewQuestion extends Fragment {
                     + user.getSurname()
                     + " on: "
                     + (post.getDate()).substring(0, 10));
-            title.setText(post.getTitle());
+            title.setText(post.isSolved() ? post.getTitle() + " [SOLVED]" : post.getTitle());
             details.setText(post.getBody());
           });
 
@@ -103,23 +101,20 @@ public class ViewQuestion extends Fragment {
 
             if (!comment.equals("")) {
               assert mUser != null;
-              firebaseActions.addComment(
-                  new Comment(comment, mUser.getUid(), postID),
+              firebaseActions.addAnswer(
+                  new Answer(comment, mUser.getUid(), postID),
                   r -> {
                     if (r) {
                       add_comment.setText("");
                       Toast.makeText(getActivity(), "added", Toast.LENGTH_LONG).show();
-                    } else {
-                      Toast.makeText(getActivity(), "not added", Toast.LENGTH_LONG).show();
-                    }
+                    } else Toast.makeText(getActivity(), "not added", Toast.LENGTH_LONG).show();
                   });
-            } else {
+            } else
               Toast.makeText(getActivity(), "the comment section is empty", Toast.LENGTH_LONG)
                   .show();
-            }
           });
 
-      firebaseActions.getComments(
+      firebaseActions.getAnswers(
           postID,
           comments -> {
             AnswerAdapter ans = new AnswerAdapter(comments, getActivity());
@@ -133,13 +128,11 @@ public class ViewQuestion extends Fragment {
     return view;
   }
 
-  static final RadioGroup.OnCheckedChangeListener onCheckedListener = new RadioGroup.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(RadioGroup group, int checkedId) {
-          for (int j = 0; j < group.getChildCount(); j++) {
-              final ToggleButton view = (ToggleButton) group.getChildAt(j);
-              view.setChecked(view.getId() == checkedId);
-          }
-      }
-  };
+  private static final RadioGroup.OnCheckedChangeListener onCheckedListener =
+      (group, checkedId) -> {
+        for (int j = 0; j < group.getChildCount(); j++) {
+          ToggleButton view = (ToggleButton) group.getChildAt(j);
+          view.setChecked(view.getId() == checkedId);
+        }
+      };
 }

@@ -11,8 +11,9 @@ public class Post {
   @SuppressLint("SimpleDateFormat")
   private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
 
-  public String title, body, uid, date, postID, tag;
-  public int vote;
+  private String title, body, uid, date, postID, tag;
+  private int vote;
+  private Boolean solved;
 
   Post() {}
 
@@ -26,6 +27,7 @@ public class Post {
     this.tag = tag;
     date = ISO_8601_FORMAT.format(new Date());
     vote = 0;
+    solved = false;
   }
 
   public Post(String title, String body, String tag, String uid, String postID) {
@@ -37,6 +39,7 @@ public class Post {
     this.postID = postID;
     date = ISO_8601_FORMAT.format(new Date());
     vote = 0;
+    solved = false;
   }
 
   public String getDate() {
@@ -93,5 +96,13 @@ public class Post {
 
   public void setBody(String body) {
     this.body = body;
+  }
+
+  public Boolean isSolved() {
+    return solved;
+  }
+
+  public void setSolved(Boolean solved) {
+    this.solved = solved;
   }
 }

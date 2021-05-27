@@ -1,23 +1,23 @@
 package com.example.witsly;
 
 import android.annotation.SuppressLint;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.witsly.Fragments.UpdateVote;
 import com.example.witsly.Interfaces.AddComment;
 import com.example.witsly.Interfaces.AddPost;
 import com.example.witsly.Interfaces.GetAllPosts;
+import com.example.witsly.Interfaces.GetAnswers;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.VoteCount;
 import com.example.witsly.Interfaces.Voted;
 import com.example.witsly.Interfaces.getVoteStatus;
-import com.example.witsly.Models.Comment;
+import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.User;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,14 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class FirebaseActions {
+  private static final String TAG = "LOG";
   private FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
-  private ArrayList<Comment> commentsArrayList;
-  int likescount;
-  DatabaseReference dbRef;
+  private ArrayList<Answer> answersArrayList;
+  private int likescount, dislikecount;
+  private DatabaseReference dbRefLikes, dbRefDislikes;
 
   public FirebaseActions() {
     firebaseDatabase = FirebaseDatabase.getInstance();
@@ -83,11 +83,19 @@ public class FirebaseActions {
 
               Post post = postSnapshot.getValue(Post.class);
               assert post != null;
-              post.setPostID(postSnapshot.getKey());
 
+              CountVotes(
+                  postSnapshot.getKey(),
+                  cv ->
+                      updateVotes(
+                          postSnapshot.getKey(),
+                          (int) cv,
+                          vvr -> {
+                            if (vvr) post.setVote((int) cv);
+                          }));
+              post.setPostID(postSnapshot.getKey());
               postArrayList.add(post);
             }
-            Collections.sort(postArrayList, Post.VoteComparator);
             g.processResponse(postArrayList);
           }
 
@@ -96,25 +104,27 @@ public class FirebaseActions {
         });
   }
 
-  public void getComments(String postID, GetComments c) {
+  public void getComments(String AnswerID, GetComments c) {
+    // Similar to the getAnswers
+  }
 
-    commentsArrayList = new ArrayList<>();
+  public void getAnswers(String postID, GetAnswers a) {
+
+    answersArrayList = new ArrayList<>();
     DatabaseReference databaseReference = firebaseDatabase.getReference("Comments");
     databaseReference.addValueEventListener(
         new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
-            commentsArrayList.clear();
+            answersArrayList.clear();
 
             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
-              Comment comment = postSnapshot.getValue(Comment.class);
+              Answer answer = postSnapshot.getValue(Answer.class);
 
-              if (comment != null && comment.getQID().equals(postID)) {
-                commentsArrayList.add(comment);
-              }
+              if (answer != null && answer.getQID().equals(postID)) answersArrayList.add(answer);
             }
-            c.processResponse(commentsArrayList);
+            a.processResponse(answersArrayList);
           }
 
           @Override
@@ -122,11 +132,11 @@ public class FirebaseActions {
         });
   }
 
-  public void addComment(Comment comment, AddComment a) {
+  public void addAnswer(Answer answer, AddComment a) {
     firebaseDatabase
         .getReference("Comments")
         .push()
-        .setValue(comment)
+        .setValue(answer)
         .addOnCompleteListener(
             c -> {
               if (c.isSuccessful()) a.processResponse(true);
@@ -145,11 +155,8 @@ public class FirebaseActions {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            if (snapshot.exists()) {
-              dislikes.removeValue();
-            } else {
-              likes.setValue(true);
-            }
+            if (snapshot.exists()) dislikes.removeValue();
+            else likes.setValue(true);
           }
 
           @Override
@@ -163,18 +170,13 @@ public class FirebaseActions {
     likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
     dislikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
 
-
     likes.addListenerForSingleValueEvent(
         new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            if (snapshot.exists()) {
-              likes.removeValue();
-
-            } else {
-              dislikes.setValue(true);
-            }
+            if (snapshot.exists()) likes.removeValue();
+            else dislikes.setValue(true);
           }
 
           @Override
@@ -189,13 +191,7 @@ public class FirebaseActions {
         new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if (snapshot.exists()) {
-
-              vs.processResponse(true);
-
-            } else {
-              vs.processResponse(false);
-            }
+            vs.processResponse(snapshot.exists());
           }
 
           @Override
@@ -211,12 +207,7 @@ public class FirebaseActions {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            if (snapshot.exists()) {
-              vs.processResponse(true);
-
-            } else {
-              vs.processResponse(false);
-            }
+            vs.processResponse(snapshot.exists());
           }
 
           @Override
@@ -230,51 +221,68 @@ public class FirebaseActions {
         pid,
         uid,
         v -> {
-          if (v) {
-            g.processResponse(0);
-          }
+          if (v) g.processResponse(0);
         });
 
     Disliked(
         pid,
         uid,
         v -> {
-          if (v) {
-            g.processResponse(2);
-          }
+          if (v) g.processResponse(2);
         });
 
     g.processResponse(1);
   }
 
   private void CountVotes(String pid, VoteCount cv) {
-      String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-      dbRef = FirebaseDatabase.getInstance().getReference("Likes");
-      String add = "Likes";
 
-      dbRef.addValueEventListener(new ValueEventListener() {
+    dbRefLikes = FirebaseDatabase.getInstance().getReference("Likes");
+
+    dbRefDislikes = FirebaseDatabase.getInstance().getReference("Dislikes");
+
+    dbRefLikes.addValueEventListener(
+        new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
-              if(snapshot.exists()){
-                  likescount = (int)snapshot.child(pid).getChildrenCount();
-                  String a = Integer.toString(likescount)+add;
-                  long aa = Long.parseLong(a);
-                  cv.processResponse(aa);
-              }
-              else{
-                  long b = (long)snapshot.getChildrenCount();
-                  cv.processResponse(b);
-              }
+
+            if (snapshot.exists()) {
+
+              likescount = (int) snapshot.child(pid).getChildrenCount();
+
+              dbRefDislikes.addValueEventListener(
+                  new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                      if (snapshot.exists()) {
+
+                        dislikecount = (int) snapshot.child(pid).getChildrenCount();
+                        cv.processResponse(likescount - dislikecount);
+                      }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                  });
+            }
           }
 
           @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-
-          }
-      });
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
 
-  public void getVoteCount(Post postID) {}
+  private void updateVotes(String pid, int vote_value, UpdateVote updateVote) {
+    DatabaseReference updateData = FirebaseDatabase.getInstance().getReference("Posts").child(pid);
+    updateData
+        .child("vote")
+        .setValue(vote_value)
+        .addOnCompleteListener(
+            task -> {
+              updateVote.processResponse(true);
+            })
+        .addOnFailureListener(e -> updateVote.processResponse(false));
+  }
 
   public void getUserDetails(String user, UserDetails f) {
     DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -286,7 +294,7 @@ public class FirebaseActions {
               public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User value = snapshot.getValue(User.class);
                 f.processResponse(value);
-               }
+              }
 
               @Override
               public void onCancelled(@NonNull DatabaseError error) {}

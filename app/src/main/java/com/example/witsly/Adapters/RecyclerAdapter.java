@@ -8,14 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,17 +22,12 @@ import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.example.witsly.R;
 import com.google.android.material.chip.Chip;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> implements Filterable {
-
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder>
+    implements Filterable {
 
   private final ArrayList<Post> mPostList;
   private ArrayList<Post> mListFilter;
@@ -44,20 +35,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
   private OnItemClickListener mListener;
   private final FirebaseActions firebaseActions = new FirebaseActions();
 
-    @Override
-    public Filter getFilter() {
-        return recyclerFilter;
-    }
+  @Override
+  public Filter getFilter() {
+    return recyclerFilter;
+  }
 
-
-    public interface OnItemClickListener {
+  public interface OnItemClickListener {
     void onItemClick(int pos);
     // Please modify to add necessary information from dB i.e. Title, Body etc.
     // Alternatively, pass the ID of the post at current position and we can get the necessary info
     // Use method in HomeFragment to navigate to ViewQuestion activity
   }
 
-  public void setOnItemClickListener(final OnItemClickListener listener) {
+  public void setOnItemClickListener(OnItemClickListener listener) {
     mListener = listener;
   }
 
@@ -70,7 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     TextView mVoteCount;
     CardView card;
 
-    RecyclerViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
+    RecyclerViewHolder(@NonNull View itemView, OnItemClickListener listener) {
       super(itemView);
 
       mChip = itemView.findViewById(R.id.tag);
@@ -83,18 +73,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
       itemView.setOnClickListener(
           v -> {
             if (listener != null) {
-              final int pos = getAdapterPosition();
+              int pos = getAdapterPosition();
               if (pos != RecyclerView.NO_POSITION) listener.onItemClick(pos);
             }
           });
-
-
-
-
     }
   }
 
-  public RecyclerAdapter(final ArrayList<Post> postList, final Context context) {
+  public RecyclerAdapter(ArrayList<Post> postList, Context context) {
     mPostList = postList;
     mListFilter = new ArrayList<>(mPostList);
     this.context = context;
@@ -102,9 +88,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
   @NonNull
   @Override
-  public RecyclerViewHolder onCreateViewHolder(
-      @NonNull final ViewGroup parent, final int viewType) {
-    final View v =
+  public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    View v =
         LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item2, parent, false);
 
     return new RecyclerViewHolder(v, mListener);
@@ -112,28 +97,34 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
   @SuppressLint("SetTextI18n")
   @Override
-  public void onBindViewHolder(@NonNull final RecyclerViewHolder holder, final int position) {
+  public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
 
-    final Post cItem = mPostList.get(position);
+    //  post.getTitle()).substring(0, 15);
+    // post.isSolved() ? post.getTitle() + " [SOLVED]" : post.getTitle()
 
-    if (cItem.getTitle().length() > 15)
-      holder.mPostTitle.setText((cItem.getTitle()).substring(0, 15));
-    else holder.mPostTitle.setText(cItem.getTitle());
+    Post post = mPostList.get(position);
+    if (post.getTitle().length() > 15)
+      holder.mPostTitle.setText(
+          post.isSolved()
+              ? post.getTitle().substring(0, 15) + " [SOLVED]"
+              : post.getTitle().substring(0, 15));
+    else
+      holder.mPostTitle.setText(post.isSolved() ? post.getTitle() + " [SOLVED]" : post.getTitle());
 
-    holder.mChip.setText(cItem.getTag());
+    holder.mChip.setText(post.getTag());
 
-    if (cItem.getBody().length() > 30) holder.mPostBody.setText((cItem.getBody()).substring(0, 30));
-    else holder.mPostBody.setText(cItem.getTitle());
+    if (post.getBody().length() > 30) holder.mPostBody.setText((post.getBody()).substring(0, 30));
+    else holder.mPostBody.setText(post.getBody());
 
     /*holder.mUpVoteButton.setOnClickListener(
-        up -> firebaseActions.upVote(cItem.getPostID(), cItem.getUid()));
+        up -> firebaseActions.upVote(post.getPostID(), post.getUid()));
 
     holder.mDownVoteButton.setOnClickListener(
-        down -> firebaseActions.downVote(cItem.getPostID(), cItem.getUid()));
+        down -> firebaseActions.downVote(post.getPostID(), post.getUid()));
 
     firebaseActions.getPostVoteState(
-        cItem.getPostID(),
-        cItem.getUid(),
+        post.getPostID(),
+        post.getUid(),
         g -> {
           if (g == 0) {
             // up
@@ -154,7 +145,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         });*/
 
     firebaseActions.getUserDetails(
-        cItem.getUid(),
+        post.getUid(),
         value -> {
           // value.getTag()
 
@@ -165,21 +156,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                   + " "
                   + value.getSurname()
                   + " on: "
-                  + (cItem.getDate()).substring(0, 10));
+                  + (post.getDate()).substring(0, 10));
         });
 
-    holder.mVoteCount.setText(cItem.getVote()+"");
+    holder.mVoteCount.setText(post.getVote() + "");
     holder.card.setOnClickListener(
         v -> {
-          final Bundle bundle = new Bundle();
-          bundle.putString("postID", cItem.getPostID());
+          Bundle bundle = new Bundle();
+          bundle.putString("postID", post.getPostID());
 
-          final AppCompatActivity activity = (AppCompatActivity) context;
+          AppCompatActivity activity = (AppCompatActivity) context;
 
-          final Fragment viewQuestion = new ViewQuestion();
+          Fragment viewQuestion = new ViewQuestion();
           viewQuestion.setArguments(bundle);
-          final FragmentTransaction transaction =
-              activity.getSupportFragmentManager().beginTransaction();
+          FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
           transaction.replace(R.id.container_frag, viewQuestion);
 
           transaction.addToBackStack(null);
@@ -192,30 +182,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     return mPostList.size();
   }
 
-    private Filter recyclerFilter = new Filter() {
+  private Filter recyclerFilter =
+      new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<Post> filterList = new ArrayList<>();
-            if(constraint == null || constraint.length() == 0){
-                filterList.addAll(mListFilter);
-            }else{
-                String query = constraint.toString().toLowerCase().trim();
-                for(Post card : mListFilter){
-                    if(card.getTag().trim().startsWith(query)){
-                        filterList.add(card);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filterList;
-            return filterResults;
+          ArrayList<Post> filterList = new ArrayList<>();
+          if (constraint == null || constraint.length() == 0) filterList.addAll(mListFilter);
+          else {
+            String query = constraint.toString().toLowerCase().trim();
+            for (Post card : mListFilter)
+              if (card.getTag().trim().startsWith(query)) filterList.add(card);
+          }
+          FilterResults filterResults = new FilterResults();
+          filterResults.values = filterList;
+          return filterResults;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mPostList.clear();
-            mPostList.addAll((Collection<? extends Post>) results.values);
-            notifyDataSetChanged();
+          mPostList.clear();
+          mPostList.addAll((Collection<? extends Post>) results.values);
+          notifyDataSetChanged();
         }
-    };
+      };
 }
