@@ -19,15 +19,14 @@ import java.util.ArrayList;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder> {
 
-  private ArrayList<Answer> mAnswerList;
-  private Context mContext;
-  private FirebaseActions firebaseActions = new FirebaseActions();
+  private final ArrayList<Answer> mAnswerList;
+  private final FirebaseActions firebaseActions = new FirebaseActions();
 
   static class ViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView mAnswerDetails;
-    private TextView mAnswerBody;
-    private TextView mAnswerDate;
+    private final TextView mAnswerDetails;
+    private final TextView mAnswerBody;
+    private final TextView mAnswerDate;
     private RecyclerView mAnswerRV;
 
     ViewHolder(@NonNull View itemView) {
@@ -42,7 +41,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
   public AnswerAdapter(ArrayList<Answer> answerList, Context context) {
     mAnswerList = answerList;
-    mContext = context;
   }
 
   @NonNull
@@ -63,9 +61,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     holder.mAnswerDate.setText(answer.getDate());
     firebaseActions.getUserDetails(
         answer.getUID(),
-        user -> {
-          holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname());
-        });
+        user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
   }
 
   @Override

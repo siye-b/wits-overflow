@@ -30,7 +30,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     implements Filterable {
 
   private final ArrayList<Post> mPostList;
-  private ArrayList<Post> mListFilter;
+  private final ArrayList<Post> mListFilter;
   private final Context context;
   private OnItemClickListener mListener;
   private final FirebaseActions firebaseActions = new FirebaseActions();
@@ -98,9 +98,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
   @SuppressLint("SetTextI18n")
   @Override
   public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-
-    //  post.getTitle()).substring(0, 15);
-    // post.isSolved() ? post.getTitle() + " [SOLVED]" : post.getTitle()
 
     Post post = mPostList.get(position);
     if (post.getTitle().length() > 15)
@@ -182,7 +179,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     return mPostList.size();
   }
 
-  private Filter recyclerFilter =
+  private final Filter recyclerFilter =
       new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {

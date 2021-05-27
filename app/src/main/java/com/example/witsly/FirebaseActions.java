@@ -1,16 +1,17 @@
 package com.example.witsly;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.witsly.Fragments.UpdateVote;
-import com.example.witsly.Interfaces.AddComment;
+import com.example.witsly.Interfaces.AddAnswer;
 import com.example.witsly.Interfaces.AddPost;
 import com.example.witsly.Interfaces.GetAllPosts;
 import com.example.witsly.Interfaces.GetAnswers;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
+import com.example.witsly.Interfaces.UpdateVote;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.VoteCount;
 import com.example.witsly.Interfaces.Voted;
@@ -111,7 +112,7 @@ public class FirebaseActions {
   public void getAnswers(String postID, GetAnswers a) {
 
     answersArrayList = new ArrayList<>();
-    DatabaseReference databaseReference = firebaseDatabase.getReference("Comments");
+    DatabaseReference databaseReference = firebaseDatabase.getReference("Answers");
     databaseReference.addValueEventListener(
         new ValueEventListener() {
           @Override
@@ -132,16 +133,20 @@ public class FirebaseActions {
         });
   }
 
-  public void addAnswer(Answer answer, AddComment a) {
+  public void addAnswer(Answer answer, AddAnswer a) {
     firebaseDatabase
-        .getReference("Comments")
+        .getReference("Answers")
         .push()
         .setValue(answer)
         .addOnCompleteListener(
             c -> {
               if (c.isSuccessful()) a.processResponse(true);
             })
-        .addOnFailureListener(e -> a.processResponse(false));
+        .addOnFailureListener(
+            e -> {
+              a.processResponse(false);
+              Log.d(TAG, e.getMessage());
+            });
   }
 
   public void upVote(String pid, String uid) {

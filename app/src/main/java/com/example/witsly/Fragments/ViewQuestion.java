@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.FirebaseActions;
 import com.example.witsly.Models.Answer;
-import com.example.witsly.ProDialog;
 import com.example.witsly.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,8 +48,6 @@ public class ViewQuestion extends Fragment {
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.activity_view_question, container, false);
 
-    ProDialog proDialog = new ProDialog(getActivity());
-
     Bundle bundle = getArguments();
     firebaseActions = new FirebaseActions();
 
@@ -72,8 +69,6 @@ public class ViewQuestion extends Fragment {
     RecyclerView recyclerView = view.findViewById(R.id.rv_answers);
     recyclerView.setHasFixedSize(true);
     RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
-
-    proDialog.start();
 
     if (bundle != null) {
       String postID = bundle.getString("postID");
@@ -116,14 +111,12 @@ public class ViewQuestion extends Fragment {
 
       firebaseActions.getAnswers(
           postID,
-          comments -> {
-            AnswerAdapter ans = new AnswerAdapter(comments, getActivity());
+          answers -> {
+            AnswerAdapter ans = new AnswerAdapter(answers, getActivity());
             mRecyclerView.setAdapter(ans);
             mRecyclerView.setLayoutManager(mRecyclerManager);
           });
     }
-
-    proDialog.stop();
 
     return view;
   }
