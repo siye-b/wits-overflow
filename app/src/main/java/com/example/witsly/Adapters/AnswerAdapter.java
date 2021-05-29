@@ -2,6 +2,7 @@ package com.example.witsly.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.FirebaseActions;
 import com.example.witsly.Models.Answer;
+import com.example.witsly.PostAnswer;
 import com.example.witsly.R;
 import com.google.firebase.database.annotations.NotNull;
 
@@ -27,6 +29,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     private final TextView mAnswerDetails;
     private final TextView mAnswerBody;
     private final TextView mAnswerDate;
+    private final TextView mReply;
     private RecyclerView mAnswerRV;
 
     ViewHolder(@NonNull View itemView) {
@@ -36,8 +39,18 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
       mAnswerBody = itemView.findViewById(R.id.tv_answer_body);
       mAnswerRV = itemView.findViewById(R.id.rv_answers);
       mAnswerDate = itemView.findViewById(R.id.tv_answer_date);
+      mReply = itemView.findViewById(R.id.tvReply);
+
+      mReply.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            v.getContext().startActivity(new Intent(v.getContext(), PostAnswer.class));
+        }
+      });
     }
   }
+
+
 
   public AnswerAdapter(ArrayList<Answer> answerList, Context context) {
     mAnswerList = answerList;

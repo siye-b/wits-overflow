@@ -8,9 +8,13 @@ import android.view.MenuInflater;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.Objects;
 
 public class PostAnswer extends AppCompatActivity {
+
+    private TextInputLayout body;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +26,7 @@ public class PostAnswer extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("Post Answer");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         
-
-
+        body = findViewById(R.id.ed_reply);
     }
 
     @Override

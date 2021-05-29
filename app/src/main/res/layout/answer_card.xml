@@ -39,6 +39,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_answer_date"
+            android:id="@+id/tvReply"
+            android:text="Reply"
+            android:background="@drawable/tv_click">
+        </TextView>
+
         <!--
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
