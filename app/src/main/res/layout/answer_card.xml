@@ -45,7 +45,7 @@
             android:layout_below="@+id/tv_answer_date"
             android:id="@+id/tvReply"
             android:text="Reply"
-            android:background="@drawable/tv_click">
+            android:textColor="@drawable/tv_click">
         </TextView>
 
         <!--

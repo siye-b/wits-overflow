@@ -8,13 +8,14 @@ import android.view.MenuInflater;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
 public class PostAnswer extends AppCompatActivity {
 
-    private TextInputLayout body;
+    private TextInputEditText body;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

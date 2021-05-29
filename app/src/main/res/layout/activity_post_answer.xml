@@ -17,7 +17,6 @@
     <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
         android:id="@+id/ed_reply"
-        android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:background="@color/white"
