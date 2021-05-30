@@ -70,7 +70,20 @@
             app:singleLine="true"
             app:singleSelection="true" />
 
+        //button for custom tags
+        <Button
+            android:id="@+id/btn_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Custom Tag"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="269dp" />
+
+
+
     </HorizontalScrollView>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

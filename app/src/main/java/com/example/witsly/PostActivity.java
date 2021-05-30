@@ -1,11 +1,15 @@
 package com.example.witsly;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,10 +37,19 @@ public class PostActivity extends AppCompatActivity {
   protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_post);
+    Button btn_tag = findViewById(R.id.btn_tag);
     final Toolbar toolbar = findViewById(R.id.tool_bar);
     setSupportActionBar(toolbar);
     (getSupportActionBar()).setTitle("New Post");
     (getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+    btn_tag.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(PostActivity.this,Dialog.class);
+        startActivity(intent);
+      }
+    });
 
     cGroup = findViewById(R.id.chip_group);
     mTagList = Arrays.asList(getResources().getStringArray(R.array.tags));
@@ -52,6 +65,8 @@ public class PostActivity extends AppCompatActivity {
 
     title = findViewById(R.id.textInputLayoutTitle);
     body = findViewById(R.id.textInputLayoutBody);
+
+
   }
 
   @Override
