@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -58,9 +59,9 @@ public class ViewQuestion extends Fragment {
     vote = view.findViewById(R.id.txt_vote);
     like = view.findViewById(R.id.btn_like);
     dislike = view.findViewById(R.id.btn_dislike);
-    radioGroup = view.findViewById(R.id.RadioGroup);
 
-    radioGroup.setOnCheckedChangeListener(onCheckedListener);
+    like.setOnCheckedChangeListener(onCheckedListener);
+    dislike.setOnCheckedChangeListener(onCheckedListener);
 
     mRecyclerView = view.findViewById(R.id.rv_answers);
     add_btn = view.findViewById(R.id.add_comment_btn);
@@ -121,11 +122,19 @@ public class ViewQuestion extends Fragment {
     return view;
   }
 
-  private static final RadioGroup.OnCheckedChangeListener onCheckedListener =
-      (group, checkedId) -> {
-        for (int j = 0; j < group.getChildCount(); j++) {
-          ToggleButton view = (ToggleButton) group.getChildAt(j);
-          view.setChecked(view.getId() == checkedId);
+
+
+    CompoundButton.OnCheckedChangeListener onCheckedListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(isChecked){
+                if(buttonView != like){
+                    like.setChecked(false);
+                }
+                if(buttonView != dislike){
+                    dislike.setChecked(false);
+                }
+            }
         }
-      };
+    };
 }
