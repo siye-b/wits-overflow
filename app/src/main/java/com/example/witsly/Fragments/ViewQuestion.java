@@ -41,6 +41,8 @@ public class ViewQuestion extends Fragment {
   private TextView vote;
   private ToggleButton like;
   private ToggleButton dislike;
+  private ToggleButton ansLike;
+  private ToggleButton ansDislike;
   private RadioGroup radioGroup;
 
   @SuppressLint("SetTextI18n")
@@ -59,9 +61,14 @@ public class ViewQuestion extends Fragment {
     vote = view.findViewById(R.id.txt_vote);
     like = view.findViewById(R.id.btn_like);
     dislike = view.findViewById(R.id.btn_dislike);
+    ansLike = view.findViewById(R.id.answer_like);
+    ansDislike = view.findViewById(R.id.answer_dislike);
 
     like.setOnCheckedChangeListener(onCheckedListener);
     dislike.setOnCheckedChangeListener(onCheckedListener);
+
+    ansLike.setOnCheckedChangeListener(onCheckedListenerAnswer);
+    ansDislike.setOnCheckedChangeListener(onCheckedListenerAnswer);
 
     mRecyclerView = view.findViewById(R.id.rv_answers);
     add_btn = view.findViewById(R.id.add_comment_btn);
@@ -133,6 +140,20 @@ public class ViewQuestion extends Fragment {
                 }
                 if(buttonView != dislike){
                     dislike.setChecked(false);
+                }
+            }
+        }
+    };
+
+    CompoundButton.OnCheckedChangeListener onCheckedListenerAnswer = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(isChecked){
+                if(buttonView != ansLike){
+                    ansLike.setChecked(false);
+                }
+                if(buttonView != ansDislike){
+                    ansDislike.setChecked(false);
                 }
             }
         }

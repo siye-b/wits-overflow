@@ -13,6 +13,41 @@
         android:layout_height="wrap_content"
         android:padding="4dp">
 
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/RG">
+
+            <ToggleButton
+                android:id="@+id/answer_like"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:textOn=" "
+                android:textOff=" "
+                android:background="@drawable/like_button">
+            </ToggleButton>
+
+            <TextView
+                android:id="@+id/tv_answer_vote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+            </TextView>
+
+            <ToggleButton
+                android:id="@+id/answer_dislike"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:textOff=" "
+                android:textOn=" "
+                android:background="@drawable/dislike_button">
+            </ToggleButton>
+
+        </RadioGroup>
+
         <TextView
             android:id="@+id/tv_answer_name"
             android:layout_width="match_parent"
@@ -21,7 +56,8 @@
             android:textSize="12sp"
             android:text="Posted by: John Smith"
             android:textStyle="bold"
-            android:textColor="@color/darkGrey" />
+            android:textColor="@color/darkGrey"
+            android:layout_toRightOf="@+id/RG"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -31,13 +67,15 @@
             android:text="Body of the comment should go here."
             android:textSize="14sp"
             android:id="@+id/tv_answer_body"
-            android:layout_below="@+id/tv_answer_name" />
+            android:layout_below="@+id/tv_answer_name"
+            android:layout_toRightOf="@+id/RG"/>
 
         <TextView
             android:layout_below="@+id/tv_answer_body"
             android:id="@+id/tv_answer_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/RG"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -45,7 +83,8 @@
             android:layout_below="@+id/tv_answer_date"
             android:id="@+id/tvReply"
             android:text="Reply"
-            android:textColor="@drawable/tv_click">
+            android:textColor="@drawable/tv_click"
+            android:layout_toRightOf="@+id/RG">
         </TextView>
 
         <!--
