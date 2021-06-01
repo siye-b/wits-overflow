@@ -267,6 +267,7 @@ public class FirebaseActions {
 
               Tag tag = postSnapshot.getValue(Tag.class);
               assert tag != null;
+              tag.setTag(postSnapshot.getKey());
               tagArrayList.add(tag);
             }
             t.processResponse(tagArrayList);

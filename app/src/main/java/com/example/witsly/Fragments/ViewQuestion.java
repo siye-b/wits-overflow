@@ -67,7 +67,7 @@ public class ViewQuestion extends Fragment {
     like.setOnCheckedChangeListener(onCheckedListener);
     dislike.setOnCheckedChangeListener(onCheckedListener);
 
-    //    ansLike.setOnCheckedChangeListener(onCheckedListenerAnswer);
+    //  ansLike.setOnCheckedChangeListener(onCheckedListenerAnswer);
     //  ansDislike.setOnCheckedChangeListener(onCheckedListenerAnswer);
 
     mRecyclerView = view.findViewById(R.id.rv_answers);
