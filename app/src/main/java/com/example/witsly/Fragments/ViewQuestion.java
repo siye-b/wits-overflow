@@ -81,8 +81,6 @@ public class ViewQuestion extends Fragment {
     if (bundle != null) {
       String postID = bundle.getString("postID");
 
-      firebaseActions.getTags(t -> {});
-
       firebaseActions.getPost(
           postID,
           (post, user) -> {
