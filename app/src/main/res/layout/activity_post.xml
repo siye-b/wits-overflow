@@ -33,9 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        app:layout_constraintEnd_toStartOf="@+id/chipHolder"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipHolder"
+        app:layout_constraintTop_toBottomOf="@+id/tagInput"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:boxStrokeColor="#FFF"
@@ -68,20 +68,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:singleLine="true"
-            app:singleSelection="true" />
-
-        //button for custom tags
-        <Button
-            android:id="@+id/btn_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Custom Tag"
-            tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="269dp" />
-
-
-
+            app:singleSelection="true" >
+        </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
+
+    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tagInput"
+        android:completionThreshold="1"
+        android:hint="Tag"
+        app:layout_constraintTop_toBottomOf="@id/chipHolder">
+    </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
 
 
 

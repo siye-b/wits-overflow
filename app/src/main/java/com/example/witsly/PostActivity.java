@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
 
@@ -32,24 +33,19 @@ public class PostActivity extends AppCompatActivity {
   private ChipGroup cGroup;
   private List<String> mTagList;
   private final FirebaseActions firebaseActions = new FirebaseActions();
+  private AppCompatAutoCompleteTextView tagInput;
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_post);
-    Button btn_tag = findViewById(R.id.btn_tag);
     final Toolbar toolbar = findViewById(R.id.tool_bar);
     setSupportActionBar(toolbar);
     (getSupportActionBar()).setTitle("New Post");
     (getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-    btn_tag.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent(PostActivity.this,Dialog.class);
-        startActivity(intent);
-      }
-    });
+    tagInput = findViewById(R.id.tagInput);
+
 
     cGroup = findViewById(R.id.chip_group);
     mTagList = Arrays.asList(getResources().getStringArray(R.array.tags));
@@ -89,9 +85,7 @@ public class PostActivity extends AppCompatActivity {
         final String postBody = (body.getEditText()).getText().toString().trim();
         //final String tag = cGroup.getTag().toString().trim();
 
-        int i = cGroup.getCheckedChipId();
-        Chip chip = (Chip)cGroup.getChildAt(i - 1);
-        final String tag = chip.getText().toString().trim();
+        final String tag = tagInput.getText().toString().toLowerCase().trim();
 
 
 
