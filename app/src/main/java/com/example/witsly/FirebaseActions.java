@@ -7,10 +7,12 @@ import androidx.annotation.NonNull;
 
 import com.example.witsly.Interfaces.AddAnswer;
 import com.example.witsly.Interfaces.AddPost;
+import com.example.witsly.Interfaces.AddTag;
 import com.example.witsly.Interfaces.GetAllPosts;
 import com.example.witsly.Interfaces.GetAnswers;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
+import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.UpdateVote;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.VoteCount;
@@ -18,6 +20,7 @@ import com.example.witsly.Interfaces.Voted;
 import com.example.witsly.Interfaces.getVoteStatus;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Post;
+import com.example.witsly.Models.Tag;
 import com.example.witsly.Models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +36,7 @@ public class FirebaseActions {
   private FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
   private ArrayList<Answer> answersArrayList;
+  private ArrayList<Tag> tagArrayList;
   private int likescount, dislikecount;
   private DatabaseReference dbRefLikes, dbRefDislikes;
 
@@ -237,6 +241,40 @@ public class FirebaseActions {
         });
 
     g.processResponse(1);
+  }
+
+  public void addTag(Tag tag, AddTag t) {
+    firebaseDatabase
+        .getReference("Tags")
+        .push()
+        .setValue(tag)
+        .addOnCompleteListener(
+            c -> {
+              if (c.isSuccessful()) t.processResponse(true);
+            })
+        .addOnFailureListener(e -> t.processResponse(false));
+  }
+
+  public void getTags(GetTags t) {
+    tagArrayList = new ArrayList<>();
+    DatabaseReference databaseReference = firebaseDatabase.getReference("Tags");
+    databaseReference.addValueEventListener(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            tagArrayList.clear();
+            for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+              Tag tag = postSnapshot.getValue(Tag.class);
+              assert tag != null;
+              tagArrayList.add(tag);
+            }
+            t.processResponse(tagArrayList);
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
 
   private void CountVotes(String pid, VoteCount cv) {

@@ -67,8 +67,8 @@ public class ViewQuestion extends Fragment {
     like.setOnCheckedChangeListener(onCheckedListener);
     dislike.setOnCheckedChangeListener(onCheckedListener);
 
-    ansLike.setOnCheckedChangeListener(onCheckedListenerAnswer);
-    ansDislike.setOnCheckedChangeListener(onCheckedListenerAnswer);
+    //    ansLike.setOnCheckedChangeListener(onCheckedListenerAnswer);
+    //  ansDislike.setOnCheckedChangeListener(onCheckedListenerAnswer);
 
     mRecyclerView = view.findViewById(R.id.rv_answers);
     add_btn = view.findViewById(R.id.add_comment_btn);
@@ -80,6 +80,8 @@ public class ViewQuestion extends Fragment {
 
     if (bundle != null) {
       String postID = bundle.getString("postID");
+
+      firebaseActions.getTags(t -> {});
 
       firebaseActions.getPost(
           postID,
@@ -129,33 +131,33 @@ public class ViewQuestion extends Fragment {
     return view;
   }
 
-
-
-    CompoundButton.OnCheckedChangeListener onCheckedListener = new CompoundButton.OnCheckedChangeListener() {
+  CompoundButton.OnCheckedChangeListener onCheckedListener =
+      new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked){
-                if(buttonView != like){
-                    like.setChecked(false);
-                }
-                if(buttonView != dislike){
-                    dislike.setChecked(false);
-                }
+          if (isChecked) {
+            if (buttonView != like) {
+              like.setChecked(false);
             }
+            if (buttonView != dislike) {
+              dislike.setChecked(false);
+            }
+          }
         }
-    };
+      };
 
-    CompoundButton.OnCheckedChangeListener onCheckedListenerAnswer = new CompoundButton.OnCheckedChangeListener() {
+  CompoundButton.OnCheckedChangeListener onCheckedListenerAnswer =
+      new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked){
-                if(buttonView != ansLike){
-                    ansLike.setChecked(false);
-                }
-                if(buttonView != ansDislike){
-                    ansDislike.setChecked(false);
-                }
+          if (isChecked) {
+            if (buttonView != ansLike) {
+              ansLike.setChecked(false);
             }
+            if (buttonView != ansDislike) {
+              ansDislike.setChecked(false);
+            }
+          }
         }
-    };
+      };
 }
