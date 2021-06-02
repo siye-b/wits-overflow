@@ -19,6 +19,7 @@ import com.example.witsly.Interfaces.VoteCount;
 import com.example.witsly.Interfaces.Voted;
 import com.example.witsly.Interfaces.getVoteStatus;
 import com.example.witsly.Models.Answer;
+import com.example.witsly.Models.Comment;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.Tag;
 import com.example.witsly.Models.User;
@@ -36,6 +37,7 @@ public class FirebaseActions {
   private FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
   private ArrayList<Answer> answersArrayList;
+  private ArrayList<Comment> commentsArrayList;
   private ArrayList<Tag> tagArrayList;
   private int likescount, dislikecount;
   private DatabaseReference dbRefLikes, dbRefDislikes;
@@ -110,21 +112,22 @@ public class FirebaseActions {
   }
 
   public void getComments(String AnswerID, GetComments c) {
-      answersArrayList = new ArrayList<>();
-      DatabaseReference databaseReference = firebaseDatabase.getReference("Answers");
+      commentsArrayList = new ArrayList<>();
+      DatabaseReference databaseReference = firebaseDatabase.getReference("Comments");
       databaseReference.addValueEventListener(
               new ValueEventListener() {
                   @Override
                   public void onDataChange(@NonNull DataSnapshot snapshot) {
-                      answersArrayList.clear();
+                      commentsArrayList.clear();
 
                       for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
-                          Answer answer = postSnapshot.getValue(Answer.class);
+                          Comment comment = postSnapshot.getValue(Comment.class);
+                          comment.setCID(postSnapshot.getKey());
 
-                          if (answer != null && answer.getQID().equals(AnswerID)) answersArrayList.add(answer);
+                          if (comment != null && comment.getAID().equals(AnswerID)) commentsArrayList.add(comment);
                       }
-                      c.processResponse(answersArrayList);
+                      c.processResponse(commentsArrayList);
                   }
 
                   @Override
@@ -288,7 +291,7 @@ public class FirebaseActions {
 
               Tag tag = postSnapshot.getValue(Tag.class);
               assert tag != null;
-              tag.setTag(postSnapshot.getKey());
+              tag.setTagID(postSnapshot.getKey());
               tagArrayList.add(tag);
             }
             t.processResponse(tagArrayList);

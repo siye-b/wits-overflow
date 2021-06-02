@@ -3,6 +3,7 @@ package com.example.witsly.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,25 +80,25 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
         answer.getUID(),
         user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
 
-    ArrayList<Comment> commentList = new ArrayList<Comment>();
+    /*ArrayList<Comment> commentList = new ArrayList<Comment>();
     for(int i = 0; i < 2; ++i){
       Comment comment = new Comment("hedueuhbu", "jehgcyug", "gcygwu");
       commentList.add(comment);
-
     }
     CommentsAdapter commentsAdapter = new CommentsAdapter(commentList);
     LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
     holder.mAnswerRV.setLayoutManager(commentLayoutManager);
-    holder.mAnswerRV.setAdapter(commentsAdapter);
+    holder.mAnswerRV.setAdapter(commentsAdapter);*/
 
-    /*String aid = answer.getAid();
+    String aid = answer.getAid();
     firebaseActions.getComments(aid,
             c -> {
               CommentsAdapter commentsAdapter = new CommentsAdapter(c);
               LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
               holder.mAnswerRV.setLayoutManager(commentLayoutManager);
               holder.mAnswerRV.setAdapter(commentsAdapter);
-            });*/
+
+            });
   }
 
   @Override

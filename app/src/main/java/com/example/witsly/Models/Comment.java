@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Comment {
-    private String comment, uid, aid, date;
+    private String comment, uid, aid, date, cid;
 
     @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
@@ -18,6 +18,16 @@ public class Comment {
         date = ISO_8601_FORMAT.format(new Date());
     }
 
+    public Comment(){}
+
+    public Comment(String comment, String uid, String aid, String cid){
+        this.comment = comment;
+        this.aid = aid;
+        this.uid = uid;
+        this.cid = cid;
+        date = ISO_8601_FORMAT.format(new Date());
+    }
+
     public String getComment(){return comment;}
 
     public String getUID(){return uid;}
@@ -25,6 +35,8 @@ public class Comment {
     public String getAID(){return aid;}
 
     public String getDate(){return date;}
+
+    public  String getCID(){return cid;}
 
     public void setComment(String comment){
         this.comment = comment;
@@ -41,5 +53,7 @@ public class Comment {
     public void setDate(String date){
         this.date = date;
     }
+
+    public void setCID(String cid){this.cid = cid;}
 
 }

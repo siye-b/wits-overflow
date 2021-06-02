@@ -26,6 +26,8 @@ public class Tag {
 
   public String getTagID(){return TagID;}
 
+  public void setTagID(String TagID){this.TagID = TagID;}
+
 
   @Override
   public String toString() {

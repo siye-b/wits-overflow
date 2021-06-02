@@ -52,7 +52,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     firebaseActions.getUserDetails(
             comment.getUID(),
             user -> {
-              holder.mCommentDetails.setText(user.getName() + " " + user.getSurname() + " on " + comment.getDate());
+              holder.mCommentDetails.setText(user.getName() + " "  + user.getSurname() + " on " + comment.getDate());
             }
     );
   }

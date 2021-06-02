@@ -42,6 +42,7 @@ public class PostActivity extends AppCompatActivity {
   private final FirebaseActions firebaseActions = new FirebaseActions();
   private AppCompatAutoCompleteTextView tagInput;
   private ArrayList mTags;
+  private String tagID;
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
