@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.witsly.Fragments.HomeFragment;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.Tag;
@@ -103,6 +105,9 @@ public class PostActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(postBody) || !TextUtils.isEmpty(postTitle) || !TextUtils.isEmpty(tag)) {
           addPost(postTitle, postBody, tag);
+          FragmentTransaction fraTransaction = getSupportFragmentManager().beginTransaction();
+          fraTransaction.replace(R.id.postA, new HomeFragment()).commit();
+
         }else Toast.makeText(this, "fill in all the fields", Toast.LENGTH_LONG).show();
     }
     return super.onOptionsItemSelected(item);
