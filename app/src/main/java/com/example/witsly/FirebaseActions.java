@@ -110,7 +110,26 @@ public class FirebaseActions {
   }
 
   public void getComments(String AnswerID, GetComments c) {
-    // Similar to the getAnswers
+      answersArrayList = new ArrayList<>();
+      DatabaseReference databaseReference = firebaseDatabase.getReference("Answers");
+      databaseReference.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot snapshot) {
+                      answersArrayList.clear();
+
+                      for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                          Answer answer = postSnapshot.getValue(Answer.class);
+
+                          if (answer != null && answer.getQID().equals(AnswerID)) answersArrayList.add(answer);
+                      }
+                      c.processResponse(answersArrayList);
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {}
+              });
   }
 
   public void getAnswers(String postID, GetAnswers a) {
@@ -126,6 +145,8 @@ public class FirebaseActions {
             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
               Answer answer = postSnapshot.getValue(Answer.class);
+              String aid = postSnapshot.getKey();
+              answer.setAid(aid);
 
               if (answer != null && answer.getQID().equals(postID)) answersArrayList.add(answer);
             }

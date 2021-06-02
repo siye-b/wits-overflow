@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.FirebaseActions;
+import com.example.witsly.Models.Comment;
 import com.example.witsly.R;
 import com.google.firebase.database.annotations.NotNull;
 
@@ -15,7 +17,8 @@ import java.util.ArrayList;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
 
-  private ArrayList<String> mCommentsList;
+  private ArrayList<Comment> mCommentsList;
+  private FirebaseActions firebaseActions = new FirebaseActions();
 
   static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -30,7 +33,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     }
   }
 
-  public CommentsAdapter(final ArrayList<String> commentsList) {
+  public CommentsAdapter(final ArrayList<Comment> commentsList) {
     mCommentsList = commentsList;
   }
 
@@ -44,9 +47,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
   @Override
   public void onBindViewHolder(@NonNull @NotNull final CommentsAdapter.ViewHolder holder, final int position) {
-    final String curr = mCommentsList.get(position);
-
-    // Do stuff
+    final Comment comment = mCommentsList.get(position);
+    holder.mCommentBody.setText(comment.getComment());
+    firebaseActions.getUserDetails(
+            comment.getUID(),
+            user -> {
+              holder.mCommentDetails.setText(user.getName() + " " + user.getSurname() + " on " + comment.getDate());
+            }
+    );
   }
 
   @Override

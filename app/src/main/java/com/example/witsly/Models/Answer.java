@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Answer {
-  private String answer, uid, qid, date;
+  private String answer, uid, qid, date, aid;
   private Boolean correct;
 
   @SuppressLint("SimpleDateFormat")
@@ -18,6 +18,15 @@ public class Answer {
     this.answer = answer;
     this.uid = uid;
     this.qid = qid;
+    date = ISO_8601_FORMAT.format(new Date());
+    correct = false;
+  }
+
+  public Answer(String answer, String uid, String qid, String aid) {
+    this.answer = answer;
+    this.uid = uid;
+    this.qid = qid;
+    this.aid = aid;
     date = ISO_8601_FORMAT.format(new Date());
     correct = false;
   }
@@ -42,6 +51,8 @@ public class Answer {
     return date;
   }
 
+  public String getAid(){return aid;}
+
   public void setAnswer(String answer) {
     this.answer = answer;
   }
@@ -57,4 +68,6 @@ public class Answer {
   public void setUid(String uid) {
     this.uid = uid;
   }
+
+  public void setAid(String aid) {this.aid = aid;}
 }

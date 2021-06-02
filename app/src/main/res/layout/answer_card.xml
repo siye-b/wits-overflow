@@ -9,6 +9,7 @@
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/RL_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp">
@@ -18,7 +19,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:id="@+id/RG">
 
             <ToggleButton
@@ -89,17 +89,34 @@
             android:layout_toRightOf="@+id/RG">
         </TextView>
 
-        <!--
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:id="@+id/rv_comments"
-                    android:layout_below="@+id/tv_answer_body"
-                    android:padding="5dp">
 
-                </androidx.recyclerview.widget.RecyclerView>
 
-                -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvReply">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/LL_answer"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignBottom="@+id/rv_comments">
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:layout_toRightOf="@+id/LL_answer"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_comments"
+                android:padding="2dp">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

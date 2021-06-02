@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.FirebaseActions;
 import com.example.witsly.Models.Answer;
+import com.example.witsly.Models.Comment;
 import com.example.witsly.PostAnswer;
 import com.example.witsly.R;
 import com.google.firebase.database.annotations.NotNull;
@@ -37,9 +39,10 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
       mAnswerDetails = itemView.findViewById(R.id.tv_answer_name);
       mAnswerBody = itemView.findViewById(R.id.tv_answer_body);
-      mAnswerRV = itemView.findViewById(R.id.rv_answers);
+      mAnswerRV = itemView.findViewById(R.id.rv_comments);
       mAnswerDate = itemView.findViewById(R.id.tv_answer_date);
       mReply = itemView.findViewById(R.id.tvReply);
+
 
       mReply.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -75,6 +78,15 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     firebaseActions.getUserDetails(
         answer.getUID(),
         user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
+
+    String aid = answer.getAid();
+    firebaseActions.getComments(aid,
+            c -> {
+              CommentsAdapter commentsAdapter = new CommentsAdapter(c);
+              LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
+              holder.mAnswerRV.setLayoutManager(commentLayoutManager);
+              holder.mAnswerRV.setAdapter(commentsAdapter);
+            });
   }
 
   @Override
