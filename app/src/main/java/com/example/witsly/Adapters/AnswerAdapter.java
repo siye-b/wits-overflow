@@ -79,14 +79,25 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
         answer.getUID(),
         user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
 
-    String aid = answer.getAid();
+    ArrayList<Comment> commentList = new ArrayList<Comment>();
+    for(int i = 0; i < 2; ++i){
+      Comment comment = new Comment("hedueuhbu", "jehgcyug", "gcygwu");
+      commentList.add(comment);
+
+    }
+    CommentsAdapter commentsAdapter = new CommentsAdapter(commentList);
+    LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
+    holder.mAnswerRV.setLayoutManager(commentLayoutManager);
+    holder.mAnswerRV.setAdapter(commentsAdapter);
+
+    /*String aid = answer.getAid();
     firebaseActions.getComments(aid,
             c -> {
               CommentsAdapter commentsAdapter = new CommentsAdapter(c);
               LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
               holder.mAnswerRV.setLayoutManager(commentLayoutManager);
               holder.mAnswerRV.setAdapter(commentsAdapter);
-            });
+            });*/
   }
 
   @Override
