@@ -93,10 +93,19 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     String aid = answer.getAid();
     firebaseActions.getComments(aid,
             c -> {
-              CommentsAdapter commentsAdapter = new CommentsAdapter(c);
-              LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
-              holder.mAnswerRV.setLayoutManager(commentLayoutManager);
-              holder.mAnswerRV.setAdapter(commentsAdapter);
+              Log.d("Size", "Comment Array Size: "  + c.size() + " Answer ID" + aid);
+              if (c.size() >= 1){
+                ArrayList<Comment> commentArrayList = new ArrayList<Comment>();
+                for (Object d : c){
+                  Comment k = (Comment)d;
+                  commentArrayList.add(k);
+                }
+                CommentsAdapter commentsAdapter = new CommentsAdapter(commentArrayList);
+                LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
+                holder.mAnswerRV.setLayoutManager(commentLayoutManager);
+                holder.mAnswerRV.setAdapter(commentsAdapter);
+              }
+
 
             });
   }
