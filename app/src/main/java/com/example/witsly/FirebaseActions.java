@@ -369,14 +369,15 @@ public class FirebaseActions {
             });
   }
 
-  public void DeletePost(String postKey, String databaseUid, String currentUid){
+  public void deletePost(String postKey, String databaseUid, String currentUid){
       DatabaseReference clickPost = firebaseDatabase.getReference().child("Posts").child(postKey);
       clickPost.addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
               if(currentUid.equals(databaseUid)){
+                  //must iterate over comments to delete them all
+                  //deleteComment();
                   clickPost.removeValue();
-                  //make a toast"post deleted"
               }
 
           }
@@ -385,5 +386,50 @@ public class FirebaseActions {
 
           }
       });
+  }
+
+  public void deleteComment(String cid, String postKey, String rid,String currentUid, String databaseUid){
+      DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(postKey);
+
+      commentRef.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull  DataSnapshot snapshot) {
+              if(currentUid.equals(databaseUid)){
+
+                  //must iterate over replies to delete them all
+                  deleteReply(rid, postKey, cid, currentUid, databaseUid);
+                  commentRef.child("Comments").child(cid).removeValue();
+
+              }
+
+              }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+
+          }
+      });
+  }
+
+  public void deleteReply(String cid, String postKey, String rid,String currentUid, String databaseUid){
+      DatabaseReference replyRef = firebaseDatabase.getReference().child("Posts").child(postKey);
+      replyRef.child("Comments").child(cid);
+
+      replyRef.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+              if(currentUid.equals(databaseUid)){
+                  replyRef.child("Answers").child(rid).removeValue();
+
+              }
+
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+
+          }
+      });
+
   }
 }
