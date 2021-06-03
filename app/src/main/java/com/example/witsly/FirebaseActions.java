@@ -368,4 +368,22 @@ public class FirebaseActions {
               public void onCancelled(@NonNull DatabaseError error) {}
             });
   }
+
+  public void DeletePost(String postKey, String databaseUid, String currentUid){
+      DatabaseReference clickPost = firebaseDatabase.getReference().child("Posts").child(postKey);
+      clickPost.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+              if(currentUid.equals(databaseUid)){
+                  clickPost.removeValue();
+                  //make a toast"post deleted"
+              }
+
+          }
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+
+          }
+      });
+  }
 }
