@@ -17,6 +17,7 @@ import com.example.witsly.Interfaces.UpdateVote;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.VoteCount;
 import com.example.witsly.Interfaces.Voted;
+import com.example.witsly.Interfaces.getTag;
 import com.example.witsly.Interfaces.getVoteStatus;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
@@ -91,16 +92,16 @@ public class FirebaseActions {
               Post post = postSnapshot.getValue(Post.class);
               assert post != null;
 
-              CountVotes(
-                  postSnapshot.getKey(),
-                  cv ->
-                      updateVotes(
-                          postSnapshot.getKey(),
-                          (int) cv,
-                          vvr -> {
-                            if (vvr) post.setVote((int) cv);
-                          }));
+              //  CountVotes(postSnapshot.getKey(), cv -> updateVotes(postSnapshot.getKey(), (int)
+              // cv, vvr -> { if (vvr) post.setVote((int) cv); }));
+
               post.setPostID(postSnapshot.getKey());
+
+              getTag(
+                  post.getTag(),
+                  t -> {
+                    post.setTag(t);
+                  });
               postArrayList.add(post);
             }
             g.processResponse(postArrayList);
@@ -112,27 +113,28 @@ public class FirebaseActions {
   }
 
   public void getComments(String AnswerID, GetComments c) {
-      commentsArrayList = new ArrayList<>();
-      DatabaseReference databaseReference = firebaseDatabase.getReference("Comments");
-      databaseReference.addValueEventListener(
-              new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot snapshot) {
-                      commentsArrayList.clear();
+    commentsArrayList = new ArrayList<>();
+    DatabaseReference databaseReference = firebaseDatabase.getReference("Comments");
+    databaseReference.addValueEventListener(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            commentsArrayList.clear();
 
-                      for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+            for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
-                          Comment comment = postSnapshot.getValue(Comment.class);
-                          comment.setCID(postSnapshot.getKey());
+              Comment comment = postSnapshot.getValue(Comment.class);
+              comment.setCID(postSnapshot.getKey());
 
-                          if (comment != null && comment.getAID().equals(AnswerID)) commentsArrayList.add(comment);
-                      }
-                      c.processResponse(commentsArrayList);
-                  }
+              if (comment != null && comment.getAID().equals(AnswerID))
+                commentsArrayList.add(comment);
+            }
+            c.processResponse(commentsArrayList);
+          }
 
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError error) {}
-              });
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
 
   public void getAnswers(String postID, GetAnswers a) {
@@ -279,6 +281,24 @@ public class FirebaseActions {
         .addOnFailureListener(e -> t.processResponse(false));
   }
 
+  public void getTag(String tid, getTag sTag) {
+    firebaseDatabase
+        .getReference("Tags/" + tid)
+        .addValueEventListener(
+            new ValueEventListener() {
+              @SuppressLint("SetTextI18n")
+              @Override
+              public void onDataChange(@NotNull DataSnapshot snapshot) {
+                Tag tag = snapshot.getValue(Tag.class);
+                assert tag != null;
+                sTag.processResponse(tag.getTag());
+              }
+
+              @Override
+              public void onCancelled(@NotNull DatabaseError error) {}
+            });
+  }
+
   public void getTags(GetTags t) {
     tagArrayList = new ArrayList<>();
     DatabaseReference databaseReference = firebaseDatabase.getReference("Tags");
@@ -369,67 +389,57 @@ public class FirebaseActions {
             });
   }
 
-  public void deletePost(String postKey, String databaseUid, String currentUid){
-      DatabaseReference clickPost = firebaseDatabase.getReference().child("Posts").child(postKey);
-      clickPost.addValueEventListener(new ValueEventListener() {
+  public void deletePost(String postKey, String databaseUid, String currentUid) {
+    DatabaseReference clickPost = firebaseDatabase.getReference().child("Posts").child(postKey);
+    clickPost.addValueEventListener(
+        new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
-              if(currentUid.equals(databaseUid)){
-                  //must iterate over comments to delete them all
-                  //deleteComment();
-                  clickPost.removeValue();
-              }
-
+            // must iterate over comments to delete them all
+            // deleteComment();
+            if (currentUid.equals(databaseUid)) clickPost.removeValue();
           }
+
           @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-
-          }
-      });
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
 
-  public void deleteComment(String cid, String postKey, String rid,String currentUid, String databaseUid){
-      DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(postKey);
+  public void deleteComment(
+      String cid, String postKey, String rid, String currentUid, String databaseUid) {
+    DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(postKey);
 
-      commentRef.addValueEventListener(new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull  DataSnapshot snapshot) {
-              if(currentUid.equals(databaseUid)){
-
-                  //must iterate over replies to delete them all
-                  deleteReply(rid, postKey, cid, currentUid, databaseUid);
-                  commentRef.child("Comments").child(cid).removeValue();
-
-              }
-
-              }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-
-          }
-      });
-  }
-
-  public void deleteReply(String cid, String postKey, String rid,String currentUid, String databaseUid){
-      DatabaseReference replyRef = firebaseDatabase.getReference().child("Posts").child(postKey);
-      replyRef.child("Comments").child(cid);
-
-      replyRef.addValueEventListener(new ValueEventListener() {
+    commentRef.addValueEventListener(
+        new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
-              if(currentUid.equals(databaseUid)){
-                  replyRef.child("Answers").child(rid).removeValue();
+            if (currentUid.equals(databaseUid)) {
 
-              }
-
+              // must iterate over replies to delete them all
+              deleteReply(rid, postKey, cid, currentUid, databaseUid);
+              commentRef.child("Comments").child(cid).removeValue();
+            }
           }
 
           @Override
-          public void onCancelled(@NonNull DatabaseError error) {
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
+  }
 
+  public void deleteReply(
+      String cid, String postKey, String rid, String currentUid, String databaseUid) {
+    DatabaseReference replyRef = firebaseDatabase.getReference().child("Posts").child(postKey);
+    replyRef.child("Comments").child(cid);
+
+    replyRef.addValueEventListener(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (currentUid.equals(databaseUid)) replyRef.child("Answers").child(rid).removeValue();
           }
-      });
 
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
 }
