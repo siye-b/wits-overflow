@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,12 +22,15 @@ import com.example.witsly.PostAnswer;
 import com.example.witsly.R;
 import com.google.firebase.database.annotations.NotNull;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder> {
 
   private final ArrayList<Answer> mAnswerList;
   private final FirebaseActions firebaseActions = new FirebaseActions();
+  private Context mContext;
 
   static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -34,6 +39,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     private final TextView mAnswerDate;
     private final TextView mReply;
     private RecyclerView mAnswerRV;
+    private TextView mKebab;
 
     ViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -43,14 +49,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
       mAnswerRV = itemView.findViewById(R.id.rv_comments);
       mAnswerDate = itemView.findViewById(R.id.tv_answer_date);
       mReply = itemView.findViewById(R.id.tvReply);
+      mKebab = itemView.findViewById(R.id.kebab);
 
-
-      mReply.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            v.getContext().startActivity(new Intent(v.getContext(), PostAnswer.class));
-        }
-      });
     }
   }
 
@@ -58,6 +58,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
   public AnswerAdapter(ArrayList<Answer> answerList, Context context) {
     mAnswerList = answerList;
+    mContext = context;
   }
 
   @NonNull
@@ -80,16 +81,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
         answer.getUID(),
         user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
 
-    /*ArrayList<Comment> commentList = new ArrayList<Comment>();
-    for(int i = 0; i < 2; ++i){
-      Comment comment = new Comment("hedueuhbu", "jehgcyug", "gcygwu");
-      commentList.add(comment);
-    }
-    CommentsAdapter commentsAdapter = new CommentsAdapter(commentList);
-    LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
-    holder.mAnswerRV.setLayoutManager(commentLayoutManager);
-    holder.mAnswerRV.setAdapter(commentsAdapter);*/
-
     String aid = answer.getAid();
     firebaseActions.getComments(aid,
             c -> {
@@ -100,7 +91,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
                   Comment k = (Comment)d;
                   commentArrayList.add(k);
                 }
-                CommentsAdapter commentsAdapter = new CommentsAdapter(commentArrayList);
+                CommentsAdapter commentsAdapter = new CommentsAdapter(commentArrayList, mContext);
                 LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
                 holder.mAnswerRV.setLayoutManager(commentLayoutManager);
                 holder.mAnswerRV.setAdapter(commentsAdapter);
@@ -108,6 +99,34 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
 
             });
+
+    holder.mReply.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        v.getContext().startActivity(new Intent(v.getContext(), PostAnswer.class));
+      }
+    });
+
+    holder.mKebab.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        PopupMenu popupMenu = new PopupMenu(mContext, holder.mKebab);
+        popupMenu.inflate(R.menu.context_menu);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+          @Override
+          public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()){
+              case R.id.btn_edit:
+                return true;
+              case R.id.btn_delete:
+                return true;
+            }
+            return false;
+          }
+        });
+      }
+    });
+
   }
 
   @Override

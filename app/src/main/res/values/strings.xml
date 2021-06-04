@@ -5,6 +5,7 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
+    <string name="kebab">&#8942;</string>
 
     <string-array name="tags">
         <item>".net"</item>
