@@ -12,9 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.witsly.Fragments.HomeFragment;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.Tag;
 import com.google.android.material.textfield.TextInputLayout;
@@ -78,15 +76,21 @@ public class PostActivity extends AppCompatActivity {
         final String postBody = (body.getEditText()).getText().toString().trim();
         final String tag = tagInput.getText().toString().toLowerCase().trim();
 
+        String tagID = null;
+
         if (!TextUtils.isEmpty(postBody)
             || !TextUtils.isEmpty(postTitle)
             || !TextUtils.isEmpty(tag)) {
 
-          for (Tag t : mTags)
-            if (t.getTag().equals(tag)) addPost(postTitle, postBody, t.getTagID());
+          for (Tag t : mTags) if (t.getTag().equals(tag)) tagID = t.getTagID();
 
-          FragmentTransaction fraTransaction = getSupportFragmentManager().beginTransaction();
-          fraTransaction.replace(R.id.postA, new HomeFragment()).commit();
+          if (tagID == null)
+            firebaseActions.addTag(
+                new Tag(tag),
+                tagID1 -> {
+                  if (tagID1 != null) addPost(postTitle, postBody, tagID1);
+                });
+          else addPost(postTitle, postBody, tagID);
 
         } else Toast.makeText(this, "fill in all the fields", Toast.LENGTH_LONG).show();
     }

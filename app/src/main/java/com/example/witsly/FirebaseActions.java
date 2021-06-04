@@ -92,16 +92,15 @@ public class FirebaseActions {
               Post post = postSnapshot.getValue(Post.class);
               assert post != null;
 
-              //  CountVotes(postSnapshot.getKey(), cv -> updateVotes(postSnapshot.getKey(), (int)
-              // cv, vvr -> { if (vvr) post.setVote((int) cv); }));
+              getTag(
+                  post.getTag(),
+                  p -> {
+                    post.setTag("");
+                    post.setTag(p);
+                  });
 
               post.setPostID(postSnapshot.getKey());
 
-              getTag(
-                  post.getTag(),
-                  t -> {
-                    post.setTag(t);
-                  });
               postArrayList.add(post);
             }
             g.processResponse(postArrayList);
@@ -270,15 +269,15 @@ public class FirebaseActions {
   }
 
   public void addTag(Tag tag, AddTag t) {
-    firebaseDatabase
-        .getReference("Tags")
-        .push()
-        .setValue(tag)
+
+    DatabaseReference rel = firebaseDatabase.getReference("Tags").push();
+
+    rel.setValue(tag)
         .addOnCompleteListener(
             c -> {
-              if (c.isSuccessful()) t.processResponse(true);
+              if (c.isSuccessful()) t.processResponse(rel.getKey());
             })
-        .addOnFailureListener(e -> t.processResponse(false));
+        .addOnFailureListener(e -> t.processResponse(null));
   }
 
   public void getTag(String tid, getTag sTag) {
