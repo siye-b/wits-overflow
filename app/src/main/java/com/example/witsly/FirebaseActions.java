@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.witsly.Interfaces.AddAnswer;
+import com.example.witsly.Interfaces.AddComment;
 import com.example.witsly.Interfaces.AddPost;
 import com.example.witsly.Interfaces.AddTag;
 import com.example.witsly.Interfaces.GetAllPosts;
@@ -178,6 +179,23 @@ public class FirebaseActions {
               Log.d(TAG, e.getMessage());
             });
   }
+
+    public void addComment(Comment comment, AddComment a){
+        firebaseDatabase
+                .getReference("Comments")
+                .push()
+                .setValue(comment)
+                .addOnCompleteListener(
+                        c -> {
+                            if (c.isSuccessful()) a.processResponse(true);
+                        })
+                .addOnFailureListener(
+                        e -> {
+                            a.processResponse(false);
+                            Log.d(TAG, e.getMessage());
+                        }
+                );
+    }
 
   public void upVote(String pid, String uid) {
 

@@ -32,7 +32,6 @@
                     android:id="@+id/RadioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:orientation="vertical"
                     android:layout_alignParentLeft="true">
                     <ToggleButton
@@ -62,6 +61,24 @@
                         android:background="@drawable/dislike_button">
                     </ToggleButton>
                 </RadioGroup>
+
+                <Button
+                    android:id="@+id/tick"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/RadioGroup"
+                    android:paddingVertical="3dp"
+                    android:background="@drawable/ic_baseline_check_24">
+                </Button>
+
+                <Button
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tick"
+                    android:paddingVertical="1dp"
+                    android:id="@+id/cross"
+                    android:background="@drawable/ic_baseline_close_24">
+                </Button>
 
 
                 <TextView
