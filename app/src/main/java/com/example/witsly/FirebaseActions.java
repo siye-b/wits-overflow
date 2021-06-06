@@ -291,15 +291,15 @@ public class FirebaseActions {
     Liked(
         pid,
         uid,
-        v -> {
-          if (v) g.processResponse(0);
+        vr -> {
+          if (vr) g.processResponse(0);
         });
 
     Disliked(
         pid,
         uid,
-        v -> {
-          if (v) g.processResponse(2);
+        vr -> {
+          if (vr) g.processResponse(2);
         });
 
     g.processResponse(1);
