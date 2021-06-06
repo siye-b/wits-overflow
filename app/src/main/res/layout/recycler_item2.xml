@@ -15,16 +15,31 @@
         android:layout_height="155dp"
         android:layout_margin="8dp">
 
-        <TextView
 
-            android:id="@+id/tv_vote_count2"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:text="100k" />
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Votes:">
+            </TextView>
+            <TextView
+
+                android:id="@+id/tv_vote_count2"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:gravity="center"
+                android:text="100k" />
+
+        </LinearLayout>
 
 
         <LinearLayout
