@@ -1,2 +1,11 @@
 ignore:
-  - "app/**/*" 
+  - "app/src/main/java/com/example/witsly/Models/Post.java" 
+  - "app/src/main/java/com/example/witsly/Models/*.java" 
+  - "app/src/main/java/com/example/witsly/Models/Answer.java"
+  - "app/src/main/java/com/example/witsly/Models/User.java" 
+  - "app/src/main/java/com/example/witsly/Models/Comment.java" 
+  - "app/src/main/java/com/example/witsly/Models/Tag.java" 
+
+
+
+
