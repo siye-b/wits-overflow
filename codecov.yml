@@ -14,7 +14,20 @@ ignore:
   - "app/src/main/java/com/example/witsly/RecyclerAdapter.java"
   - "app/src/main/java/com/example/witsly/Fragments/HomeFragment.java"
   - "app/src/main/java/com/example/witsly/Fragments/ViewQuestion.java"
-  - "app/src/main/java/com/example/witsly/Fragments/ProfileFragment.java" 
+  - "app/src/main/java/com/example/witsly/Fragments/ProfileFragment.java"
+  - "app/src/main/java/com/example/witsly/Adapters/AnswerAdapter.java"
+  - "app/src/main/java/com/example/witsly/Adapters/CommentsAdapter.java"
+  - "app/src/main/java/com/example/witsly/Adapters/RecyclerAdapter.java"
+  - "app/src/main/java/com/example/witsly/Adapters/ProDialog.java"
+  - "app/src/main/java/com/example/witsly/PostAnswer.java"
+  - "app/src/main/java/com/example/witsly/PostActivity.java"
+  
+
+
+
+
+
+
 
 
 
