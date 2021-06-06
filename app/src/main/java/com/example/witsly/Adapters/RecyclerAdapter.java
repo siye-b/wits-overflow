@@ -187,8 +187,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
           if (constraint == null || constraint.length() == 0) filterList.addAll(mListFilter);
           else {
             String query = constraint.toString().toLowerCase().trim();
+            String tQuery = constraint.toString();
             for (Post card : mListFilter)
-              if (card.getTag().trim().startsWith(query) || card.getTitle().startsWith(query)) filterList.add(card);
+              if (card.getTag().trim().startsWith(query) || card.getTitle().contains(tQuery)) filterList.add(card);
           }
           FilterResults filterResults = new FilterResults();
           filterResults.values = filterList;
