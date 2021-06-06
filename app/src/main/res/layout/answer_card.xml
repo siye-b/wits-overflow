@@ -27,8 +27,7 @@
                 android:layout_height="28dp"
                 android:textOn=" "
                 android:textOff=" "
-                android:background="@drawable/like_button">
-            </ToggleButton>
+                android:background="@drawable/like_button"></ToggleButton>
 
             <TextView
                 android:id="@+id/tv_answer_vote"
@@ -36,8 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:gravity="center_horizontal"
-                android:textColor="@color/darkGrey">
-            </TextView>
+                android:textColor="@color/darkGrey"></TextView>
 
             <ToggleButton
                 android:id="@+id/answer_dislike"
@@ -45,68 +43,137 @@
                 android:layout_height="28dp"
                 android:textOff=" "
                 android:textOn=" "
-                android:background="@drawable/dislike_button">
-            </ToggleButton>
+                android:background="@drawable/dislike_button"></ToggleButton>
 
         </RadioGroup>
 
-        <TextView
-            android:id="@+id/tv_answer_name"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textSize="12sp"
-            android:text="Posted by: John Smith"
-            android:textStyle="bold"
-            android:textColor="@color/darkGrey"
             android:layout_toRightOf="@+id/RG"
-            android:layout_toLeftOf="@+id/kebab"/>
+            android:id="@+id/RG_answer"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="&#8942;"
-            android:textColor="@color/black"
-            android:id="@+id/kebab"
-            android:textStyle="bold">
-        </TextView>
+            <LinearLayout
+                android:id="@+id/RG_answer_body"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:textColor="@color/black"
-            android:text="Body of the comment should go here."
-            android:textSize="14sp"
-            android:id="@+id/tv_answer_body"
-            android:layout_below="@+id/tv_answer_name"
-            android:layout_toRightOf="@+id/RG"/>
+                <TextView
+                    android:id="@+id/tv_answer_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textSize="12sp"
+                    android:text="Posted by: John Smith"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkGrey"
+                    android:layout_toLeftOf="@+id/kebab" />
 
-        <TextView
-            android:layout_below="@+id/tv_answer_body"
-            android:id="@+id/tv_answer_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/RG"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:text="Body of the comment should go here."
+                    android:textSize="14sp"
+                    android:id="@+id/tv_answer_body"
+                    android:layout_below="@+id/tv_answer_name" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_answer_date"
-            android:id="@+id/tvReply"
-            android:text="Reply"
-            android:textColor="@drawable/tv_click"
-            android:layout_toRightOf="@+id/RG">
-        </TextView>
+                <TextView
+                    android:layout_below="@+id/tv_answer_body"
+                    android:id="@+id/tv_answer_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_below="@id/RG_answer_body"
+                android:id="@+id/RG_answer_body2"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+
+                <EditText
+                    android:id="@+id/edit_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <Button
+                        android:id="@+id/add_comment_post"
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:background="@color/darkGrey"
+                        android:text="Comment" />
+
+                    <TextView
+                        android:id="@+id/close_add_comment"
+                        android:layout_width="234dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingRight="10dp"
+                        android:text="CLOSE" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RG_answer_body2"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="end"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvReply"
+                        android:layout_width="58dp"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/tv_answer_date"
+                        android:gravity="start"
+                        android:text="Reply"
+                        android:clickable="true"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/tvDelete"
+                        android:layout_width="62dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_answer_date"
+                        android:text="Delete"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:textColor="@color/Red" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvReply">
+            android:layout_below="@+id/RG_answer">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -114,8 +181,7 @@
                 android:layout_width="28dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignBottom="@+id/rv_comments">
-            </LinearLayout>
+                android:layout_alignBottom="@+id/rv_comments"></LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:nestedScrollingEnabled="false"
@@ -124,8 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rv_comments"
-                android:padding="2dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:padding="2dp"></androidx.recyclerview.widget.RecyclerView>
 
         </RelativeLayout>
 

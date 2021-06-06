@@ -23,7 +23,7 @@ class FirebaseAuthentication {
         .signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(
             task -> {
-              if (task.isSuccessful()) f.processAuth(true, "");
+              if (task.isSuccessful()) f.processAuth(true, null);
             })
         .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
   }
@@ -31,14 +31,8 @@ class FirebaseAuthentication {
   void resetPassword(String email, FirebaseAuthHandler f) {
     mAuth
         .sendPasswordResetEmail(email)
-        .addOnSuccessListener(
-            aVoid -> {
-              f.processAuth(true, "");
-            })
-        .addOnFailureListener(
-            e -> {
-              f.processAuth(false, e.getMessage());
-            });
+        .addOnSuccessListener(aVoid -> f.processAuth(true, null))
+        .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
   }
 
   void register(String email, String name, String surname, String password, FirebaseAuthHandler f) {

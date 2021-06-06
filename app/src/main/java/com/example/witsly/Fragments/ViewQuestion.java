@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,11 +39,9 @@ public class ViewQuestion extends Fragment {
   private FirebaseActions firebaseActions;
   private String questionID, userID;
   private TextView vote;
-  private ToggleButton like;
-  private ToggleButton dislike;
-  private ToggleButton ansLike;
-  private ToggleButton ansDislike;
-  private RadioGroup radioGroup;
+  private ToggleButton like, dislike;
+  private Button solvedMark, deleteMark;
+  private Boolean isAuthor;
 
   @SuppressLint("SetTextI18n")
   @Override
@@ -53,6 +51,7 @@ public class ViewQuestion extends Fragment {
 
     Bundle bundle = getArguments();
     firebaseActions = new FirebaseActions();
+    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
     body = view.findViewById(R.id.tv_view_details);
     title = view.findViewById(R.id.tv_view_title);
@@ -61,14 +60,13 @@ public class ViewQuestion extends Fragment {
     vote = view.findViewById(R.id.txt_vote);
     like = view.findViewById(R.id.btn_like);
     dislike = view.findViewById(R.id.btn_dislike);
-    ansLike = view.findViewById(R.id.answer_like);
-    ansDislike = view.findViewById(R.id.answer_dislike);
+    solvedMark = view.findViewById(R.id.tick);
+    deleteMark = view.findViewById(R.id.cross);
+
+    assert mUser != null;
 
     like.setOnCheckedChangeListener(onCheckedListener);
     dislike.setOnCheckedChangeListener(onCheckedListener);
-
-    ansLike.setOnCheckedChangeListener(onCheckedListenerAnswer);
-    ansDislike.setOnCheckedChangeListener(onCheckedListenerAnswer);
 
     mRecyclerView = view.findViewById(R.id.rv_answers);
     add_btn = view.findViewById(R.id.add_comment_btn);
@@ -94,16 +92,50 @@ public class ViewQuestion extends Fragment {
                     + (post.getDate()).substring(0, 10));
             title.setText(post.isSolved() ? post.getTitle() + " [SOLVED]" : post.getTitle());
             details.setText(post.getBody());
+
+            // only the owner of the post can mark the question as solved
+
+            if (mUser.getUid().equals(userID)) {
+              solvedMark.setVisibility(View.VISIBLE);
+              solvedMark.setOnClickListener(
+                  sm ->
+                      firebaseActions.markPost(
+                          postID,
+                          m -> {
+                            if (m)
+                              Toast.makeText(getActivity(), "Solved", Toast.LENGTH_SHORT).show();
+                            else
+                              Toast.makeText(getActivity(), "Not Solved", Toast.LENGTH_SHORT)
+                                  .show();
+                          }));
+            }
+
+            firebaseActions.isCurrentUserAdmin(
+                (isAdmin, resp) -> {
+                  if (isAdmin || mUser.getUid().equals(userID)) {
+                    deleteMark.setVisibility(View.VISIBLE);
+                    deleteMark.setOnClickListener(
+                        dm -> {
+                          ((FragmentActivity) view.getContext())
+                              .getSupportFragmentManager()
+                              .beginTransaction()
+                              .replace(R.id.container_frag, new HomeFragment())
+                              .commit();
+                          firebaseActions.deletePost(
+                              postID,
+                              r ->
+                                  Toast.makeText(getActivity(), "Post Deleted", Toast.LENGTH_LONG)
+                                      .show());
+                        });
+                  }
+                });
           });
 
       add_btn.setOnClickListener(
           v -> {
-            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-
             String comment = add_comment.getText().toString().trim();
 
             if (!comment.equals("")) {
-              assert mUser != null;
               firebaseActions.addAnswer(
                   new Answer(comment, mUser.getUid(), postID),
                   r -> {
@@ -143,19 +175,21 @@ public class ViewQuestion extends Fragment {
           }
         }
       };
+  /*
+   CompoundButton.OnCheckedChangeListener onCheckedListenerAnswer =
+       new CompoundButton.OnCheckedChangeListener() {
+         @Override
+         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+           if (isChecked) {
+             if (buttonView != ansLike) {
+               ansLike.setChecked(false);
+             }
+             if (buttonView != ansDislike) {
+               ansDislike.setChecked(false);
+             }
+           }
+         }
+       };
 
-  CompoundButton.OnCheckedChangeListener onCheckedListenerAnswer =
-      new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-          if (isChecked) {
-            if (buttonView != ansLike) {
-              ansLike.setChecked(false);
-            }
-            if (buttonView != ansDislike) {
-              ansDislike.setChecked(false);
-            }
-          }
-        }
-      };
+  */
 }

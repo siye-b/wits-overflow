@@ -2,14 +2,14 @@ package com.example.witsly.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,11 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.witsly.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
-import com.example.witsly.PostAnswer;
 import com.example.witsly.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.annotations.NotNull;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -30,16 +29,26 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
   private final ArrayList<Answer> mAnswerList;
   private final FirebaseActions firebaseActions = new FirebaseActions();
-  private Context mContext;
+  FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+  private final Context mContext;
 
   static class ViewHolder extends RecyclerView.ViewHolder {
 
+    // For Posts
     private final TextView mAnswerDetails;
     private final TextView mAnswerBody;
     private final TextView mAnswerDate;
     private final TextView mReply;
-    private RecyclerView mAnswerRV;
-    private TextView mKebab;
+    private final TextView mDelete;
+    private final LinearLayout replyLayout;
+    private final RecyclerView mAnswerRV;
+
+    // For Comments
+
+    private final EditText mComment;
+    private final Button mAddComment;
+    private final TextView mClose;
 
     ViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -49,12 +58,13 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
       mAnswerRV = itemView.findViewById(R.id.rv_comments);
       mAnswerDate = itemView.findViewById(R.id.tv_answer_date);
       mReply = itemView.findViewById(R.id.tvReply);
-      mKebab = itemView.findViewById(R.id.kebab);
-
+      mDelete = itemView.findViewById(R.id.tvDelete);
+      replyLayout = itemView.findViewById(R.id.RG_answer_body2);
+      mComment = itemView.findViewById(R.id.edit_comment);
+      mAddComment = itemView.findViewById(R.id.add_comment_post);
+      mClose = itemView.findViewById(R.id.close_add_comment);
     }
   }
-
-
 
   public AnswerAdapter(ArrayList<Answer> answerList, Context context) {
     mAnswerList = answerList;
@@ -77,56 +87,74 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     Answer answer = mAnswerList.get(position);
     holder.mAnswerBody.setText(answer.getAnswer());
     holder.mAnswerDate.setText(answer.getDate());
+    holder.mClose.setOnClickListener(
+        close -> {
+          holder.replyLayout.setVisibility(View.GONE);
+          holder.mReply.setVisibility(View.VISIBLE);
+          holder.mDelete.setVisibility(View.VISIBLE);
+        });
     firebaseActions.getUserDetails(
         answer.getUID(),
         user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
 
     String aid = answer.getAid();
-    firebaseActions.getComments(aid,
-            c -> {
-              Log.d("Size", "Comment Array Size: "  + c.size() + " Answer ID" + aid);
-              if (c.size() >= 1){
-                ArrayList<Comment> commentArrayList = new ArrayList<Comment>();
-                for (Object d : c){
-                  Comment k = (Comment)d;
-                  commentArrayList.add(k);
-                }
-                CommentsAdapter commentsAdapter = new CommentsAdapter(commentArrayList, mContext);
-                LinearLayoutManager commentLayoutManager = new LinearLayoutManager(holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
-                holder.mAnswerRV.setLayoutManager(commentLayoutManager);
-                holder.mAnswerRV.setAdapter(commentsAdapter);
-              }
-
-
-            });
-
-    holder.mReply.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        v.getContext().startActivity(new Intent(v.getContext(), PostAnswer.class));
-      }
-    });
-
-    holder.mKebab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        PopupMenu popupMenu = new PopupMenu(mContext, holder.mKebab);
-        popupMenu.inflate(R.menu.context_menu);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-          @Override
-          public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()){
-              case R.id.btn_edit:
-                return true;
-              case R.id.btn_delete:
-                return true;
+    firebaseActions.getComments(
+        aid,
+        c -> {
+          if (c.size() >= 1) {
+            ArrayList<Comment> commentArrayList = new ArrayList<>();
+            for (Object d : c) {
+              Comment k = (Comment) d;
+              commentArrayList.add(k);
             }
-            return false;
+            CommentsAdapter commentsAdapter = new CommentsAdapter(commentArrayList, mContext);
+            LinearLayoutManager commentLayoutManager =
+                new LinearLayoutManager(
+                    holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
+            holder.mAnswerRV.setLayoutManager(commentLayoutManager);
+            holder.mAnswerRV.setAdapter(commentsAdapter);
           }
         });
-      }
-    });
 
+    holder.mReply.setOnClickListener(
+        reply -> {
+          holder.replyLayout.setVisibility(View.VISIBLE);
+          holder.mReply.setVisibility(View.INVISIBLE);
+          holder.mDelete.setVisibility(View.INVISIBLE);
+
+          String commentText = holder.mComment.getText().toString().trim();
+
+          holder.mAddComment.setOnClickListener(
+              add ->
+                  firebaseActions.addComment(
+                      new Comment(commentText, mUser.getUid(), answer.getAid()),
+                      ac -> {
+                        if (ac) {
+                          holder.replyLayout.setVisibility(View.GONE);
+                          holder.mReply.setVisibility(View.VISIBLE);
+                          holder.mDelete.setVisibility(View.GONE);
+
+                          firebaseActions.isCurrentUserAdmin(
+                              (isAdmin, str) -> {
+                                if (isAdmin || answer.getUID().equals(mUser.getUid())) {
+                                  holder.mDelete.setVisibility(View.VISIBLE);
+                                }
+                              });
+                        }
+                      }));
+        });
+
+    firebaseActions.isCurrentUserAdmin(
+        (isAdmin, str) -> {
+          if (isAdmin || answer.getUID().equals(mUser.getUid())) {
+            holder.mDelete.setVisibility(View.VISIBLE);
+            holder.mDelete.setOnClickListener(
+                c ->
+                    firebaseActions.deleteAnswer(
+                        answer.getAid(),
+                        r -> Toast.makeText(mContext, "Answer Deleted", Toast.LENGTH_LONG).show()));
+          }
+        });
   }
 
   @Override

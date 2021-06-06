@@ -88,9 +88,9 @@ public class PostActivity extends AppCompatActivity {
             firebaseActions.addTag(
                 new Tag(tag),
                 tagID1 -> {
-                  if (tagID1 != null) addPost(postTitle, postBody, tagID1);
+                  if (tagID1 != null) addPost(postTitle, postBody, tag);
                 });
-          else addPost(postTitle, postBody, tagID);
+          else addPost(postTitle, postBody, tag);
 
         } else Toast.makeText(this, "fill in all the fields", Toast.LENGTH_LONG).show();
     }
@@ -105,6 +105,7 @@ public class PostActivity extends AppCompatActivity {
         post,
         (added, key) -> {
           if (added) {
+            Toast.makeText(getApplicationContext(), "Post added", Toast.LENGTH_SHORT).show();
 
           } else
             Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT)
