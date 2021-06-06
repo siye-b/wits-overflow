@@ -5,6 +5,28 @@ ignore:
   - "app/src/main/java/com/example/witsly/Models/User.java" 
   - "app/src/main/java/com/example/witsly/Models/Comment.java" 
   - "app/src/main/java/com/example/witsly/Models/Tag.java" 
+  - "app/src/main/java/com/example/witsly/Models/Question.java" 
+  - "app/src/main/java/com/example/witsly/FirebaseActions.java"
+  - "app/src/main/java/com/example/witsly/FirebaseAuthentication.java"
+  - "app/src/main/java/com/example/witsly/MainActivity.java"
+  - "app/src/main/java/com/example/witsly/AnswerAdapter.java"
+  - "app/src/main/java/com/example/witsly/CommentsAdapter.java"
+  - "app/src/main/java/com/example/witsly/RecyclerAdapter.java"
+  - "app/src/main/java/com/example/witsly/Fragments/HomeFragment.java"
+  - "app/src/main/java/com/example/witsly/Fragments/ViewQuestion.java"
+  - "app/src/main/java/com/example/witsly/Fragments/ProfileFragment.java" 
+
+
+
+
+
+
+  
+
+
+  
+
+
 
 
 
