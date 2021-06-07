@@ -10,186 +10,179 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:overScrollMode="never"
-        android:fillViewport="true"
-        android:layout_above="@+id/txt"
+        android:fillViewport="false"
         android:layout_alignParentTop="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/RL"
-                android:paddingLeft="1dp">
-
-                <RadioGroup
-                    android:id="@+id/RadioGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true">
-
-                    <Button
-                        android:id="@+id/tick"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:paddingVertical="3dp"
-                        android:visibility="invisible"
-
-                        android:background="@drawable/ic_baseline_check_24"></Button>
-
-                    <ToggleButton
-                        android:id="@+id/btn_like"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:textOff=" "
-                        android:textOn=" "
-                        android:text=" "
-                        android:background="@drawable/like_button"></ToggleButton>
-
-                    <TextView
-                        android:id="@+id/txt_vote"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:text="0"
-                        android:textColor="@color/darkGrey"></TextView>
-
-                    <ToggleButton
-                        android:id="@+id/btn_dislike"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:textOff=" "
-                        android:textOn=" "
-                        android:text=" "
-                        android:background="@drawable/dislike_button"></ToggleButton>
-
-                    <Button
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:paddingVertical="1dp"
-                        android:id="@+id/cross"
-                        android:visibility="invisible"
-                        android:background="@drawable/ic_baseline_close_24"></Button>
-                </RadioGroup>
+                android:id="@+id/nestedView"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_toRightOf="@+id/RadioGroup"
-                    android:layout_centerVertical="true"
+                    android:layout_height="match_parent"
+                    android:id="@+id/RL"
+                    android:paddingLeft="1dp">
 
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_view_details"
-                        android:layout_width="match_parent"
+                    <RadioGroup
+                        android:id="@+id/RadioGroup"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_view_body"
-                        android:layout_gravity="bottom"
-                        android:padding="3dp"
-                        android:text="Posted by: John Smith · On: 01/01/2000"
-                        android:textColor="@color/darkGrey"
-                        android:textSize="14sp" />
+                        android:orientation="vertical"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true">
 
-                    <TextView
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/tv_view_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:padding="3dp"
-                        android:singleLine="false"
-                        android:text="Title"
-                        android:textColor="@color/black"
-                        android:textSize="32sp"
-                        android:textStyle="bold" />
+                        <Button
+                            android:id="@+id/tick"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:paddingVertical="3dp"
+                            android:visibility="invisible"
 
-                    <TextView
-                        android:id="@+id/tv_view_body"
+                            android:background="@drawable/ic_baseline_check_24"></Button>
+
+                        <ToggleButton
+                            android:id="@+id/btn_like"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:textOff=" "
+                            android:textOn=" "
+                            android:text=" "
+                            android:background="@drawable/like_button"></ToggleButton>
+
+                        <TextView
+                            android:id="@+id/txt_vote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="0"
+                            android:textColor="@color/darkGrey"></TextView>
+
+                        <ToggleButton
+                            android:id="@+id/btn_dislike"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:textOff=" "
+                            android:textOn=" "
+                            android:text=" "
+                            android:background="@drawable/dislike_button"></ToggleButton>
+
+                        <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:paddingVertical="1dp"
+                            android:id="@+id/cross"
+                            android:visibility="invisible"
+                            android:background="@drawable/ic_baseline_close_24"></Button>
+                    </RadioGroup>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_view_title"
-                        android:padding="3dp"
-                        android:singleLine="false"
-                        android:text="Body should go here!"
-                        android:textColor="@color/darkGrey"
-                        android:textSize="16sp" />
+                        android:layout_toRightOf="@+id/RadioGroup"
+                        android:layout_centerVertical="true"
+
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_view_details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_view_body"
+                            android:layout_gravity="bottom"
+                            android:padding="3dp"
+                            android:text="Posted by: John Smith · On: 01/01/2000"
+                            android:textColor="@color/darkGrey"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/tv_view_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:padding="3dp"
+                            android:singleLine="false"
+                            android:text="Title"
+                            android:textColor="@color/black"
+                            android:textSize="32sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_view_body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_view_title"
+                            android:padding="3dp"
+                            android:singleLine="false"
+                            android:text="Body should go here!"
+                            android:textColor="@color/darkGrey"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
 
                 </RelativeLayout>
 
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_answers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/RL"
+                    android:overScrollMode="never"
+                    android:paddingTop="5dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
             </RelativeLayout>
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_answers"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/RL"
-                android:overScrollMode="never"
-                android:paddingTop="5dp">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="100dp"
+                android:padding="10dp"
+                android:id="@+id/txt"
 
 
-        </RelativeLayout>
+                android:background="@drawable/border"
+                android:gravity="bottom">
+
+                <EditText
+                    android:id="@+id/add_comment_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="85dp"
+                    android:singleLine="false"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/add_comment_btn"
+                    android:layout_centerVertical="true" />
+
+                <Button
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_comment_btn"
+                    android:text="add"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+
+
+                -->
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:padding="10dp"
-        android:id="@+id/txt"
-        android:background="@drawable/border"
-        android:layout_alignParentBottom="true">
-
-        <EditText
-            android:id="@+id/add_comment_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="85dp"
-            android:singleLine="false"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/add_comment_btn"
-            android:layout_centerVertical="true" />
-
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/add_comment_btn"
-            android:text="add"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
-
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/add_comment_et"
-                android:layout_width= "300dp"
-                android:layout_height="80dp"
-                android:singleLine="false"/>
-
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="50dp"
-                android:id="@+id/add_comment_btn"
-                android:text="add" />
-
-        </LinearLayout>
--->
-
-    </RelativeLayout>
 
 
 </RelativeLayout>

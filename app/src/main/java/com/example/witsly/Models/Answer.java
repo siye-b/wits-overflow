@@ -3,11 +3,13 @@ package com.example.witsly.Models;
 import android.annotation.SuppressLint;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 public class Answer {
   private String answer, uid, qid, date, aid;
   private Boolean correct;
+  private int vote;
 
   @SuppressLint("SimpleDateFormat")
   private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
@@ -18,15 +20,19 @@ public class Answer {
     this.answer = answer;
     this.uid = uid;
     this.qid = qid;
+    vote = 0;
     date = ISO_8601_FORMAT.format(new Date());
     correct = false;
   }
+
+  public static Comparator<Answer> VoteComparator = (o1, o2) -> o2.getVote() - o1.getVote();
 
   public Answer(String answer, String uid, String qid, String aid) {
     this.answer = answer;
     this.uid = uid;
     this.qid = qid;
     this.aid = aid;
+    vote = 0;
     date = ISO_8601_FORMAT.format(new Date());
     correct = false;
   }
@@ -51,7 +57,13 @@ public class Answer {
     return date;
   }
 
-  public String getAid(){return aid;}
+  public String getAid() {
+    return aid;
+  }
+
+  public int getVote() {
+    return vote;
+  }
 
   public void setAnswer(String answer) {
     this.answer = answer;
@@ -69,5 +81,7 @@ public class Answer {
     this.uid = uid;
   }
 
-  public void setAid(String aid) {this.aid = aid;}
+  public void setAid(String aid) {
+    this.aid = aid;
+  }
 }

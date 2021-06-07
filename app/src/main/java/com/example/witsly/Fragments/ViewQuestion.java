@@ -20,11 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.FirebaseActions;
 import com.example.witsly.Models.Answer;
+import com.example.witsly.Models.Post;
 import com.example.witsly.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ViewQuestion extends Fragment {
   private TextView title;
@@ -92,6 +94,7 @@ public class ViewQuestion extends Fragment {
                     + (post.getDate()).substring(0, 10));
             title.setText(post.isSolved() ? post.getTitle() + " [SOLVED]" : post.getTitle());
             details.setText(post.getBody());
+            vote.setText(post.getVote() + "");
 
             // only the owner of the post can mark the question as solved
 
@@ -131,6 +134,18 @@ public class ViewQuestion extends Fragment {
                 });
           });
 
+      like.setOnClickListener(
+          v -> {
+            Toast.makeText(getActivity(), "like", Toast.LENGTH_SHORT).show();
+            firebaseActions.upVote("Posts", postID, mUser.getUid());
+          });
+
+      dislike.setOnClickListener(
+          v -> {
+            firebaseActions.downVote("Posts", postID, mUser.getUid());
+            Toast.makeText(getActivity(), "dislike", Toast.LENGTH_SHORT).show();
+          });
+
       add_btn.setOnClickListener(
           v -> {
             String comment = add_comment.getText().toString().trim();
@@ -141,17 +156,18 @@ public class ViewQuestion extends Fragment {
                   r -> {
                     if (r) {
                       add_comment.setText("");
-                      Toast.makeText(getActivity(), "added", Toast.LENGTH_LONG).show();
-                    } else Toast.makeText(getActivity(), "not added", Toast.LENGTH_LONG).show();
+                      Toast.makeText(getActivity(), "added", Toast.LENGTH_SHORT).show();
+                    } else Toast.makeText(getActivity(), "not added", Toast.LENGTH_SHORT).show();
                   });
             } else
-              Toast.makeText(getActivity(), "the comment section is empty", Toast.LENGTH_LONG)
+              Toast.makeText(getActivity(), "the comment section is empty", Toast.LENGTH_SHORT)
                   .show();
           });
 
       firebaseActions.getAnswers(
           postID,
           answers -> {
+            Collections.sort(answers, Post.VoteComparator);
             AnswerAdapter ans = new AnswerAdapter(answers, getActivity());
             mRecyclerView.setAdapter(ans);
             mRecyclerView.setLayoutManager(mRecyclerManager);

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,6 +44,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     private final TextView mDelete;
     private final LinearLayout replyLayout;
     private final RecyclerView mAnswerRV;
+    private ToggleButton like, dislike;
 
     // For Comments
 
@@ -63,6 +65,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
       mComment = itemView.findViewById(R.id.edit_comment);
       mAddComment = itemView.findViewById(R.id.add_comment_post);
       mClose = itemView.findViewById(R.id.close_add_comment);
+      like = itemView.findViewById(R.id.answer_like);
+      dislike = itemView.findViewById(R.id.answer_dislike);
     }
   }
 
@@ -93,6 +97,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
           holder.mReply.setVisibility(View.VISIBLE);
           holder.mDelete.setVisibility(View.VISIBLE);
         });
+
     firebaseActions.getUserDetails(
         answer.getUID(),
         user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
@@ -114,6 +119,18 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
             holder.mAnswerRV.setLayoutManager(commentLayoutManager);
             holder.mAnswerRV.setAdapter(commentsAdapter);
           }
+        });
+
+    holder.like.setOnClickListener(
+        l -> {
+          firebaseActions.upVote("Answers", answer.getAid(), mUser.getUid());
+          Toast.makeText(mContext, "Like", Toast.LENGTH_SHORT).show();
+        });
+
+    holder.dislike.setOnClickListener(
+        l -> {
+          firebaseActions.downVote("Answers", answer.getAid(), mUser.getUid());
+          Toast.makeText(mContext, "DisLike", Toast.LENGTH_SHORT).show();
         });
 
     holder.mReply.setOnClickListener(

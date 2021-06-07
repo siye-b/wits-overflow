@@ -216,19 +216,34 @@ public class FirebaseActions {
             });
   }
 
-  public void upVote(String pid, String uid) {
+  public void upVote(String place, String pid, String uid) {
 
-    DatabaseReference likes, disLikes;
+    DatabaseReference likes, disLikes, vote;
     likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
     disLikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
+    vote = firebaseDatabase.getReference(place).child(pid).child("vote");
+    vote.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot voteShot) {
+            vote.setValue(((long) voteShot.getValue() + 1));
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
     disLikes.addListenerForSingleValueEvent(
         new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            if (snapshot.exists()) disLikes.removeValue();
-            else likes.setValue(true);
+            if (snapshot.exists()) {
+              disLikes.removeValue();
+
+            } else {
+              likes.setValue(true);
+            }
           }
 
           @Override
@@ -236,19 +251,35 @@ public class FirebaseActions {
         });
   }
 
-  public void downVote(String pid, String uid) {
+  public void downVote(String place, String pid, String uid) {
 
-    DatabaseReference likes, disLikes;
+    DatabaseReference likes, disLikes, vote;
     likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
     disLikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
+    vote = firebaseDatabase.getReference(place).child(pid).child("vote");
+
+    vote.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot voteShot) {
+            vote.setValue(((long) voteShot.getValue() - 1));
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
     likes.addListenerForSingleValueEvent(
         new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            if (snapshot.exists()) likes.removeValue();
-            else disLikes.setValue(true);
+            if (snapshot.exists()) {
+              likes.removeValue();
+
+            } else {
+              disLikes.setValue(true);
+            }
           }
 
           @Override
