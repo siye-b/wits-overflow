@@ -34,15 +34,10 @@ public class HomeFragment extends Fragment {
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-    /*
-       if login is admin -> show the btn self
-    */
-
     FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
     mFAB.setOnClickListener(v -> startActivity(new Intent(getActivity(), PostActivity.class)));
 
     setHasOptionsMenu(true);
-    // ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 
     RecyclerView mRecyclerView = view.findViewById(R.id.recyclerView);
     mRecyclerView.setHasFixedSize(true);

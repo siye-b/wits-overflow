@@ -6,28 +6,29 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
 
 import com.example.witsly.Models.Post;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
+import com.example.witsly.Models.Tag;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class PostActivity extends AppCompatActivity {
 
   private TextInputLayout title, body;
   private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-  private ChipGroup cGroup;
-  private List<String> mTagList;
   private final FirebaseActions firebaseActions = new FirebaseActions();
+  private AppCompatAutoCompleteTextView tagInput;
+  private ArrayList<Tag> mTags;
+  private String tagID;
+  Tag tag;
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -38,20 +39,21 @@ public class PostActivity extends AppCompatActivity {
     (getSupportActionBar()).setTitle("New Post");
     (getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-    cGroup = findViewById(R.id.chip_group);
-    mTagList = Arrays.asList(getResources().getStringArray(R.array.tags));
-
-    for (int i = 0; i < mTagList.size(); ++i) {
-      final Chip chip = new Chip(this);
-      chip.setText(mTagList.get(i).trim());
-      chip.setCheckable(true);
-      chip.setCheckedIconVisible(true);
-      chip.setId(ViewCompat.generateViewId());
-      cGroup.addView(chip);
-    }
-
+    tagInput = findViewById(R.id.tagInput);
     title = findViewById(R.id.textInputLayoutTitle);
     body = findViewById(R.id.textInputLayoutBody);
+
+    firebaseActions.getTags(
+        tags -> {
+          ArrayAdapter<Tag> arrayAdapter =
+              new ArrayAdapter<Tag>(this, android.R.layout.simple_list_item_1, tags);
+          tagInput.setAdapter(arrayAdapter);
+          mTags = tags;
+          tagInput.setOnItemClickListener(
+              (parent, view, position, id) -> {
+                tag = ((Tag) tags.get(position));
+              });
+        });
   }
 
   @Override
@@ -72,18 +74,25 @@ public class PostActivity extends AppCompatActivity {
       case R.id.btn_post:
         final String postTitle = (title.getEditText()).getText().toString().trim();
         final String postBody = (body.getEditText()).getText().toString().trim();
-        //final String tag = cGroup.getTag().toString().trim();
+        final String tag = tagInput.getText().toString().toLowerCase().trim();
 
-        int i = cGroup.getCheckedChipId();
-        Chip chip = (Chip)cGroup.getChildAt(i - 1);
-        final String tag = chip.getText().toString().trim();
+        String tagID = null;
 
+        if (!TextUtils.isEmpty(postBody)
+            || !TextUtils.isEmpty(postTitle)
+            || !TextUtils.isEmpty(tag)) {
 
+          for (Tag t : mTags) if (t.getTag().equals(tag)) tagID = t.getTagID();
 
+          if (tagID == null)
+            firebaseActions.addTag(
+                new Tag(tag),
+                tagID1 -> {
+                  if (tagID1 != null) addPost(postTitle, postBody, tag);
+                });
+          else addPost(postTitle, postBody, tag);
 
-        if (!TextUtils.isEmpty(postBody) || !TextUtils.isEmpty(postTitle) || !TextUtils.isEmpty(tag)) {
-          addPost(postTitle, postBody, tag);
-        }else Toast.makeText(this, "fill in all the fields", Toast.LENGTH_LONG).show();
+        } else Toast.makeText(this, "fill in all the fields", Toast.LENGTH_LONG).show();
     }
     return super.onOptionsItemSelected(item);
   }
@@ -96,6 +105,7 @@ public class PostActivity extends AppCompatActivity {
         post,
         (added, key) -> {
           if (added) {
+            Toast.makeText(getApplicationContext(), "Post added", Toast.LENGTH_SHORT).show();
 
           } else
             Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT)

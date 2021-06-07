@@ -12,5 +12,6 @@
     <color name="darkGrey">#1a1a1a</color>
     <color name="Red">#F44336</color>
     <color name="Green">#8BC34A</color>
+    <color name="BorderStroke">#CCC8C8</color>
 
 </resources>

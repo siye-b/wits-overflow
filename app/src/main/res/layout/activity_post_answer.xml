@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
         android:layout_alignParentTop="true"
-        android:visibility="invisible"
+        android:visibility="visible"
         layout="@layout/drawer_toolbar"
         android:layout_height="wrap_content" />
 

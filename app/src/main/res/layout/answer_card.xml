@@ -9,56 +9,191 @@
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/RL_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp">
 
-        <TextView
-            android:id="@+id/tv_answer_name"
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textSize="12sp"
-            android:text="Posted by: John Smith"
-            android:textStyle="bold"
-            android:textColor="@color/darkGrey" />
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/RG">
 
-        <TextView
+            <ToggleButton
+                android:id="@+id/answer_like"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:textOn=" "
+                android:textOff=" "
+                android:background="@drawable/like_button"></ToggleButton>
+
+            <TextView
+                android:id="@+id/tv_answer_vote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:gravity="center_horizontal"
+                android:textColor="@color/darkGrey"></TextView>
+
+            <ToggleButton
+                android:id="@+id/answer_dislike"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:textOff=" "
+                android:textOn=" "
+                android:background="@drawable/dislike_button"></ToggleButton>
+
+        </RadioGroup>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:textColor="@color/black"
-            android:text="Body of the comment should go here."
-            android:textSize="14sp"
-            android:id="@+id/tv_answer_body"
-            android:layout_below="@+id/tv_answer_name" />
+            android:layout_toRightOf="@+id/RG"
+            android:id="@+id/RG_answer"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_below="@+id/tv_answer_body"
-            android:id="@+id/tv_answer_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/RG_answer_body"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_answer_date"
-            android:id="@+id/tvReply"
-            android:text="Reply"
-            android:textColor="@drawable/tv_click">
-        </TextView>
-
-        <!--
-                <androidx.recyclerview.widget.RecyclerView
+                <TextView
+                    android:id="@+id/tv_answer_name"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:id="@+id/rv_comments"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textSize="12sp"
+                    android:text="Posted by: John Smith"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkGrey"
+                    android:layout_toLeftOf="@+id/kebab" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:text="Body of the comment should go here."
+                    android:textSize="14sp"
+                    android:id="@+id/tv_answer_body"
+                    android:layout_below="@+id/tv_answer_name" />
+
+                <TextView
                     android:layout_below="@+id/tv_answer_body"
-                    android:padding="5dp">
+                    android:id="@+id/tv_answer_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-                </androidx.recyclerview.widget.RecyclerView>
 
-                -->
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_below="@id/RG_answer_body"
+                android:id="@+id/RG_answer_body2"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+
+                <EditText
+                    android:id="@+id/edit_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <Button
+                        android:id="@+id/add_comment_post"
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:background="@color/darkGrey"
+                        android:text="Comment" />
+
+                    <TextView
+                        android:id="@+id/close_add_comment"
+                        android:layout_width="234dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingRight="10dp"
+                        android:text="CLOSE" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RG_answer_body2"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="end"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvReply"
+                        android:layout_width="58dp"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/tv_answer_date"
+                        android:gravity="start"
+                        android:text="Reply"
+                        android:clickable="true"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/tvDelete"
+                        android:layout_width="62dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_answer_date"
+                        android:text="Delete"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:textColor="@color/Red" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RG_answer">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/LL_answer"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignBottom="@+id/rv_comments"></LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:layout_toRightOf="@+id/LL_answer"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_comments"
+                android:padding="2dp"></androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

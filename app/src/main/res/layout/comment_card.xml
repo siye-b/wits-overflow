@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardPreventCornerOverlap="true"
-    app:cardElevation="2dp"
+    app:cardElevation="1dp"
+    android:id="@+id/ccard"
     app:cardCornerRadius="0dp"
     app:cardUseCompatPadding="true">
 
@@ -18,11 +19,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:textSize="12sp"
             android:text="Posted by: John Smith"
-            android:textStyle="bold"
-            android:textColor="@color/darkGrey">
-        </TextView>
+            android:textColor="@color/darkGrey"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
 
         <TextView
             android:layout_width="match_parent"
@@ -36,7 +36,19 @@
 
         </TextView>
 
+        <TextView
+            android:visibility="gone"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:id="@+id/delete_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_commenter_body"
+
+            android:text="delete" />
+
 
     </RelativeLayout>
+
 
 </androidx.cardview.widget.CardView>
