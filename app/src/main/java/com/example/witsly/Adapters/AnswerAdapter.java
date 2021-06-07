@@ -45,6 +45,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     private final LinearLayout replyLayout;
     private final RecyclerView mAnswerRV;
     private ToggleButton like, dislike;
+    private TextView vote;
 
     // For Comments
 
@@ -66,6 +67,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
       mAddComment = itemView.findViewById(R.id.add_comment_post);
       mClose = itemView.findViewById(R.id.close_add_comment);
       like = itemView.findViewById(R.id.answer_like);
+      vote = itemView.findViewById(R.id.tv_answer_vote);
       dislike = itemView.findViewById(R.id.answer_dislike);
     }
   }
@@ -91,6 +93,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     Answer answer = mAnswerList.get(position);
     holder.mAnswerBody.setText(answer.getAnswer());
     holder.mAnswerDate.setText(answer.getDate());
+    holder.vote.setText(answer.getVote() + "");
     holder.mClose.setOnClickListener(
         close -> {
           holder.replyLayout.setVisibility(View.GONE);

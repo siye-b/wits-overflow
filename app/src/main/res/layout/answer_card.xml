@@ -15,35 +15,34 @@
         android:padding="4dp">
 
         <RadioGroup
+            android:id="@+id/RG"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentLeft="true"
-            android:id="@+id/RG">
+            android:orientation="vertical">
 
             <ToggleButton
                 android:id="@+id/answer_like"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:textOn=" "
+                android:background="@drawable/like_button"
                 android:textOff=" "
-                android:background="@drawable/like_button"></ToggleButton>
+                android:textOn=" "></ToggleButton>
 
             <TextView
                 android:id="@+id/tv_answer_vote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0"
                 android:gravity="center_horizontal"
+                android:text="0"
                 android:textColor="@color/darkGrey"></TextView>
 
             <ToggleButton
                 android:id="@+id/answer_dislike"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:background="@drawable/dislike_button"
                 android:textOff=" "
-                android:textOn=" "
-                android:background="@drawable/dislike_button"></ToggleButton>
+                android:textOn=" "></ToggleButton>
 
         </RadioGroup>
 

@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.FirebaseActions;
 import com.example.witsly.Models.Answer;
-import com.example.witsly.Models.Post;
 import com.example.witsly.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -167,7 +166,7 @@ public class ViewQuestion extends Fragment {
       firebaseActions.getAnswers(
           postID,
           answers -> {
-            Collections.sort(answers, Post.VoteComparator);
+            Collections.sort(answers, Answer.VoteComparator);
             AnswerAdapter ans = new AnswerAdapter(answers, getActivity());
             mRecyclerView.setAdapter(ans);
             mRecyclerView.setLayoutManager(mRecyclerManager);
