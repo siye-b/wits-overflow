@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Adapters.RecyclerAdapter;
 import com.example.witsly.FirebaseActions;
-import com.example.witsly.Models.Post;
+import com.example.witsly.Models.Answer;
 import com.example.witsly.PostActivity;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
     RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
     firebaseActions.getAllPost(
         (response) -> {
-          Collections.sort(response, Post.VoteComparator);
+          Collections.sort(response, Answer.VoteComparator);
           mRecyclerViewAdapter = new RecyclerAdapter(response, getActivity());
           mRecyclerView.setLayoutManager(mRecyclerManager);
           mRecyclerView.setAdapter(mRecyclerViewAdapter);
