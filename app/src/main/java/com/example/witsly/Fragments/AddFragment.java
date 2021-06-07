@@ -1,7 +1,6 @@
 package com.example.witsly.Fragments;
 
 public class AddFragment {
-  Integer x1, x2;
 
   public AddFragment() {}
 
