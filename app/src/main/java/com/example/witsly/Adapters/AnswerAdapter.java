@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.witsly.FirebaseActions;
+import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.R;
@@ -105,7 +105,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
         answer.getUID(),
         user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
 
-    String aid = answer.getAid();
+    String aid = answer.getAID();
     firebaseActions.getComments(
         aid,
         c -> {
@@ -126,13 +126,13 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
     holder.like.setOnClickListener(
         l -> {
-          firebaseActions.upVote("Answers", answer.getAid(), mUser.getUid());
+          firebaseActions.upVote("Answers", answer.getAID(), mUser.getUid());
           Toast.makeText(mContext, "Like", Toast.LENGTH_SHORT).show();
         });
 
     holder.dislike.setOnClickListener(
         l -> {
-          firebaseActions.downVote("Answers", answer.getAid(), mUser.getUid());
+          firebaseActions.downVote("Answers", answer.getAID(), mUser.getUid());
           Toast.makeText(mContext, "DisLike", Toast.LENGTH_SHORT).show();
         });
 
@@ -147,7 +147,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
           holder.mAddComment.setOnClickListener(
               add ->
                   firebaseActions.addComment(
-                      new Comment(commentText, mUser.getUid(), answer.getAid()),
+                      new Comment(commentText, mUser.getUid(), answer.getAID()),
                       ac -> {
                         if (ac) {
                           holder.replyLayout.setVisibility(View.GONE);
@@ -171,7 +171,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
             holder.mDelete.setOnClickListener(
                 c ->
                     firebaseActions.deleteAnswer(
-                        answer.getAid(),
+                        answer.getAID(),
                         r -> Toast.makeText(mContext, "Answer Deleted", Toast.LENGTH_LONG).show()));
           }
         });

@@ -1,4 +1,4 @@
-package com.example.witsly;
+package com.example.witsly.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,8 +17,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Fragments.HomeFragment;
 import com.example.witsly.Fragments.ProfileFragment;
+import com.example.witsly.ProDialog;
+import com.example.witsly.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

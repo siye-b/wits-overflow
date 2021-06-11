@@ -1,4 +1,4 @@
-package com.example.witsly;
+package com.example.witsly.Firebase;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -52,7 +52,7 @@ public class FirebaseActions {
     firebaseDatabase = FirebaseDatabase.getInstance();
   }
 
-  void addPost(Post post, AddPost a) {
+  public void addPost(Post post, AddPost a) {
 
     DatabaseReference rel = firebaseDatabase.getReference("Posts").push();
 

@@ -9,7 +9,7 @@ import java.util.Date;
 public class Answer {
   private String answer, uid, qid, date, aid;
   private Boolean correct;
-  private int vote;
+  private long vote;
 
   @SuppressLint("SimpleDateFormat")
   private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
@@ -25,7 +25,7 @@ public class Answer {
     correct = false;
   }
 
-  public static Comparator<Answer> VoteComparator = (o1, o2) -> o2.getVote() - o1.getVote();
+  public static Comparator<Answer> VoteComparator = (o1, o2) -> (int) (o2.getVote() - o1.getVote());
 
   public Answer(String answer, String uid, String qid, String aid) {
     this.answer = answer;
@@ -57,11 +57,11 @@ public class Answer {
     return date;
   }
 
-  public String getAid() {
+  public String getAID() {
     return aid;
   }
 
-  public int getVote() {
+  public long getVote() {
     return vote;
   }
 

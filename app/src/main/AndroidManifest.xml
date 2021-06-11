@@ -12,10 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Witsly">
         <activity
-            android:name=".PostAnswer"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PostActivity"
+            android:name=".Activities.PostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Activities.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

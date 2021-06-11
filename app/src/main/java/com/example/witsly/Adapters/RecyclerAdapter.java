@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.witsly.FirebaseActions;
+import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.example.witsly.R;
@@ -160,7 +160,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     holder.card.setOnClickListener(
         v -> {
           Bundle bundle = new Bundle();
-          bundle.putString("postID", post.getPostID());
+          bundle.putString("postID", post.getPID());
 
           AppCompatActivity activity = (AppCompatActivity) context;
 
@@ -189,7 +189,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             String query = constraint.toString().toLowerCase().trim();
             String tQuery = constraint.toString();
             for (Post card : mListFilter)
-              if (card.getTag().trim().startsWith(query) || card.getTitle().contains(tQuery)) filterList.add(card);
+              if (card.getTag().trim().startsWith(query) || card.getTitle().contains(tQuery))
+                filterList.add(card);
           }
           FilterResults filterResults = new FilterResults();
           filterResults.values = filterList;

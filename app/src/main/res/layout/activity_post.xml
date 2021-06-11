@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostActivity"
+    tools:context=".Activities.PostActivity"
     android:id="@+id/postA">
 
     <include
@@ -69,8 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:singleLine="true"
-            app:singleSelection="true" >
-        </com.google.android.material.chip.ChipGroup>
+            app:singleSelection="true"></com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -79,10 +78,7 @@
         android:id="@+id/tagInput"
         android:completionThreshold="1"
         android:hint="Tag"
-        app:layout_constraintTop_toBottomOf="@id/chipHolder">
-    </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
-
-
+        app:layout_constraintTop_toBottomOf="@id/chipHolder"></androidx.appcompat.widget.AppCompatAutoCompleteTextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.witsly;
+package com.example.witsly.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.witsly.Firebase.FirebaseAuthentication;
+import com.example.witsly.R;
 import com.example.witsly.databinding.ForgotDialogBinding;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,10 +19,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-  TextInputLayout loginEmail, loginPassword;
+  public TextInputLayout loginEmail, loginPassword;
   private FirebaseAuth mAuth;
   private TextView tv_register, tv_forgotPW;
-  Button loginButton;
+  public Button loginButton;
   private FirebaseUser mUser;
   private FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
 

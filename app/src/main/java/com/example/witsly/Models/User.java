@@ -4,7 +4,7 @@ public class User {
 
   private String name, surname, email;
   private Boolean admin;
-  // Don't remove this constructor
+
   public User() {}
 
   public User(String name, String surname, String email) {

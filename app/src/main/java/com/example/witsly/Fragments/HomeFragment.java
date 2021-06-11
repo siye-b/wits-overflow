@@ -15,10 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.Activities.PostActivity;
 import com.example.witsly.Adapters.RecyclerAdapter;
-import com.example.witsly.FirebaseActions;
+import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Post;
-import com.example.witsly.PostActivity;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

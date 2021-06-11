@@ -1,24 +1,24 @@
-package com.example.witsly;
+package com.example.witsly.Firebase;
 
 import com.example.witsly.Interfaces.FirebaseAuthHandler;
 import com.example.witsly.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-class FirebaseAuthentication {
+public class FirebaseAuthentication {
 
   private final FirebaseAuth mAuth;
 
-  FirebaseAuthentication() {
+  public FirebaseAuthentication() {
     mAuth = FirebaseAuth.getInstance();
   }
 
-  void logout(final FirebaseAuthHandler r) {
+  public void logout(final FirebaseAuthHandler r) {
     FirebaseAuth.getInstance().signOut();
     r.processAuth(true, "");
   }
 
-  void login(String email, String password, FirebaseAuthHandler f) {
+  public void login(String email, String password, FirebaseAuthHandler f) {
     mAuth
         .signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(
@@ -28,14 +28,15 @@ class FirebaseAuthentication {
         .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
   }
 
-  void resetPassword(String email, FirebaseAuthHandler f) {
+  public void resetPassword(String email, FirebaseAuthHandler f) {
     mAuth
         .sendPasswordResetEmail(email)
         .addOnSuccessListener(aVoid -> f.processAuth(true, null))
         .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
   }
 
-  void register(String email, String name, String surname, String password, FirebaseAuthHandler f) {
+  public void register(
+      String email, String name, String surname, String password, FirebaseAuthHandler f) {
 
     mAuth
         .createUserWithEmailAndPassword(email, password)

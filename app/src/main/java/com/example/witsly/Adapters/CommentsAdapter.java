@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.witsly.FirebaseActions;
+import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.R;
 import com.google.firebase.auth.FirebaseAuth;

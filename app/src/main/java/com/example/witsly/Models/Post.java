@@ -62,7 +62,7 @@ public class Post {
     return uid;
   }
 
-  public String getPostID() {
+  public String getPID() {
     return postID;
   }
 

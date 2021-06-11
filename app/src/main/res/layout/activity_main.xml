@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:id="@+id/MainDrawer"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
     <include
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.witsly;
+package com.example.witsly.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,15 +8,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.witsly.Firebase.FirebaseAuthentication;
+import com.example.witsly.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
-  TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
-  TextView tv_register;
-  Button regButton;
+  public TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
+  public TextView tv_register;
+  public Button regButton;
   private FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
 
   private static Pattern EMAIL_ADDRESS =
@@ -98,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
   }
 
-  private static boolean validateFields(
+  public boolean validateFields(
       String email,
       String password1,
       String password2,

@@ -1,4 +1,4 @@
-package com.example.witsly;
+package com.example.witsly.Activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -13,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.Tag;
+import com.example.witsly.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
