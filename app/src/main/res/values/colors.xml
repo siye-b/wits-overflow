@@ -12,6 +12,10 @@
     <color name="darkGrey">#1a1a1a</color>
     <color name="Red">#F44336</color>
     <color name="Green">#8BC34A</color>
+    <color name="ActivatedStroke">#00B0FF</color>
     <color name="BorderStroke">#CCC8C8</color>
+    <color name="Background">#335986</color>
+
+
 
 </resources>

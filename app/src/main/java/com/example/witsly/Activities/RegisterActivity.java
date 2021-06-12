@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.witsly.Firebase.FirebaseAuthentication;
 import com.example.witsly.R;
@@ -18,7 +19,8 @@ public class RegisterActivity extends AppCompatActivity {
 
   public TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
   public TextView tv_register;
-  public Button regButton;
+  public AppCompatButton regButton;
+
   private FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
 
   private static Pattern EMAIL_ADDRESS =
