@@ -9,5 +9,5 @@ public interface FirebaseUtils {
   String LIKES = "Likes";
   String DISLIKES = "Dislikes";
   String TAGS = "Tags";
-  String SOVLED = "solved";
+  String SOLVED = "solved";
 }

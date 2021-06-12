@@ -1,4 +1,4 @@
-package com.example.witsly;
+package com.example.witsly.Activities;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
