@@ -98,7 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("email", regEmail.getEditText().getText().toString());
             startActivity(intent);
-          } else Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
+          } else {
+              Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
+              startActivity(new Intent(this, LoginActivity.class));
+          }
         });
   }
 
