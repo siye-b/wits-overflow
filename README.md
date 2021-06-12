@@ -17,7 +17,9 @@ USB cable (to connect Android device to your computer)
 ## Running the tests
 To run tests we used TravisCI as well as Coverals for our Test Driven Development. 
 
-[![Build Status](https://travis-ci.com/SNR99/wits-overflow.svg?branch=main)](https://travis-ci.com/MOLOFP/wits-overflow)
+[![Build Status](https://travis-ci.com/SNR99/wits-overflow.svg?branch=main)](https://travis-ci.com/SNR99/wits-overflow)
+
+
 [![codecov](https://codecov.io/gh/SNR99/wits-overflow/branch/main/graph/badge.svg?token=Q4FIUY0ZKU)](https://codecov.io/gh/MOLOFP/wits-overflow)
 
 
