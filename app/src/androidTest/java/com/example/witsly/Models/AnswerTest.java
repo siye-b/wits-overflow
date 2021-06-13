@@ -71,5 +71,40 @@ public class AnswerTest {
 		assertEquals(correctANSWER, answer.isCorrect());
 	}
 
+	@Test
+	public void setAID() {
+		String NEW_AID = "aid1";
+		answer.setAid(NEW_AID);
+		assertEquals(NEW_AID, answer.getAID());
+	}
+
+	@Test
+	public void setUID() {
+		String NEW_UID = "uid1";
+		answer.setUid(NEW_UID);
+		assertEquals(NEW_UID, answer.getUID());
+	}
+
+	@Test
+	public void setQID() {
+		String NEW_QID = "qid1";
+		answer.setQid(NEW_QID);
+		assertEquals(NEW_QID, answer.getQID());
+	}
+
+	@Test
+	public void setANSWER() {
+		String NEW_ANSWER = "answer1";
+		answer.setAnswer(NEW_ANSWER);
+		assertEquals(NEW_ANSWER, answer.getAnswer());
+	}
+
+	@Test
+	public void setDATE() {
+		String NEW_DATE = "date1";
+		answer.setDate(NEW_DATE);
+		assertEquals(NEW_DATE, answer.getDate());
+	}
+
 
 }
