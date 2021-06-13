@@ -115,7 +115,8 @@ public class RegisterActivity extends AppCompatActivity {
       passwordField2.setError(null);
       return false;
     } else if (!PASSWORD_PATTERN.matcher(password1).matches()) {
-      passwordField1.setError("Please choose a stronger password!");
+      passwordField1.setError("Password must be at least be 8 characters long and contain at least " +
+              "1 Uppercase letter, 1 Lowercase letter, 1 Special character, and 1 Digit!");
       emailField.setError(null);
       passwordField2.setError(null);
       return false;

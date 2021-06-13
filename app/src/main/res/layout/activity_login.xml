@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:background="@color/Background"
     tools:context=".Activities.LoginActivity">
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/icon"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@drawable/new_logo"
         app:layout_constraintBottom_toTopOf="@+id/til_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,17 +20,23 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
+        android:textColorHint="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/til_password">
+        style="@style/TextInputLayoutStroke"
+        app:layout_constraintBottom_toTopOf="@+id/til_password"
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        app:startIconTint="@color/white"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
+            android:textColor="@color/white"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -41,18 +48,24 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
+        android:textColorHint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/btn_singin"
-        app:passwordToggleEnabled="true">
+        style="@style/TextInputLayoutStroke"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/white"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        app:startIconTint="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:textColor="@color/white"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_singin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,8 +73,10 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:background="@drawable/button_ripple"
         android:layout_marginBottom="5dp"
         android:text="Sign In"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/tv_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -72,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Create Account"
-        android:textColor="@drawable/tv_click"
+        android:textColor="@drawable/tv_click_update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -81,9 +96,9 @@
         android:id="@+id/tv_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="86dp"
+        android:layout_marginBottom="85dp"
         android:text="Forgot Password?"
-        android:textColor="@drawable/tv_click"
+        android:textColor="@drawable/tv_click_update"
         app:layout_constraintBottom_toTopOf="@+id/tv_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

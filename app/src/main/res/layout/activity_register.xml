@@ -32,14 +32,15 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         app:startIconDrawable="@drawable/ic_baseline_person_24"
-        app:startIconTint="@color/white">
+        app:startIconTint="@color/white"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
             android:textColor="@color/white"
-            android:inputType="textEmailAddress" />
+            android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,13 +56,14 @@
         android:layout_marginBottom="16dp"
         style="@style/TextInputLayoutStroke"
         app:startIconDrawable="@drawable/ic_baseline_person_24"
-        app:startIconTint="@color/white">
+        app:startIconTint="@color/white"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Surname"
-            android:inputType="textEmailAddress"
+            android:inputType="textPersonName"
             android:textColor="@color/white"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -77,7 +79,8 @@
         android:textColorHint="@color/white"
         style="@style/TextInputLayoutStroke"
         app:startIconDrawable="@drawable/ic_baseline_email_24"
-        app:startIconTint="@color/white">
+        app:startIconTint="@color/white"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -143,10 +146,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/button"
+        android:background="@drawable/button_ripple"
         android:textColor="@color/white"
-        android:clickable="true"
-        android:foreground="?attr/selectableItemBackground"
         android:text="Sign up"
         app:layout_constraintBottom_toTopOf="@+id/tv_register" />
 
