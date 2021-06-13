@@ -60,4 +60,38 @@ public class CommentTest {
 	}
 
 
+	@Test
+	public void setAID() {
+		String NEW_AID = "aid1";
+		comment.setAID(NEW_AID);
+		assertEquals(NEW_AID, comment.getAID());
+	}
+
+	@Test
+	public void setUID() {
+		String NEW_UID = "uid1";
+		comment.setUID(NEW_UID);
+		assertEquals(NEW_UID, comment.getUID());
+	}
+
+	@Test
+	public void setCID() {
+		String NEW_CID = "cid1";
+		comment.setCID(NEW_CID);
+		assertEquals(NEW_CID, comment.getCID());
+	}
+
+	@Test
+	public void setCOMMENT() {
+		String NEW_COMMENT = "comment1";
+		comment.setComment(NEW_COMMENT);
+		assertEquals(NEW_COMMENT, comment.getComment());
+	}
+
+	@Test
+	public void setDATE() {
+		String NEW_DATE = "date1";
+		comment.setDate(NEW_DATE);
+		assertEquals(NEW_DATE, comment.getDate());
+	}
 }

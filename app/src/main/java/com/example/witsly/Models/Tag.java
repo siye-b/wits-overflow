@@ -12,7 +12,7 @@ public class Tag {
     this.TagID = tid;
   }
 
-  public Tag(String tag) {
+  public  Tag(String tag) {
     this.Tag = tag;
   }
 
