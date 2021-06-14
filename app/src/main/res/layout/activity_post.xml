@@ -36,7 +36,7 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagInput"
+        app:layout_constraintTop_toBottomOf="@+id/holder"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:boxStrokeColor="#FFF"
@@ -56,29 +56,34 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <HorizontalScrollView
-        android:id="@+id/chipHolder"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutTitle">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group"
-            android:layout_width="wrap_content"
+        android:id="@+id/holder"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTitle"
+        app:boxBackgroundColor="#FFF">
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:singleLine="true"
-            app:singleSelection="true"></com.google.android.material.chip.ChipGroup>
-    </HorizontalScrollView>
+            android:id="@+id/tagInput"
+            android:paddingStart="13dp"
+            android:paddingLeft="13dp"
+            android:paddingEnd="13dp"
+            android:paddingRight="13dp"
+            android:completionThreshold="1"
+            android:hint="TAG"
+            android:textColorHint="#808080"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayoutTitle">
+        </com.google.android.material.textfield.MaterialAutoCompleteTextView>
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tagInput"
-        android:completionThreshold="1"
-        android:hint="Tag"
-        app:layout_constraintTop_toBottomOf="@id/chipHolder"></androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,7 +26,7 @@
                 android:layout_height="28dp"
                 android:background="@drawable/like_button"
                 android:textOff=" "
-                android:textOn=" "></ToggleButton>
+                android:textOn=" "/>
 
             <TextView
                 android:id="@+id/tv_answer_vote"
@@ -34,15 +34,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="0"
-                android:textColor="@color/darkGrey"></TextView>
-
-            <ToggleButton
-                android:id="@+id/answer_dislike"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:background="@drawable/dislike_button"
-                android:textOff=" "
-                android:textOn=" "></ToggleButton>
+                android:textColor="@color/darkGrey"/>
 
         </RadioGroup>
 
@@ -58,16 +50,36 @@
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_answer_name"
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:textSize="12sp"
-                    android:text="Posted by: John Smith"
-                    android:textStyle="bold"
-                    android:textColor="@color/darkGrey"
-                    android:layout_toLeftOf="@+id/kebab" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_answer_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:textSize="12sp"
+                        android:text="Posted by: John Smith"
+                        android:textStyle="bold"
+                        android:textColor="@color/darkGrey"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/btn_close"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:backgroundTint="@color/Green"
+                        android:background="@drawable/ic_baseline_check_24"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/btn_close"/>
+
+                </RelativeLayout>
+
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -148,6 +160,7 @@
                         android:gravity="start"
                         android:text="Reply"
                         android:clickable="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:textColor="@color/darkGrey" />
 
                     <TextView

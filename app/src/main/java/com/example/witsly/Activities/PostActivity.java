@@ -17,7 +17,11 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.Tag;
 import com.example.witsly.R;
+<<<<<<< Updated upstream
 import com.example.witsly.Utils.FirebaseUtils;
+=======
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+>>>>>>> Stashed changes
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -28,7 +32,7 @@ public class PostActivity extends AppCompatActivity {
 	public TextInputLayout title, body;
 	private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 	private final FirebaseActions firebaseActions = new FirebaseActions();
-	public AppCompatAutoCompleteTextView tagInput;
+	public MaterialAutoCompleteTextView tagInput;
 	private ArrayList<Tag> mTags;
 	Tag tag;
 
