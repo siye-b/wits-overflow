@@ -10,11 +10,12 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:overScrollMode="never"
         android:fillViewport="false"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/txt">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,41 +125,71 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:padding="10dp"
-                android:id="@+id/txt"
 
 
-                android:background="@drawable/border"
-                android:gravity="bottom">
-
-                <EditText
-                    android:id="@+id/add_comment_et"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxHeight="85dp"
-                    android:singleLine="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@+id/add_comment_btn"
-                    android:layout_centerVertical="true" />
-
-                <Button
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/add_comment_btn"
-                    android:text="add"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
-
-
-            </RelativeLayout>
 
         </LinearLayout>
 
 
+
+
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:clickable="true"
+        android:id="@+id/btn_hide_show"
+        app:backgroundTint="@color/Background"
+        app:rippleColor="#E1C3C3"
+        app:srcCompat="@drawable/ic_baseline_add_24"
+        app:tint="@color/white">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="0dp"
+        android:id="@+id/txt"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@drawable/border"
+        android:gravity="bottom">
+
+        <EditText
+            android:id="@+id/add_comment_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="85dp"
+            android:singleLine="false"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/add_comment_btn" />
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:id="@+id/add_comment_btn"
+            android:text="add"
+            android:layout_toLeftOf="@+id/btn_no"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_baseline_close_24"
+            android:id="@+id/btn_no"
+            android:backgroundTint="@color/Red"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:foreground="?attr/selectableItemBackground"/>
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

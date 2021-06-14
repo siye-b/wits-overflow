@@ -194,23 +194,26 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/RG_answer">
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/LL_answer"
                 android:layout_width="28dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignBottom="@+id/rv_comments">
-            </LinearLayout>
+            </LinearLayout>-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:nestedScrollingEnabled="false"
-                android:layout_toRightOf="@+id/LL_answer"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rv_comments"
-                android:padding="2dp">
+                android:padding="2dp"
+                android:layout_marginLeft="28dp">
             </androidx.recyclerview.widget.RecyclerView>
 
         </RelativeLayout>

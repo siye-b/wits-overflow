@@ -21,6 +21,7 @@ import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.R;
 import com.example.witsly.Utils.FirebaseUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.annotations.NotNull;
@@ -34,6 +35,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 	FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
 	private final Context mContext;
+	private FloatingActionButton mFab;
 
 	static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -72,9 +74,10 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 		}
 	}
 
-	public AnswerAdapter(ArrayList<Answer> answerList, Context context) {
+	public AnswerAdapter(ArrayList<Answer> answerList, Context context, FloatingActionButton fab) {
 		mAnswerList = answerList;
 		mContext = context;
+		mFab = fab;
 	}
 
 	@NonNull
@@ -99,7 +102,11 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 					holder.replyLayout.setVisibility(View.GONE);
 					holder.mReply.setVisibility(View.VISIBLE);
 					holder.mDelete.setVisibility(View.VISIBLE);
+					//mFab.setVisibility(View.INVISIBLE);
+					//This works
 				});
+
+
 
 		firebaseActions.getUserDetails(
 				answer.getUID(),

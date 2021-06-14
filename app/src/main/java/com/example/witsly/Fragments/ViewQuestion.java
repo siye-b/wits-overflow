@@ -3,14 +3,18 @@ package com.example.witsly.Fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +25,7 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.R;
 import com.example.witsly.Utils.FirebaseUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -42,8 +47,11 @@ public class ViewQuestion extends Fragment {
 	private String questionID, userID;
 	private TextView vote;
 	private ToggleButton like, dislike;
-	private Button solvedMark, deleteMark;
+	private AppCompatButton solvedMark, deleteMark, mClose;
 	private Boolean isAuthor;
+	private FloatingActionButton fab;
+	private RelativeLayout mHolder;
+	private NestedScrollView nScrollView;
 
 	@SuppressLint("SetTextI18n")
 	@Override
@@ -62,11 +70,51 @@ public class ViewQuestion extends Fragment {
 		vote = view.findViewById(R.id.txt_vote);
 		like = view.findViewById(R.id.btn_like);
 
-		assert mUser != null;
-
 		mRecyclerView = view.findViewById(R.id.rv_answers);
 		add_btn = view.findViewById(R.id.add_comment_btn);
 		add_comment = view.findViewById(R.id.add_comment_et);
+		nScrollView = view.findViewById(R.id.scrollView2);
+
+		fab = view.findViewById(R.id.btn_hide_show);
+		mHolder = view.findViewById(R.id.txt);
+		mClose = view.findViewById(R.id.btn_no);
+
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mHolder.setVisibility(View.VISIBLE);
+				add_comment.setFocusableInTouchMode(true);
+				add_comment.requestFocus();
+			}
+		});
+
+		mClose.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				fab.setVisibility(View.VISIBLE);
+				mHolder.setVisibility(View.GONE);
+				add_comment.setText("");
+			}
+		});
+
+		add_comment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(hasFocus){
+					fab.setVisibility(View.INVISIBLE);
+				}else{
+					fab.setVisibility(View.VISIBLE);
+					mHolder.setVisibility(View.GONE);
+					add_comment.setText("");
+				}
+			}
+		});
+
+
+
+		assert mUser != null;
+
+
 
 		RecyclerView recyclerView = view.findViewById(R.id.rv_answers);
 		recyclerView.setHasFixedSize(true);
@@ -156,7 +204,7 @@ public class ViewQuestion extends Fragment {
 					postID,
 					answers -> {
 						Collections.sort(answers, Answer.VoteComparator);
-						AnswerAdapter ans = new AnswerAdapter(answers, getActivity());
+						AnswerAdapter ans = new AnswerAdapter(answers, getActivity(), fab);
 						mRecyclerView.setAdapter(ans);
 						mRecyclerView.setLayoutManager(mRecyclerManager);
 					});
