@@ -109,7 +109,7 @@ public class ViewQuestion extends Fragment {
 
 						firebaseActions.isCurrentUserAdmin(
 								(isAdmin, resp) -> {
-									if (isAdmin || mUser.getUid().equals(userID)) {
+									/*if (isAdmin || mUser.getUid().equals(userID)) {
 										deleteMark.setVisibility(View.VISIBLE);
 										deleteMark.setOnClickListener(
 												dm -> {
@@ -124,7 +124,7 @@ public class ViewQuestion extends Fragment {
 																	Toast.makeText(getActivity(), "Post Deleted", Toast.LENGTH_LONG)
 																			.show());
 												});
-									}
+									}*/
 								});
 					});
 
@@ -133,10 +133,6 @@ public class ViewQuestion extends Fragment {
 						firebaseActions.upVote(FirebaseUtils.POSTS, postID, mUser.getUid());
 					});
 
-			dislike.setOnClickListener(
-					v -> {
-						firebaseActions.downVote(FirebaseUtils.POSTS, postID, mUser.getUid());
-					});
 
 			add_btn.setOnClickListener(
 					v -> {

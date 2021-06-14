@@ -44,8 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_commenter_body"
-
-            android:text="delete" />
+            android:background="?attr/selectableItemBackground"
+            android:text="Delete" />
 
 
     </RelativeLayout>
