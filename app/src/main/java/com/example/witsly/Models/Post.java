@@ -8,101 +8,103 @@ import java.util.Date;
 
 public class Post {
 
-  @SuppressLint("SimpleDateFormat")
-  private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
+	@SuppressLint("SimpleDateFormat")
+	private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
 
-  private String title, body, uid, date, postID, tag;
-  private int vote;
-  private Boolean solved;
+	private String title, body, uid, date, pid, tag;
+	private long vote;
+	private Boolean solved;
 
-  Post() {}
+	Post() {
+	}
 
-  public static Comparator<Post> VoteComparator = (o1, o2) -> o2.getVote() - o1.getVote();
+	public static Comparator<Post> VoteComparator = (o1, o2) -> (int) (o2.getVote() - o1.getVote());
 
-  public Post(String title, String body, String tag, String uid) {
+	public Post(String title, String body, String tag, String uid) {
 
-    this.title = title;
-    this.body = body;
-    this.uid = uid;
-    this.tag = tag;
-    date = ISO_8601_FORMAT.format(new Date());
-    vote = 0;
-    solved = false;
-  }
+		this.title = title;
+		this.body = body;
+		this.uid = uid;
+		this.tag = tag;
+		date = ISO_8601_FORMAT.format(new Date());
+		vote = 0;
+		solved = false;
+	}
 
-  public Post(String title, String body, String tag, String uid, String postID) {
+	public Post(String title, String body, String tag, String uid, String pid) {
 
-    this.title = title;
-    this.body = body;
-    this.uid = uid;
-    this.tag = tag;
-    this.postID = postID;
-    date = ISO_8601_FORMAT.format(new Date());
-    vote = 0;
-    solved = false;
-  }
+		this.title = title;
+		this.body = body;
+		this.uid = uid;
+		this.tag = tag;
+		this.pid = pid;
+		date = ISO_8601_FORMAT.format(new Date());
+		vote = 0;
+		solved = false;
+	}
 
-  public String getDate() {
-    return date;
-  }
+	public String getDate() {
+		return date.substring(0, 10);
+	}
 
-  public String getBody() {
-    return body;
-  }
 
-  public String getTitle() {
-    return title;
-  }
+	public String getBody() {
+		return body;
+	}
 
-  public String getTag() {
-    return tag;
-  }
+	public String getTitle() {
+		return title;
+	}
 
-  public String getUid() {
-    return uid;
-  }
+	public String getTag() {
+		return tag;
+	}
 
-  public String getPID() {
-    return postID;
-  }
+	public String getUID() {
+		return uid;
+	}
 
-  public void setPostID(String postID) {
-    this.postID = postID;
-  }
+	public String getPID() {
+		return pid;
+	}
 
-  public int getVote() {
-    return vote;
-  }
+	public void setPID(String pid) {
+		this.pid = pid;
+	}
 
-  public void setDate(String date) {
-    this.date = date;
-  }
+	public long getVote() {
+		return vote;
+	}
 
-  public void setTag(String tag) {
-    this.tag = tag;
-  }
+	public void setDate(String date) {
+		this.date = date;
+	}
 
-  public void setUid(String uid) {
-    this.uid = uid;
-  }
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 
-  public void setVote(int vote) {
-    this.vote = vote;
-  }
+	public void setUID(String uid) {
+		this.uid = uid;
+	}
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+	public void setVote(int vote) {
+		this.vote = vote;
+	}
 
-  public void setBody(String body) {
-    this.body = body;
-  }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-  public Boolean isSolved() {
-    return solved;
-  }
+	public void setBody(String body) {
+		this.body = body;
+	}
 
-  public void setSolved(Boolean solved) {
-    this.solved = solved;
-  }
+	public Boolean isSolved() {
+		return solved;
+	}
+
+	public void setSolved(Boolean solved) {
+		this.solved = solved;
+	}
 }

@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class AnswerTest {
 	String ANSWER = "answer";
-	String QID = "qid";
+	String PID = "pid";
 	String UID = "uid";
 	String AID = "aid";
 	Boolean correctANSWER = false;
@@ -19,13 +19,13 @@ public class AnswerTest {
 
 	@Before
 	public void testConstructorWithAllParams() {
-		answer = new Answer(ANSWER, UID, QID, AID);
+		answer = new Answer(ANSWER, UID, PID, AID);
 
 	}
 
 	@Test
 	public void testConstructorWithParams() {
-		answer = new Answer(ANSWER, UID, QID);
+		answer = new Answer(ANSWER, UID, PID);
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class AnswerTest {
 
 	@Test
 	public void getQID() {
-		assertEquals(QID, answer.getQID());
+		assertEquals(PID, answer.getPID());
 	}
 
 
@@ -74,22 +74,22 @@ public class AnswerTest {
 	@Test
 	public void setAID() {
 		String NEW_AID = "aid1";
-		answer.setAid(NEW_AID);
+		answer.setAID(NEW_AID);
 		assertEquals(NEW_AID, answer.getAID());
 	}
 
 	@Test
 	public void setUID() {
 		String NEW_UID = "uid1";
-		answer.setUid(NEW_UID);
+		answer.setUID(NEW_UID);
 		assertEquals(NEW_UID, answer.getUID());
 	}
 
 	@Test
-	public void setQID() {
-		String NEW_QID = "qid1";
-		answer.setQid(NEW_QID);
-		assertEquals(NEW_QID, answer.getQID());
+	public void setPID() {
+		String NEW_PID = "id1";
+		answer.setPID(NEW_PID);
+		assertEquals(NEW_PID, answer.getPID());
 	}
 
 	@Test

@@ -20,9 +20,7 @@ import com.example.witsly.Interfaces.MarkPost;
 import com.example.witsly.Interfaces.UpdateVote;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.VoteCount;
-import com.example.witsly.Interfaces.Voted;
 import com.example.witsly.Interfaces.getTag;
-import com.example.witsly.Interfaces.getVoteStatus;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.Models.Post;
@@ -48,6 +46,8 @@ public class FirebaseActions {
 	private ArrayList<Comment> commentsArrayList;
 	private ArrayList<Tag> tagArrayList;
 	private int likesCount, disLikeCount;
+	Boolean likesState;
+	Boolean disLikesState;
 
 	public FirebaseActions() {
 		firebaseDatabase = FirebaseDatabase.getInstance();
@@ -100,7 +100,7 @@ public class FirebaseActions {
 								if (snapshot.exists()) {
 									Post post = snapshot.getValue(Post.class);
 									assert post != null;
-									getUserDetails(post.getUid(), user -> g.processResponse(post, user));
+									getUserDetails(post.getUID(), user -> g.processResponse(post, user));
 								}
 							}
 
@@ -123,7 +123,7 @@ public class FirebaseActions {
 
 							Post post = postSnapshot.getValue(Post.class);
 							assert post != null;
-							post.setPostID(postSnapshot.getKey());
+							post.setPID(postSnapshot.getKey());
 
 							postArrayList.add(post);
 						}
@@ -162,7 +162,7 @@ public class FirebaseActions {
 				});
 	}
 
-	public void getAnswers(String postID, GetAnswers a) {
+	public void getAnswers(String pid, GetAnswers a) {
 
 		answersArrayList = new ArrayList<>();
 		DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.ANSWERS);
@@ -177,9 +177,9 @@ public class FirebaseActions {
 							Answer answer = postSnapshot.getValue(Answer.class);
 							String aid = postSnapshot.getKey();
 							assert answer != null;
-							answer.setAid(aid);
+							answer.setAID(aid);
 
-							if (answer.getQID().equals(postID)) answersArrayList.add(answer);
+							if (answer.getPID().equals(pid)) answersArrayList.add(answer);
 						}
 						a.processResponse(answersArrayList);
 					}
@@ -224,124 +224,27 @@ public class FirebaseActions {
 
 	public void upVote(String place, String pid, String uid) {
 
-		DatabaseReference likes, disLikes, vote;
-		likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
-		disLikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
-		vote = firebaseDatabase.getReference(place).child(pid).child("vote");
-		vote.addListenerForSingleValueEvent(
-				new ValueEventListener() {
-					@Override
-					public void onDataChange(@NonNull DataSnapshot voteShot) {
-						vote.setValue(((long) voteShot.getValue() + 1));
-					}
+		DatabaseReference likes = firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(uid);
+		DatabaseReference disLikes = firebaseDatabase.getReference(FirebaseUtils.DISLIKES).child(pid).child(uid);
+		DatabaseReference vote = firebaseDatabase.getReference(place).child(pid).child(FirebaseUtils.VOTE);
 
-					@Override
-					public void onCancelled(@NonNull DatabaseError error) {
-					}
-				});
 
-		disLikes.addListenerForSingleValueEvent(
-				new ValueEventListener() {
-					@Override
-					public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-						if (snapshot.exists()) disLikes.removeValue();
-                        else likes.setValue(true);
-					}
-
-					@Override
-					public void onCancelled(@NonNull DatabaseError error) {
-					}
-				});
 	}
 
 	public void downVote(String place, String pid, String uid) {
+		
 
-		DatabaseReference likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
-		DatabaseReference disLikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
-		DatabaseReference vote = firebaseDatabase.getReference(place).child(pid).child("vote");
+		DatabaseReference likes = firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(uid);
+		DatabaseReference disLikes = firebaseDatabase.getReference(FirebaseUtils.DISLIKES).child(pid).child(uid);
+		DatabaseReference vote = firebaseDatabase.getReference(place).child(pid).child(FirebaseUtils.VOTE);
 
-		vote.addListenerForSingleValueEvent(
-				new ValueEventListener() {
-					@Override
-					public void onDataChange(@NonNull DataSnapshot voteShot) {
-						vote.setValue(((long) voteShot.getValue() - 1));
-					}
 
-					@Override
-					public void onCancelled(@NonNull DatabaseError error) {
-					}
-				});
-
-		likes.addListenerForSingleValueEvent(
-				new ValueEventListener() {
-					@Override
-					public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-						if (snapshot.exists()) likes.removeValue();
-                        else disLikes.setValue(true);
-					}
-
-					@Override
-					public void onCancelled(@NonNull DatabaseError error) {
-					}
-				});
 	}
 
-	private void Liked(String pid, String uid, Voted vs) {
-		DatabaseReference likes = firebaseDatabase.getReference("Likes").child(pid).child(uid);
-
-		likes.addListenerForSingleValueEvent(
-				new ValueEventListener() {
-					@Override
-					public void onDataChange(@NonNull DataSnapshot snapshot) {
-						vs.processResponse(snapshot.exists());
-					}
-
-					@Override
-					public void onCancelled(@NonNull DatabaseError error) {
-					}
-				});
-	}
-
-	private void Disliked(String pid, String uid, Voted vs) {
-		DatabaseReference dislikes = firebaseDatabase.getReference("Dislikes").child(pid).child(uid);
-
-		dislikes.addListenerForSingleValueEvent(
-				new ValueEventListener() {
-					@Override
-					public void onDataChange(@NonNull DataSnapshot snapshot) {
-						vs.processResponse(snapshot.exists());
-					}
-
-					@Override
-					public void onCancelled(@NonNull DatabaseError error) {
-					}
-				});
-	}
-
-	public void getPostVoteState(String pid, String uid, getVoteStatus g) {
-
-		Liked(
-				pid,
-				uid,
-				vr -> {
-					if (vr) g.processResponse(0);
-				});
-
-		Disliked(
-				pid,
-				uid,
-				vr -> {
-					if (vr) g.processResponse(2);
-				});
-
-		g.processResponse(1);
-	}
 
 	public void addTag(Tag tag, AddTag t) {
 
-		DatabaseReference rel = firebaseDatabase.getReference("Tags").push();
+		DatabaseReference rel = firebaseDatabase.getReference(FirebaseUtils.TAGS).push();
 
 		rel.setValue(tag)
 				.addOnCompleteListener(
@@ -353,7 +256,7 @@ public class FirebaseActions {
 
 	public void getTag(String tid, getTag sTag) {
 		firebaseDatabase
-				.getReference("Tags/" + tid)
+				.getReference(FirebaseUtils.TAGS).child(tid)
 				.addValueEventListener(
 						new ValueEventListener() {
 							@SuppressLint("SetTextI18n")
@@ -372,7 +275,7 @@ public class FirebaseActions {
 
 	public void getTags(GetTags t) {
 		tagArrayList = new ArrayList<>();
-		DatabaseReference databaseReference = firebaseDatabase.getReference("Tags");
+		DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.TAGS);
 		databaseReference.addValueEventListener(
 				new ValueEventListener() {
 					@Override

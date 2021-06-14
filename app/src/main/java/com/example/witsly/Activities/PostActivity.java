@@ -17,6 +17,7 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.Tag;
 import com.example.witsly.R;
+import com.example.witsly.Utils.FirebaseUtils;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -106,9 +107,9 @@ public class PostActivity extends AppCompatActivity {
 				post,
 				(added, key) -> {
 					if (added)
-						Toast.makeText(getApplicationContext(), "Post added", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), FirebaseUtils.POST_ADDED, Toast.LENGTH_SHORT).show();
 					else
-						Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT)
+						Toast.makeText(getApplicationContext(), FirebaseUtils.POST_NOT_ADDED, Toast.LENGTH_SHORT)
 								.show();
 				});
 	}

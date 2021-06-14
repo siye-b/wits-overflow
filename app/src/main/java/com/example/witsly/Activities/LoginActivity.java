@@ -3,12 +3,12 @@ package com.example.witsly.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.witsly.Firebase.FirebaseAuthentication;
 import com.example.witsly.R;
@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
   public TextInputLayout loginEmail, loginPassword;
   private FirebaseAuth mAuth;
   private TextView tv_register, tv_forgotPW;
-  public AppCompatButton loginButton;
+  public Button loginButton;
   private FirebaseUser mUser;
   private FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
 
