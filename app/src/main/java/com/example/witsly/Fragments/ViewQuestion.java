@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -23,6 +24,7 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -38,8 +40,8 @@ public class ViewQuestion extends Fragment {
   private RecyclerView.Adapter mAdapter;
   private RecyclerView.LayoutManager mLayout;
   private ArrayList<String> mAnswerList; // Change to model for answer
-  private Button add_btn;
-  private EditText add_comment;
+  private AppCompatButton add_btn;
+  private AppCompatEditText add_comment;
   private FirebaseActions firebaseActions;
   private String questionID, userID;
   private TextView vote;
