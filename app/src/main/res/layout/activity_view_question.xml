@@ -200,7 +200,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:layout_marginBottom="5dp"
+
                 android:gravity="bottom"
                 android:id="@+id/add_comment_btn"
                 android:background="@drawable/ic_baseline_send_24"
@@ -216,7 +216,6 @@
             android:layout_height="30dp"
             android:background="@drawable/ic_baseline_close_24"
             android:id="@+id/btn_no"
-            android:layout_marginBottom="5dp"
             android:gravity="bottom"
             android:backgroundTint="@color/Red"
             android:layout_alignParentEnd="true"
