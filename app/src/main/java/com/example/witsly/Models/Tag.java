@@ -1,7 +1,5 @@
 package com.example.witsly.Models;
 
-import androidx.annotation.NonNull;
-
 public class Tag {
   String Tag, TagID;
 
@@ -12,7 +10,7 @@ public class Tag {
     this.TagID = tid;
   }
 
-  public  Tag(String tag) {
+  public Tag(String tag) {
     this.Tag = tag;
   }
 
@@ -24,10 +22,13 @@ public class Tag {
     return Tag;
   }
 
-  public String getTagID(){return TagID;}
+  public String getTagID() {
+    return TagID;
+  }
 
-  public void setTagID(String TagID){this.TagID = TagID;}
-
+  public void setTagID(String TagID) {
+    this.TagID = TagID;
+  }
 
   @Override
   public String toString() {

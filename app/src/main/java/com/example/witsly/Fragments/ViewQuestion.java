@@ -22,7 +22,6 @@ import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.R;
-import com.example.witsly.Utils.FirebaseUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -125,7 +124,7 @@ public class ViewQuestion extends Fragment {
                     + (post.getDate()).substring(0, 10));
             title.setText(post.isSolved() ? post.getTitle() + " [SOLVED]" : post.getTitle());
             details.setText(post.getBody());
-            vote.setText(post.getVote() + "");
+            vote.setText(String.valueOf(post.getVote()));
 
             // only the owner of the post can mark the question as solved
 
@@ -154,7 +153,7 @@ public class ViewQuestion extends Fragment {
 
       like.setOnClickListener(
           v -> {
-            firebaseActions.upVote(FirebaseUtils.POSTS, postID, mUser.getUid());
+            firebaseActions.upVotePost(postID, mUser.getUid());
           });
 
       add_btn.setOnClickListener(

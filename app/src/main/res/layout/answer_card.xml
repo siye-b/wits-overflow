@@ -20,13 +20,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ToggleButton
+            <Button
                 android:id="@+id/answer_like"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:background="@drawable/like_button"
-                android:textOff=" "
-                android:textOn=" "/>
+                android:background="@drawable/like_button" />
 
             <TextView
                 android:id="@+id/tv_answer_vote"
@@ -34,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="0"
-                android:textColor="@color/darkGrey"/>
+                android:textColor="@color/darkGrey" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="28dp"
@@ -42,7 +40,7 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:backgroundTint="@color/Green"
                 android:background="@drawable/ic_baseline_check_24"
-                android:id="@+id/btn_close"/>
+                android:id="@+id/btn_close_1" />
 
         </RadioGroup>
 
@@ -59,19 +57,18 @@
                 android:layout_height="wrap_content">
 
 
-                    <TextView
-                        android:id="@+id/tv_answer_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:textSize="12sp"
-                        android:text="Posted by: John Smith"
-                        android:textStyle="bold"
-                        android:textColor="@color/darkGrey"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"/>
-
+                <TextView
+                    android:id="@+id/tv_answer_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textSize="12sp"
+                    android:text="Posted by: John Smith"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkGrey"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true" />
 
 
                 <TextView
@@ -103,13 +100,14 @@
 
 
                 <EditText
-                    android:id="@+id/edit_comment"
+                    android:id="@+id/edit_comment_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <Button
                         android:id="@+id/add_comment_post"
                         android:layout_width="wrap_content"
@@ -117,7 +115,7 @@
                         android:background="@color/darkGrey"
                         android:text="Comment"
                         android:layout_toLeftOf="@+id/close_add_comment"
-                        android:layout_marginRight="20dp"/>
+                        android:layout_marginRight="20dp" />
 
                     <TextView
                         android:id="@+id/close_add_comment"
@@ -136,7 +134,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
 
 
                 </LinearLayout>
@@ -213,8 +210,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/rv_comments"
                 android:padding="2dp"
-                android:layout_marginLeft="28dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginLeft="28dp"></androidx.recyclerview.widget.RecyclerView>
 
         </RelativeLayout>
 

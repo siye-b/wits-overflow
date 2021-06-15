@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +20,6 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.R;
-import com.example.witsly.Utils.FirebaseUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,156 +29,165 @@ import java.util.ArrayList;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder> {
 
-	private final ArrayList<Answer> mAnswerList;
-	private final FirebaseActions firebaseActions = new FirebaseActions();
-	FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+  private final ArrayList<Answer> mAnswerList;
+  private final FirebaseActions firebaseActions = new FirebaseActions();
+  FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-	private final Context mContext;
-	private FloatingActionButton mFab;
+  private final Context mContext;
+  private FloatingActionButton mFab;
 
-	static class ViewHolder extends RecyclerView.ViewHolder {
+  static class ViewHolder extends RecyclerView.ViewHolder {
 
-		// For Posts
-		private final TextView mAnswerDetails;
-		private final TextView mAnswerBody;
-		private final TextView mAnswerDate;
-		private final TextView mReply;
-		private final TextView mDelete;
-		private final LinearLayout replyLayout;
-		private final RecyclerView mAnswerRV;
-		private final ToggleButton like;
-		private final TextView vote;
+    // For Posts
+    private final TextView mAnswerDetails;
+    private final TextView mAnswerBody;
+    private final TextView mAnswerDate;
+    private final TextView mReply;
+    private final EditText mComment;
+    private final TextView mDelete;
+    private final LinearLayout replyLayout;
+    private final RecyclerView mAnswerRV;
+    private final Button like;
+    private final TextView vote;
+    AppCompatButton closeButton;
 
-		// For Comments
+    // For Comments
 
-		private final EditText mComment;
-		private final Button mAddComment;
-		private final TextView mClose;
+    private final Button mAddComment;
+    private final TextView mClose;
 
-		ViewHolder(@NonNull View itemView) {
-			super(itemView);
+    ViewHolder(@NonNull View itemView) {
+      super(itemView);
 
-			mAnswerDetails = itemView.findViewById(R.id.tv_answer_name);
-			mAnswerBody = itemView.findViewById(R.id.tv_answer_body);
-			mAnswerRV = itemView.findViewById(R.id.rv_comments);
-			mAnswerDate = itemView.findViewById(R.id.tv_answer_date);
-			mReply = itemView.findViewById(R.id.tvReply);
-			mDelete = itemView.findViewById(R.id.tvDelete);
-			replyLayout = itemView.findViewById(R.id.RG_answer_body2);
-			mComment = itemView.findViewById(R.id.edit_comment);
-			mAddComment = itemView.findViewById(R.id.add_comment_post);
-			mClose = itemView.findViewById(R.id.close_add_comment);
-			like = itemView.findViewById(R.id.answer_like);
-			vote = itemView.findViewById(R.id.tv_answer_vote);
-		}
-	}
+      mAnswerDetails = itemView.findViewById(R.id.tv_answer_name);
+      mAnswerBody = itemView.findViewById(R.id.tv_answer_body);
+      mAnswerRV = itemView.findViewById(R.id.rv_comments);
+      mAnswerDate = itemView.findViewById(R.id.tv_answer_date);
+      mReply = itemView.findViewById(R.id.tvReply);
+      mDelete = itemView.findViewById(R.id.tvDelete);
+      replyLayout = itemView.findViewById(R.id.RG_answer_body2);
+      mComment = itemView.findViewById(R.id.edit_comment_rv);
+      mAddComment = itemView.findViewById(R.id.add_comment_post);
+      mClose = itemView.findViewById(R.id.close_add_comment);
+      like = itemView.findViewById(R.id.answer_like);
+      vote = itemView.findViewById(R.id.tv_answer_vote);
+      closeButton = itemView.findViewById(R.id.btn_close_1);
+    }
+  }
 
-	public AnswerAdapter(ArrayList<Answer> answerList, Context context, FloatingActionButton fab) {
-		mAnswerList = answerList;
-		mContext = context;
-		mFab = fab;
-	}
+  public AnswerAdapter(ArrayList<Answer> answerList, Context context, FloatingActionButton fab) {
+    mAnswerList = answerList;
+    mContext = context;
+    mFab = fab;
+  }
 
-	@NonNull
-	@NotNull
-	@Override
-	public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-		View view =
-				LayoutInflater.from(parent.getContext()).inflate(R.layout.answer_card, parent, false);
+  @NonNull
+  @NotNull
+  @Override
+  public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    View view =
+        LayoutInflater.from(parent.getContext()).inflate(R.layout.answer_card, parent, false);
 
-		return new AnswerAdapter.ViewHolder(view);
-	}
+    return new AnswerAdapter.ViewHolder(view);
+  }
 
-	@SuppressLint("SetTextI18n")
-	@Override
-	public void onBindViewHolder(@NonNull @NotNull AnswerAdapter.ViewHolder holder, int position) {
-		Answer answer = mAnswerList.get(position);
-		holder.mAnswerBody.setText(answer.getAnswer());
-		holder.mAnswerDate.setText(answer.getDate());
-		holder.vote.setText(String.valueOf(answer.getVote()));
-		holder.mClose.setOnClickListener(
-				close -> {
-					holder.replyLayout.setVisibility(View.GONE);
-					holder.mReply.setVisibility(View.VISIBLE);
-					holder.mDelete.setVisibility(View.VISIBLE);
-					//mFab.setVisibility(View.INVISIBLE);
-					//This works
-				});
+  @SuppressLint("SetTextI18n")
+  @Override
+  public void onBindViewHolder(@NonNull @NotNull AnswerAdapter.ViewHolder holder, int position) {
+    Answer answer = mAnswerList.get(position);
+    holder.mAnswerBody.setText(answer.getAnswer());
+    holder.mAnswerDate.setText(answer.getDate());
+    holder.vote.setText(String.valueOf(answer.getVote()));
+    holder.mClose.setOnClickListener(
+        close -> {
+          holder.replyLayout.setVisibility(View.GONE);
+          holder.mReply.setVisibility(View.VISIBLE);
+          holder.mDelete.setVisibility(View.VISIBLE);
+          // mFab.setVisibility(View.INVISIBLE);
+          // This works
+        });
 
+    firebaseActions.getUserDetails(
+        answer.getUID(),
+        user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
 
+    String aid = answer.getAID();
+    firebaseActions.getComments(
+        aid,
+        c -> {
+          if (c.size() >= 1) {
+            ArrayList<Comment> commentArrayList = new ArrayList<>();
+            for (Object d : c) {
+              Comment k = (Comment) d;
+              commentArrayList.add(k);
+            }
+            CommentsAdapter commentsAdapter = new CommentsAdapter(commentArrayList, mContext);
+            LinearLayoutManager commentLayoutManager =
+                new LinearLayoutManager(
+                    holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
+            holder.mAnswerRV.setLayoutManager(commentLayoutManager);
+            holder.mAnswerRV.setAdapter(commentsAdapter);
+          }
+        });
 
-		firebaseActions.getUserDetails(
-				answer.getUID(),
-				user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
+    holder.closeButton.setOnClickListener(
+        b -> {
+          firebaseActions.markAnswer(answer.getPID(), answer.getAID());
+        });
 
-		String aid = answer.getAID();
-		firebaseActions.getComments(
-				aid,
-				c -> {
-					if (c.size() >= 1) {
-						ArrayList<Comment> commentArrayList = new ArrayList<>();
-						for (Object d : c) {
-							Comment k = (Comment) d;
-							commentArrayList.add(k);
-						}
-						CommentsAdapter commentsAdapter = new CommentsAdapter(commentArrayList, mContext);
-						LinearLayoutManager commentLayoutManager =
-								new LinearLayoutManager(
-										holder.mAnswerRV.getContext(), LinearLayoutManager.VERTICAL, false);
-						holder.mAnswerRV.setLayoutManager(commentLayoutManager);
-						holder.mAnswerRV.setAdapter(commentsAdapter);
-					}
-				});
+    holder.like.setOnClickListener(
+        l -> {
+          firebaseActions.upVoteAnswer(answer.getAID(), mUser.getUid());
+          Toast.makeText(mContext, "Like", Toast.LENGTH_SHORT).show();
+        });
 
-		holder.like.setOnClickListener(
-				l -> {
-					firebaseActions.upVote(FirebaseUtils.ANSWERS, answer.getAID(), mUser.getUid());
-					Toast.makeText(mContext, "Like", Toast.LENGTH_SHORT).show();
-				});
+    holder.mReply.setOnClickListener(
+        reply -> {
+          holder.replyLayout.setVisibility(View.VISIBLE);
+          holder.mReply.setVisibility(View.INVISIBLE);
+          holder.mDelete.setVisibility(View.INVISIBLE);
 
+          holder.mAddComment.setOnClickListener(
+              add -> {
+                String commentText = holder.mComment.getText().toString().trim();
+                if (!commentText.equals("")) {
+                  firebaseActions.addComment(
+                      new Comment(commentText, mUser.getUid(), answer.getAID()),
+                      ac -> {
+                        if (ac) {
+                          holder.replyLayout.setVisibility(View.GONE);
+                          holder.mReply.setVisibility(View.VISIBLE);
+                          holder.mDelete.setVisibility(View.GONE);
+                          holder.mComment.setText("");
+                          firebaseActions.isCurrentUserAdmin(
+                              (isAdmin, str) -> {
+                                if (isAdmin || answer.getUID().equals(mUser.getUid()))
+                                  holder.mDelete.setVisibility(View.VISIBLE);
+                              });
+                        }
+                      });
+                } else {
+                  Toast.makeText(mContext, "Fill in the Comment section", Toast.LENGTH_SHORT)
+                      .show();
+                }
+              });
+        });
 
-		holder.mReply.setOnClickListener(
-				reply -> {
-					holder.replyLayout.setVisibility(View.VISIBLE);
-					holder.mReply.setVisibility(View.INVISIBLE);
-					holder.mDelete.setVisibility(View.INVISIBLE);
+    firebaseActions.isCurrentUserAdmin(
+        (isAdmin, str) -> {
+          if (isAdmin || answer.getUID().equals(mUser.getUid())) {
+            holder.mDelete.setVisibility(View.VISIBLE);
+            holder.mDelete.setOnClickListener(
+                c ->
+                    firebaseActions.deleteAnswer(
+                        answer.getAID(),
+                        r -> Toast.makeText(mContext, "Answer Deleted", Toast.LENGTH_LONG).show()));
+          }
+        });
+  }
 
-					String commentText = holder.mComment.getText().toString().trim();
-
-					holder.mAddComment.setOnClickListener(
-							add ->
-									firebaseActions.addComment(
-											new Comment(commentText, mUser.getUid(), answer.getAID()),
-											ac -> {
-												if (ac) {
-													holder.replyLayout.setVisibility(View.GONE);
-													holder.mReply.setVisibility(View.VISIBLE);
-													holder.mDelete.setVisibility(View.GONE);
-
-													firebaseActions.isCurrentUserAdmin(
-															(isAdmin, str) -> {
-																if (isAdmin || answer.getUID().equals(mUser.getUid()))
-																	holder.mDelete.setVisibility(View.VISIBLE);
-															});
-												}
-											}));
-				});
-
-		firebaseActions.isCurrentUserAdmin(
-				(isAdmin, str) -> {
-					if (isAdmin || answer.getUID().equals(mUser.getUid())) {
-						holder.mDelete.setVisibility(View.VISIBLE);
-						holder.mDelete.setOnClickListener(
-								c ->
-										firebaseActions.deleteAnswer(
-												answer.getAID(),
-												r -> Toast.makeText(mContext, "Answer Deleted", Toast.LENGTH_LONG).show()));
-					}
-				});
-	}
-
-	@Override
-	public int getItemCount() {
-		return mAnswerList.size();
-	}
+  @Override
+  public int getItemCount() {
+    return mAnswerList.size();
+  }
 }
