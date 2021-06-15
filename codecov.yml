@@ -1,10 +1,8 @@
-
-  
-
-
-
-
-
+ignore:
+  - "app/src/main/java/com/example/witsly/Adapters/CommentsAdapters.java"
+  - "app/src/main/java/com/example/witsly/Fragments/ProfileFragment.java"
+  - "app/src/main/java/com/example/witsly/Fragments/ViewQuestion.java"
+  - "app/src/main/java/com/example/witsly/Firebase/FirebaseActions.java"
 
 
 

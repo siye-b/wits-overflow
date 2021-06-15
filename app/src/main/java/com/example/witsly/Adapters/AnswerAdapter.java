@@ -130,6 +130,16 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
             holder.mAnswerRV.setAdapter(commentsAdapter);
           }
         });
+    
+    
+
+
+      firebaseActions.getPost(answer.getPID(), (post, user)->{
+          if(post.getUID().equals(mUser.getUid())){
+              holder.closeButton.setVisibility(View.VISIBLE);
+          }
+      });
+
 
     holder.closeButton.setOnClickListener(
         b -> {
