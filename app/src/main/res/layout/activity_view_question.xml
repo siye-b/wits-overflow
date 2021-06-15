@@ -34,25 +34,24 @@
                     android:id="@+id/RL"
                     android:paddingLeft="1dp">
 
-                    <RadioGroup
+                    <LinearLayout
                         android:id="@+id/RadioGroup"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:paddingTop="10dp">
 
 
-                        <ToggleButton
+                        <Button
                             android:id="@+id/btn_like"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:textOff=" "
                             android:textOn=" "
                             android:text=" "
-                            android:background="@drawable/like_button">
-                        </ToggleButton>
+                            android:background="@drawable/like_button" />
 
                         <TextView
                             android:id="@+id/txt_vote"
@@ -60,9 +59,17 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:text="0"
-                            android:textColor="@color/darkGrey">
-                        </TextView>
-                    </RadioGroup>
+                            android:textColor="@color/darkGrey" />
+
+                        <Button
+                            android:id="@+id/btn_delete"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:textOff=" "
+                            android:textOn=" "
+                            android:text=" "
+                            android:background="@drawable/ic_baseline_close_24" />
+                    </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -126,11 +133,7 @@
             </RelativeLayout>
 
 
-
-
         </LinearLayout>
-
-
 
 
     </androidx.core.widget.NestedScrollView>
@@ -148,8 +151,7 @@
         app:backgroundTint="@color/Background"
         app:rippleColor="#E1C3C3"
         app:srcCompat="@drawable/ic_baseline_add_24"
-        app:tint="@color/white">
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:tint="@color/white"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 
     <RelativeLayout
@@ -176,7 +178,7 @@
             android:layout_height="40dp"
             android:id="@+id/add_comment_btn"
             android:text="add"
-            android:layout_toLeftOf="@+id/btn_no"/>
+            android:layout_toLeftOf="@+id/btn_no" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="40dp"
@@ -186,7 +188,7 @@
             android:backgroundTint="@color/Red"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:foreground="?attr/selectableItemBackground"/>
+            android:foreground="?attr/selectableItemBackground" />
 
 
     </RelativeLayout>

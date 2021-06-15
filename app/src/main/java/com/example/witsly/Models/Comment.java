@@ -45,9 +45,6 @@ public class Comment {
 		return date.substring(0, 10);
 	}
 
-	public String getFullDate() {
-		return date;
-	}
 
 	public String getCID() {
 		return cid;

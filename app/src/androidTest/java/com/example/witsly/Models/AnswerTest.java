@@ -3,6 +3,9 @@ package com.example.witsly.Models;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -13,6 +16,8 @@ public class AnswerTest {
 	String AID = "aid";
 	Boolean correctANSWER = false;
 	long voteCOUNT = 0;
+
+	private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
 
 
 	private Answer answer;
@@ -96,6 +101,13 @@ public class AnswerTest {
 		String NEW_ANSWER = "answer1";
 		answer.setAnswer(NEW_ANSWER);
 		assertEquals(NEW_ANSWER, answer.getAnswer());
+	}
+
+	@Test
+	public void setDATE() {
+		String NEW_DATE = ISO_8601_FORMAT.format(new Date());
+		answer.setDate(NEW_DATE);
+		assertEquals(NEW_DATE, answer.getDate());
 	}
 
 

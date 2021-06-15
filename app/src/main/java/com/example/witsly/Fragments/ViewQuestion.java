@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.widget.NestedScrollView;
@@ -44,7 +43,7 @@ public class ViewQuestion extends Fragment {
 	private FirebaseActions firebaseActions;
 	private String questionID, userID;
 	private TextView vote;
-	private ToggleButton like, dislike;
+	private Button like, dislike;
 	private AppCompatButton solvedMark, deleteMark, mClose;
 	private Boolean isAuthor;
 	private FloatingActionButton fab;
