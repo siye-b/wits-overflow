@@ -16,19 +16,19 @@
         android:layout_margin="8dp">
 
 
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Votes:">
-            </TextView>
+                android:text="Votes:"></TextView>
+
             <TextView
 
                 android:id="@+id/tv_vote_count2"
@@ -47,6 +47,7 @@
             android:layout_height="match_parent"
             android:textAlignment="center"
             android:id="@+id/LL"
+            android:paddingLeft="5dp"
             android:layout_marginLeft="40dp"
             android:layout_alignParentRight="true"
             android:gravity="center"
@@ -74,8 +75,7 @@
                 android:layout_below="@+id/tv_poster_title2"
                 android:backgroundTint="#2979FF"
                 android:textColor="@color/white"
-                android:text="General">
-            </com.google.android.material.chip.Chip>
+                android:text="General"></com.google.android.material.chip.Chip>
 
             <TextView
                 android:id="@+id/tv_card_body2"

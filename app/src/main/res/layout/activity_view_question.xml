@@ -48,9 +48,6 @@
                             android:id="@+id/btn_like"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:textOff=" "
-                            android:textOn=" "
-                            android:text=" "
                             android:background="@drawable/like_button" />
 
                         <TextView
@@ -65,9 +62,10 @@
                             android:id="@+id/btn_delete"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:textOff=" "
-                            android:textOn=" "
-                            android:text=" "
+                            android:backgroundTint="@color/Green"
+
+                            android:visibility="invisible"
+
                             android:background="@drawable/ic_baseline_close_24" />
                     </LinearLayout>
 
@@ -75,6 +73,7 @@
                         android:layout_width="match_parent"
                         android:layout_toRightOf="@+id/RadioGroup"
                         android:layout_centerVertical="true"
+                        android:paddingLeft="5dp"
 
                         android:layout_height="wrap_content">
 
