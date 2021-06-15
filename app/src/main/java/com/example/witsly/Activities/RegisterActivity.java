@@ -20,38 +20,9 @@ public class RegisterActivity extends AppCompatActivity {
 	public TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
 	public TextView tv_register;
 	public AppCompatButton regButton;
-	public Verifier verifier;
+	public Verifier verifier = new Verifier();
 
 	private final FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
-
-	private static final Pattern EMAIL_ADDRESS =
-			Pattern.compile(
-					"[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}"
-							+ // between 1 and 256 characters which contain alphanumeric characters and certain
-							// acceptable symbols
-							"\\@"
-							+ // @ sign
-							"(students.wits.ac.za|wits.ac.za)" // two Wits associated domains
-			);
-
-	private static final Pattern PASSWORD_PATTERN =
-			Pattern.compile(
-					"^"
-							+ "(?=.*[0-9])"
-							+ // at least 1 digit
-							"(?=.*[a-z])"
-							+ // at least 1 lower case letter
-							"(?=.*[A-Z])"
-							+ // at least 1 upper case letter
-							"(?=.*[a-zA-Z])"
-							+ // any upper or lower case letter
-							"(?=.*[@#$%^&+=!])"
-							+ // at least 1 special character
-							"(?=\\S+$)"
-							+ // no white spaces
-							".{8,}"
-							+ // at least 8 characters
-							"$");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
 					String email = regEmail.getEditText().getText().toString().trim();
 					String password1 = regPasswordOne.getEditText().getText().toString().trim();
 					String password2 = regPasswordTwo.getEditText().getText().toString().trim();
-					if (validateFields(email, password1, password2, regEmail, regPasswordOne, regPasswordTwo))
+					if (validateFields(email, password1, password2, name, surname, regEmail, regPasswordOne, regPasswordTwo))
 						registerUser(name, surname, email, password1);
 				});
 
@@ -110,11 +81,16 @@ public class RegisterActivity extends AppCompatActivity {
 			String email,
 			String password1,
 			String password2,
+			String name,
+			String surname,
 			TextInputLayout emailField,
 			TextInputLayout passwordField1,
 			TextInputLayout passwordField2) {
 
-		verifier = new Verifier();
+		if(name.length() < 1 || surname.length() < 1){
+			Toast.makeText(this, "Please enter a Name and/or Surname", Toast.LENGTH_SHORT).show();
+			return false;
+		}
 
 		if (!verifier.verifyEmail(email)) {
 			emailField.setError("Please use a valid Wits email address!");
@@ -138,5 +114,6 @@ public class RegisterActivity extends AppCompatActivity {
 			passwordField2.setError(null);
 			return true;
 		}
+
 	}
 }

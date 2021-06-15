@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.witsly.Firebase.FirebaseAuthentication;
 import com.example.witsly.R;
+import com.example.witsly.Verifier;
 import com.example.witsly.databinding.ForgotDialogBinding;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
   public Button loginButton;
   private FirebaseUser mUser;
   private FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
+  private Verifier verifier = new Verifier();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +55,25 @@ public class LoginActivity extends AppCompatActivity {
         login -> {
           String email = loginEmail.getEditText().getText().toString().trim();
           String password = loginPassword.getEditText().getText().toString().trim();
-          login(email, password);
+          if (validateFields(email, password)){
+                login(email, password);
+            }
+
         });
     tv_register.setOnClickListener(
         tv__register -> {
           startActivity(new Intent(this, RegisterActivity.class));
         });
     tv_forgotPW.setOnClickListener(v -> resetPassword());
+  }
+
+  private boolean validateFields(String email, String password){
+      if(!verifier.verifyEmail(email) || !verifier.verifyPassword(password)){
+          Toast.makeText(this, "Please enter a valid email and password combination!", Toast.LENGTH_LONG).show();
+          return false;
+      }else{
+          return true;
+      }
   }
 
   private void login(String email, String password) {
