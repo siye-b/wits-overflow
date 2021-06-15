@@ -80,21 +80,23 @@ public class PostActivity extends AppCompatActivity {
 
         String tagID = null;
 
-        if (!TextUtils.isEmpty(postBody)
-            || !TextUtils.isEmpty(postTitle)
-            || !TextUtils.isEmpty(tag)) {
+        if (validateFields(postTitle, tag, postBody)){
+          if (!TextUtils.isEmpty(postBody)
+                  || !TextUtils.isEmpty(postTitle)
+                  || !TextUtils.isEmpty(tag)) {
 
-          for (Tag t : mTags) if (t.getTag().equals(tag)) tagID = t.getTagID();
+            for (Tag t : mTags) if (t.getTag().equals(tag)) tagID = t.getTagID();
 
-          if (tagID == null)
-            firebaseActions.addTag(
-                new Tag(tag),
-                tagID1 -> {
-                  if (tagID1 != null) addPost(postTitle, postBody, tag);
-                });
-          else addPost(postTitle, postBody, tag);
+            if (tagID == null)
+              firebaseActions.addTag(
+                      new Tag(tag),
+                      tagID1 -> {
+                        if (tagID1 != null) addPost(postTitle, postBody, tag);
+                      });
+            else addPost(postTitle, postBody, tag);
 
-        } else Toast.makeText(this, "Fill in all the fields", Toast.LENGTH_LONG).show();
+          } else Toast.makeText(this, "Fill in all the fields", Toast.LENGTH_LONG).show();
+        }
     }
     return super.onOptionsItemSelected(item);
   }
@@ -114,5 +116,12 @@ public class PostActivity extends AppCompatActivity {
                     getApplicationContext(), FirebaseUtils.POST_NOT_ADDED, Toast.LENGTH_SHORT)
                 .show();
         });
+  }
+
+  private boolean validateFields(String title, String tag, String body){
+    if(title.length() < 1 || tag.length() < 1 || body.length() < 1){
+      Toast.makeText(this, "Please ensure all fields ae filled!", Toast.LENGTH_SHORT).show();
+      return false;
+    }else return true;
   }
 }
