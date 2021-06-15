@@ -108,14 +108,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <Button
+                    <TextView
                         android:id="@+id/add_comment_post"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/darkGrey"
-                        android:text="Comment"
+                        android:textSize="12sp"
+                        android:text="COMMENT"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:textColor="@drawable/tv_click"
+                        android:textStyle="bold"
                         android:layout_toLeftOf="@+id/close_add_comment"
-                        android:layout_marginRight="20dp" />
+                        android:layout_marginRight="10dp" />
 
                     <TextView
                         android:id="@+id/close_add_comment"
@@ -124,7 +129,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:gravity="right"
-                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:layout_centerVertical="true"
                         android:paddingRight="10dp"
@@ -161,8 +167,9 @@
                         android:layout_height="match_parent"
                         android:layout_below="@+id/tv_answer_date"
                         android:gravity="start"
-                        android:text="Reply"
+                        android:text="REPLY"
                         android:clickable="true"
+                        android:layout_gravity="center_horizontal"
                         android:background="?attr/selectableItemBackground"
                         android:textColor="@color/darkGrey" />
 

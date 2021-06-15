@@ -53,7 +53,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
     // For Comments
 
-    private final Button mAddComment;
+    private final TextView mAddComment;
     private final TextView mClose;
 
 
