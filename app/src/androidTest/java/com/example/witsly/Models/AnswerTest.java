@@ -19,9 +19,10 @@ public class AnswerTest {
 
 	@Before
 	public void testConstructorWithAllParams() {
-		answer = new Answer(ANSWER, UID, PID, AID);
+		answer = new Answer(ANSWER, UID, AID, PID);
 
 	}
+
 
 	@Test
 	public void testConstructorWithParams() {
@@ -33,12 +34,10 @@ public class AnswerTest {
 		answer = new Answer();
 	}
 
-
 	@Test
 	public void getAID() {
 		assertEquals(AID, answer.getAID());
 	}
-
 
 	@Test
 	public void getUID() {
@@ -97,13 +96,6 @@ public class AnswerTest {
 		String NEW_ANSWER = "answer1";
 		answer.setAnswer(NEW_ANSWER);
 		assertEquals(NEW_ANSWER, answer.getAnswer());
-	}
-
-	@Test
-	public void setDATE() {
-		String NEW_DATE = "date1";
-		answer.setDate(NEW_DATE);
-		assertEquals(NEW_DATE, answer.getDate());
 	}
 
 

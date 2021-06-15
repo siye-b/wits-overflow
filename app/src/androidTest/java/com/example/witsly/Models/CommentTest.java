@@ -88,10 +88,5 @@ public class CommentTest {
 		assertEquals(NEW_COMMENT, comment.getComment());
 	}
 
-	@Test
-	public void setDATE() {
-		String NEW_DATE = "date1";
-		comment.setDate(NEW_DATE);
-		assertEquals(NEW_DATE, comment.getDate());
-	}
+
 }

@@ -3,7 +3,6 @@ package com.example.witsly.Fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import android.widget.ToggleButton;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -100,9 +98,8 @@ public class ViewQuestion extends Fragment {
 		add_comment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus){
-					fab.setVisibility(View.INVISIBLE);
-				}else{
+				if (hasFocus) fab.setVisibility(View.INVISIBLE);
+				else {
 					fab.setVisibility(View.VISIBLE);
 					mHolder.setVisibility(View.GONE);
 					add_comment.setText("");
@@ -111,9 +108,7 @@ public class ViewQuestion extends Fragment {
 		});
 
 
-
 		assert mUser != null;
-
 
 
 		RecyclerView recyclerView = view.findViewById(R.id.rv_answers);
@@ -141,18 +136,7 @@ public class ViewQuestion extends Fragment {
 						// only the owner of the post can mark the question as solved
 
 						if (mUser.getUid().equals(userID)) {
-							solvedMark.setVisibility(View.VISIBLE);
-							solvedMark.setOnClickListener(
-									sm ->
-											firebaseActions.markPost(
-													postID,
-													m -> {
-														if (m)
-															Toast.makeText(getActivity(), "Solved", Toast.LENGTH_SHORT).show();
-														else
-															Toast.makeText(getActivity(), "Not Solved", Toast.LENGTH_SHORT)
-																	.show();
-													}));
+
 						}
 
 						firebaseActions.isCurrentUserAdmin(

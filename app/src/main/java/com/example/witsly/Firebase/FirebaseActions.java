@@ -46,8 +46,7 @@ public class FirebaseActions {
 	private ArrayList<Comment> commentsArrayList;
 	private ArrayList<Tag> tagArrayList;
 	private int likesCount, disLikeCount;
-	Boolean likesState;
-	Boolean disLikesState;
+
 
 	public FirebaseActions() {
 		firebaseDatabase = FirebaseDatabase.getInstance();
@@ -227,12 +226,25 @@ public class FirebaseActions {
 		DatabaseReference likes = firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(uid);
 		DatabaseReference disLikes = firebaseDatabase.getReference(FirebaseUtils.DISLIKES).child(pid).child(uid);
 		DatabaseReference vote = firebaseDatabase.getReference(place).child(pid).child(FirebaseUtils.VOTE);
+		disLikes.addListenerForSingleValueEvent(
+				new ValueEventListener() {
+					@Override
+					public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+						if (snapshot.exists()) disLikes.removeValue();
+						else likes.setValue(true);
+					}
+
+					@Override
+					public void onCancelled(@NonNull DatabaseError error) {
+					}
+				});
 
 
 	}
 
 	public void downVote(String place, String pid, String uid) {
-		
+
 
 		DatabaseReference likes = firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(uid);
 		DatabaseReference disLikes = firebaseDatabase.getReference(FirebaseUtils.DISLIKES).child(pid).child(uid);
