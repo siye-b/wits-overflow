@@ -56,6 +56,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     private final Button mAddComment;
     private final TextView mClose;
 
+
     ViewHolder(@NonNull View itemView) {
       super(itemView);
 
@@ -75,10 +76,10 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     }
   }
 
-  public AnswerAdapter(ArrayList<Answer> answerList, Context context, FloatingActionButton fab) {
+  public AnswerAdapter(ArrayList<Answer> answerList, Context context, Object e) {
     mAnswerList = answerList;
     mContext = context;
-    mFab = fab;
+    mFab = ((FloatingActionButton) e);
   }
 
   @NonNull

@@ -43,8 +43,7 @@ public class ViewQuestion extends Fragment {
   private FirebaseActions firebaseActions;
   private String questionID, userID;
   private TextView vote;
-  private Button like, delete;
-  private AppCompatButton solvedMark, deleteMark, mClose;
+  private AppCompatButton like, delete, mClose;
   private Boolean isAuthor;
   private FloatingActionButton fab;
   private RelativeLayout mHolder;

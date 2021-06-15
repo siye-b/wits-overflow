@@ -44,7 +44,7 @@
                         android:paddingTop="10dp">
 
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_like"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -58,15 +58,15 @@
                             android:text="0"
                             android:textColor="@color/darkGrey" />
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_delete"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:backgroundTint="@color/Green"
+                            android:backgroundTint="@color/Red"
 
                             android:visibility="invisible"
 
-                            android:background="@drawable/ic_baseline_close_24" />
+                            android:background="@drawable/ic_baseline_delete_24" />
                     </LinearLayout>
 
                     <RelativeLayout

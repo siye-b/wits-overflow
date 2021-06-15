@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.witsly.Firebase.FirebaseAuthentication;
 import com.example.witsly.R;
+import com.example.witsly.Verifier;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
@@ -19,6 +20,7 @@ public class RegisterActivity extends AppCompatActivity {
 	public TextInputLayout regName, regSurname, regEmail, regPasswordOne, regPasswordTwo;
 	public TextView tv_register;
 	public AppCompatButton regButton;
+	public Verifier verifier;
 
 	private final FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
 
@@ -111,12 +113,15 @@ public class RegisterActivity extends AppCompatActivity {
 			TextInputLayout emailField,
 			TextInputLayout passwordField1,
 			TextInputLayout passwordField2) {
-		if (!EMAIL_ADDRESS.matcher(email).matches()) {
+
+		verifier = new Verifier();
+
+		if (!verifier.verifyEmail(email)) {
 			emailField.setError("Please use a valid Wits email address!");
 			passwordField1.setError(null);
 			passwordField2.setError(null);
 			return false;
-		} else if (!PASSWORD_PATTERN.matcher(password1).matches()) {
+		} else if (!verifier.verifyPassword(password1)) {
 			passwordField1.setError("Password must be at least be 8 characters long and contain at least " +
 					"1 Uppercase letter, 1 Lowercase letter, 1 Special character, and 1 Digit!");
 			emailField.setError(null);
