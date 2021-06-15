@@ -141,7 +141,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -152,7 +152,7 @@
         app:backgroundTint="@color/Background"
         app:rippleColor="#E1C3C3"
         app:srcCompat="@drawable/ic_baseline_add_24"
-        app:tint="@color/white"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:tint="@color/white"/>
 
 
     <RelativeLayout
@@ -162,7 +162,7 @@
         android:maxHeight="110dp"
         android:id="@+id/txt"
         android:layout_alignParentBottom="true"
-        android:visibility="visible"
+        android:visibility="gone"
         android:background="@drawable/border"
         android:gravity="bottom">
 
