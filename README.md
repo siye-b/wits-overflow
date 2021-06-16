@@ -20,7 +20,7 @@ To run tests we used TravisCI as well as Coverals for our Test Driven Developmen
 [![Build Status](https://travis-ci.com/SNR99/wits-overflow.svg?branch=main)](https://travis-ci.com/SNR99/wits-overflow)
 
 
-[![codecov](https://codecov.io/gh/SNR99/wits-overflow/branch/main/graph/badge.svg?token=Q4FIUY0ZKU)](https://codecov.io/gh/SNR99/wits-overflow)
+[![codecov](https://codecov.io/gh/umair-b/wits-overflow/branch/main/graph/badge.svg?token=Q4FIUY0ZKU)](https://codecov.io/gh/umair-b/wits-overflow)
 
 # Contributors
 Ntwanano Rikhotso -[insert social media links here]
