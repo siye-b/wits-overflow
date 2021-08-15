@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Activities.PostActivity;
+import com.example.witsly.Activities.Topics;
 import com.example.witsly.Adapters.RecyclerAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Post;
@@ -35,7 +36,7 @@ public class HomeFragment extends Fragment {
     View view = inflater.inflate(R.layout.fragment_home, container, false);
 
     FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
-    mFAB.setOnClickListener(v -> startActivity(new Intent(getActivity(), PostActivity.class)));
+    mFAB.setOnClickListener(v -> startActivity(new Intent(getActivity(), Topics.class)));
 
     setHasOptionsMenu(true);
 
