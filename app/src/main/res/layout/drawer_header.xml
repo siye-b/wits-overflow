@@ -1,34 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:background="@color/Background"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:gravity="bottom"
     android:padding="20dp">
 
     <LinearLayout
-        android:gravity="bottom"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="top">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:cardCornerRadius="50dp"
+            app:strokeColor="@color/darkGrey"
+            app:strokeWidth="1dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_baseline_person_24"
+                android:id="@+id/headerProfilePic">
+            </ImageView>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:gravity="bottom"
+        android:orientation="vertical">
 
 
         <TextView
-            android:textSize="24sp"
-            android:textColor="@android:color/white"
-            android:layout_width="wrap_content"
             android:id="@+id/headerFullName"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:text="John Smith"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="13dp"
+                android:text="Reputation: "/>
+
+            <TextView
+                android:id="@+id/headerReputation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="13dp"
+                android:text="9000"/>
+        </LinearLayout>
+
 
         <TextView
-            android:textSize="14dp"
+            android:id="@+id/headerEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingVertical="5dp"
             android:textColor="@android:color/white"
-            android:layout_width="wrap_content"
-            android:id="@+id/headerEmail"
-            android:layout_height="wrap_content" />
+            android:textSize="13dp"
+            android:text="johnsmith@wits.ac.za"/>
+
+
 
     </LinearLayout>
 

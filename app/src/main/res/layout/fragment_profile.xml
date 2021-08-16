@@ -1,12 +1,103 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar"
+        android:visibility="invisible"
+        layout="@layout/drawer_toolbar"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="145dp"
+        android:layout_height="145dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/rl_pp">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            app:cardCornerRadius="80dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/Background"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_baseline_person_24">
+            </androidx.appcompat.widget.AppCompatImageView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            app:backgroundTint="@color/Background"
+            app:rippleColor="#E1C3C3"
+            app:srcCompat="@drawable/ic_baseline_camera_alt_24"
+            app:tint="@color/white"
+            tools:ignore="SpeakableTextPresentCheck">
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    </RelativeLayout>
 
     <TextView
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_bio"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="PROFILE" />
+        android:layout_below="@id/rl_pp"
+        android:layout_marginTop="25dp"
+        android:paddingLeft="10dp"
+        android:text="Biography (Tell the community about yourself.)"
+        android:textColor="@color/black"
+        android:textSize="16sp"></TextView>
+
+
+    <!--<androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:minLines="5"
+        android:gravity="top"
+        android:singleLine="false"
+        android:layout_below="@id/tv_bio"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="1dp"
+        android:hint="Tell the community a little bit about yourself in about 250 characters or less."
+        android:inputType="textMultiLine"
+        android:maxLength="250">
+    </androidx.appcompat.widget.AppCompatEditText>-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/tv_bio"
+        app:counterEnabled="true"
+        app:counterMaxLength="250"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:textSize="14sp">
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
 
 </RelativeLayout>
