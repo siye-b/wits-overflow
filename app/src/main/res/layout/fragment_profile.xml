@@ -18,6 +18,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/rl_pp">
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="140dp"
             android:layout_height="140dp"
@@ -26,11 +27,12 @@
             app:strokeColor="@color/Background"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true">
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/ic_baseline_person_24">
-            </androidx.appcompat.widget.AppCompatImageView>
+                android:id="@+id/userProfilePicture"
+                android:background="@drawable/ic_baseline_person_24" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -44,8 +46,8 @@
             app:rippleColor="#E1C3C3"
             app:srcCompat="@drawable/ic_baseline_camera_alt_24"
             app:tint="@color/white"
-            tools:ignore="SpeakableTextPresentCheck">
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+            android:id="@+id/uploadProfilePicture"
+            tools:ignore="SpeakableTextPresentCheck"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     </RelativeLayout>
 
@@ -85,19 +87,15 @@
         app:counterEnabled="true"
         app:counterMaxLength="250"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="false"
             android:inputType="textMultiLine"
             android:gravity="top"
-            android:textSize="14sp">
-        </com.google.android.material.textfield.TextInputEditText>
+            android:textSize="14sp"></com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
 
 
 </RelativeLayout>
