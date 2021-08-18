@@ -1,13 +1,8 @@
 package com.example.witsly.Activities;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +17,6 @@ import com.example.witsly.databinding.ForgotDialogBinding;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-
-
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     tv_forgotPW = findViewById(R.id.tv_password);
     loginButton = findViewById(R.id.btn_singin);
 
-
     if (mUser != null)
       startActivity(
           new Intent(this, MainActivity.class)
@@ -71,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
           startActivity(new Intent(this, RegisterActivity.class));
         });
     tv_forgotPW.setOnClickListener(v -> resetPassword());
-
   }
 
   private boolean validateFields(String email, String password) {
@@ -89,73 +79,85 @@ public class LoginActivity extends AppCompatActivity {
         email,
         password,
         (response, msg) -> {
-          if (response) {
+          if (response.equals(0)) {
             Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
             startActivity(
                 new Intent(this, MainActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-          } else {
-              new AlertDialog.Builder(LoginActivity.this)
-                      .setTitle("Email verification")
-                      .setMessage(msg)
-                      .setPositiveButton("Resend link", (dialogInterface, i) -> {
-                          //TODO: 
-                      })
-                      .setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss())
-                      .create()
-                      .show();
-
-          }
+          } else if (response.equals(2))
+            new AlertDialog.Builder(LoginActivity.this)
+                .setTitle("Email verification")
+                .setMessage(msg)
+                .setPositiveButton(
+                    "Resend link",
+                    (dialogInterface, i) -> {
+                      mAuth = FirebaseAuth.getInstance();
+                      mAuth
+                          .getCurrentUser()
+                          .sendEmailVerification()
+                          .addOnSuccessListener(
+                              sent -> {
+                                Toast.makeText(LoginActivity.this, "Link Sent", Toast.LENGTH_LONG)
+                                    .show();
+                              })
+                          .addOnFailureListener(
+                              failure ->
+                                  Toast.makeText(
+                                          LoginActivity.this, "Link not sent", Toast.LENGTH_LONG)
+                                      .show());
+                    })
+                .setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss())
+                .create()
+                .show();
         });
   }
 
   private void resetPassword() {
-      AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
-      ForgotDialogBinding binding =
-              ForgotDialogBinding.inflate(LayoutInflater.from(LoginActivity.this));
-      builder.setView(binding.getRoot());
+    ForgotDialogBinding binding =
+        ForgotDialogBinding.inflate(LayoutInflater.from(LoginActivity.this));
+    builder.setView(binding.getRoot());
 
-      builder.setPositiveButton(
-              "Next",
-              (dialog, which) -> {
-                  String email = binding.etForgotPW.getText().toString().trim();
+    builder.setPositiveButton(
+        "Next",
+        (dialog, which) -> {
+          String email = binding.etForgotPW.getText().toString().trim();
 
-                  firebaseAuthentication.resetPassword(
-                          email,
-                          (response, msg) -> {
-                              if (response)
-                                  Toast.makeText(
-                                          LoginActivity.this,
-                                          "Reset link is sent to your email: " + email,
-                                          Toast.LENGTH_LONG)
-                                          .show();
-                              else
-                                  Toast.makeText(
-                                          LoginActivity.this, "ERROR ! Reset link is not sent ,", Toast.LENGTH_LONG)
-                                          .show();
-                          });
-
-                  dialog.dismiss();
+          firebaseAuthentication.resetPassword(
+              email,
+              (response, msg) -> {
+                if (response)
+                  Toast.makeText(
+                          LoginActivity.this,
+                          "Reset link is sent to your email: " + email,
+                          Toast.LENGTH_LONG)
+                      .show();
+                else
+                  Toast.makeText(
+                          LoginActivity.this, "ERROR ! Reset link is not sent ,", Toast.LENGTH_LONG)
+                      .show();
               });
 
-      builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+          dialog.dismiss();
+        });
 
-      builder.create();
-      builder.show();
+    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+    builder.create();
+    builder.show();
   }
 
-     /*ShowDialog.setOnClickListener(v -> {
-        new AlertDialog.Builder(LoginActivity.this)
-                .setTitle("Email verification")
-                .setMessage("Pleas verify account in the link sent to email.")
-                .setPositiveButton("Resend link", (dialogInterface, i) -> {
-                    //TODO: send verfication email here
-                })
-                .setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss())
-                .create()
-                .show();
-    });*/
+  /*ShowDialog.setOnClickListener(v -> {
+      new AlertDialog.Builder(LoginActivity.this)
+              .setTitle("Email verification")
+              .setMessage("Pleas verify account in the link sent to email.")
+              .setPositiveButton("Resend link", (dialogInterface, i) -> {
+                  //TODO: send verfication email here
+              })
+              .setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss())
+              .create()
+              .show();
+  });*/
 
-  }
-
+}
