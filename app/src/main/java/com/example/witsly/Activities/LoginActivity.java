@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                       .setTitle("Email verification")
                       .setMessage(msg)
                       .setPositiveButton("Resend link", (dialogInterface, i) -> {
-                          //TODO: send verfication email here
+                          //TODO: 
                       })
                       .setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss())
                       .create()
