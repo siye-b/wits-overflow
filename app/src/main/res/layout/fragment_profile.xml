@@ -47,7 +47,9 @@
             app:srcCompat="@drawable/ic_baseline_camera_alt_24"
             app:tint="@color/white"
             android:id="@+id/uploadProfilePicture"
-            tools:ignore="SpeakableTextPresentCheck"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+            tools:ignore="SpeakableTextPresentCheck">
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
 
     </RelativeLayout>
 
