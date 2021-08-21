@@ -147,17 +147,4 @@ public class LoginActivity extends AppCompatActivity {
     builder.create();
     builder.show();
   }
-
-  /*ShowDialog.setOnClickListener(v -> {
-      new AlertDialog.Builder(LoginActivity.this)
-              .setTitle("Email verification")
-              .setMessage("Pleas verify account in the link sent to email.")
-              .setPositiveButton("Resend link", (dialogInterface, i) -> {
-                  //TODO: send verfication email here
-              })
-              .setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss())
-              .create()
-              .show();
-  });*/
-
 }
