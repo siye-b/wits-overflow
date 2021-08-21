@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.witsly.R;
+
 public class ViewProfileActivity extends AppCompatActivity {
 
     @Override
