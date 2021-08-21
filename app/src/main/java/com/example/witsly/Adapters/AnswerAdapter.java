@@ -2,6 +2,7 @@ package com.example.witsly.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.Activities.ViewProfileActivity;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
@@ -195,6 +197,15 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
                         r -> Toast.makeText(mContext, "Answer Deleted", Toast.LENGTH_LONG).show()));
           }
         });
+
+    holder.mAnswerDetails.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(mContext, ViewProfileActivity.class);
+            //intent.putExtra("profID", mUser.getUid());
+            mContext.startActivity(intent);
+        }
+    });
   }
 
   @Override

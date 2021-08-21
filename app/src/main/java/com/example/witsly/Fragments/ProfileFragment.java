@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
@@ -24,6 +25,7 @@ public class ProfileFragment extends Fragment {
 
   private AppCompatImageView profilePic;
   private FloatingActionButton btnImageUploader;
+  private AppCompatButton btnSave;
   Uri imgUri;
   FirebaseActions firebaseActions = new FirebaseActions();
 
@@ -35,6 +37,14 @@ public class ProfileFragment extends Fragment {
     btnImageUploader = view.findViewById(R.id.uploadProfilePicture);
 
     btnImageUploader.setOnClickListener(img -> selectImage());
+    btnSave = view.findViewById(R.id.btnSave);
+
+    btnSave.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        saveChanges();
+      }
+    });
 
     return view;
   }
@@ -56,6 +66,10 @@ public class ProfileFragment extends Fragment {
         .setCropShape(CropImageView.CropShape.OVAL)
         .setActivityTitle("Select an Image")
         .start(getContext(), this);
+  }
+
+  private void saveChanges(){
+    //Change Bio
   }
 
   @Override

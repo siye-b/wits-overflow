@@ -2,6 +2,7 @@ package com.example.witsly.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.Activities.ViewProfileActivity;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.R;
@@ -88,6 +90,16 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
                         }));
           }
         });
+
+    //Assuming you're using the UserID to get the details for the next activity
+    holder.mCommentDetails.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(mContext, ViewProfileActivity.class);
+        //intent.putExtra("profID", mUser.getUid());
+        mContext.startActivity(intent);
+      }
+    });
   }
 
   @Override
