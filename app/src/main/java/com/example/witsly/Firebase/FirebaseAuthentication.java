@@ -27,7 +27,7 @@ public class FirebaseAuthentication {
             task -> {
               if (task.isSuccessful())
                 if (mAuth.getCurrentUser().isEmailVerified()) f.processAuth(0, "Logging in");
-                else f.processAuth(2, "Not verified");
+                else f.processAuth(2, "Account not verified");
             })
         .addOnFailureListener(e -> f.processAuth(1, e.getMessage()));
   }
