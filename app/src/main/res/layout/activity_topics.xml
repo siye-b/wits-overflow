@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     tools:context=".Activities.Topics">
 
@@ -22,23 +22,23 @@
                 android:id="@+id/textView"
                 android:layout_width="249dp"
                 android:layout_height="38dp"
-                android:text="CHOOSE A TOPIC"
-                android:textStyle="bold"
                 android:gravity="center"
+                android:text="CHOOSE A TOPIC"
                 android:textSize="25dp"
+                android:textStyle="bold"
                 android:translationX="80dp"
                 android:translationY="90dp" />
 
 
         </RelativeLayout>
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="257dp"
+            android:alignmentMode="alignMargins"
             android:columnCount="3"
             android:columnOrderPreserved="false"
-            android:rowCount="2"
-            android:alignmentMode="alignMargins">
+            android:rowCount="2">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/topic1"
@@ -46,8 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                >
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,9 +133,31 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-        </GridLayout>
-    </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/mTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:clickable="true"
+                android:visibility="visible"
+                app:backgroundTint="@color/Background"
+                app:rippleColor="#E1C3C3"
+                app:srcCompat="@drawable/ic_baseline_add_24"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </ScrollView>
