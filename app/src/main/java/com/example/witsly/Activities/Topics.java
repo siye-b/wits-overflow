@@ -15,9 +15,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-
-
-
 public class Topics extends AppCompatActivity {
     CardView cms ,cam, maths;
    // private  final TextView question;
@@ -64,10 +61,19 @@ public class Topics extends AppCompatActivity {
     public void click(View v){
         switch (v.getId()){
             case R.id.topic1:
+                Intent intent = new Intent(this, PostActivity.class);
+                intent.putExtra("topic","cam");
+                startActivity(intent);
+
             case R.id.topic2:
+                Intent intent2 = new Intent(this, PostActivity.class);
+                intent2.putExtra("topic","coms");
+                startActivity(intent2);
+
             case R.id.topic3:
-                startActivity(new Intent(this, PostActivity.class));
-                break;
+                Intent intent3 = new Intent(this, PostActivity.class);
+                intent3.putExtra("topic","Maths");
+                startActivity(intent3);
         }
 
     }
@@ -77,6 +83,6 @@ public class Topics extends AppCompatActivity {
         //mTopicList = TopicList;
         mTop = ((FloatingActionButton) e);
         //this.mTopicAdd = mTopicAdd;
-        startActivity(new Intent(this, TopicsAdapter.class));
+        //startActivity(new Intent(this, TopicsAdapter.class));
     }
 }

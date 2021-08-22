@@ -11,7 +11,7 @@ public class Post {
 	@SuppressLint("SimpleDateFormat")
 	private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
 
-	private String title, body, uid, date, pid, tag;
+	private String title, body, uid, date, pid, tag, topic;
 	private long vote;
 	private Boolean solved;
 
@@ -20,24 +20,26 @@ public class Post {
 
 	public static Comparator<Post> VoteComparator = (o1, o2) -> (int) (o2.getVote() - o1.getVote());
 
-	public Post(String title, String body, String tag, String uid) {
+	public Post(String title, String body, String tag, String uid, String topic) {
 
 		this.title = title;
 		this.body = body;
 		this.uid = uid;
 		this.tag = tag;
+		this.topic = topic;
 		date = ISO_8601_FORMAT.format(new Date());
 		vote = 0;
 		solved = false;
 	}
 
-	public Post(String title, String body, String tag, String uid, String pid) {
+	public Post(String title, String body, String tag, String uid, String pid, String topic) {
 
 		this.title = title;
 		this.body = body;
 		this.uid = uid;
 		this.tag = tag;
 		this.pid = pid;
+		this.topic = topic;
 		date = ISO_8601_FORMAT.format(new Date());
 		vote = 0;
 		solved = false;
@@ -107,4 +109,5 @@ public class Post {
 	public void setSolved(Boolean solved) {
 		this.solved = solved;
 	}
+
 }

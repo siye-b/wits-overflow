@@ -1,6 +1,7 @@
 package com.example.witsly.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -31,6 +32,7 @@ public class PostActivity extends AppCompatActivity {
   public MaterialAutoCompleteTextView tagInput;
   private ArrayList<Tag> mTags;
   Tag tag;
+  String topic;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,9 @@ public class PostActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
     (getSupportActionBar()).setTitle("New Post");
     (getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+    Intent i = getIntent();
+    topic = i.getStringExtra("topic");
 
     tagInput = findViewById(R.id.tagInput);
     title = findViewById(R.id.textInputLayoutTitle);
@@ -91,9 +96,9 @@ public class PostActivity extends AppCompatActivity {
               firebaseActions.addTag(
                       new Tag(tag),
                       tagID1 -> {
-                        if (tagID1 != null) addPost(postTitle, postBody, tag);
+                        if (tagID1 != null) addPost(postTitle, postBody, tag, topic);
                       });
-            else addPost(postTitle, postBody, tag);
+            else addPost(postTitle, postBody, tag, topic);
 
           } else Toast.makeText(this, "Fill in all the fields", Toast.LENGTH_LONG).show();
         }
@@ -101,9 +106,9 @@ public class PostActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  private void addPost(String title, String body, String tag) {
+  private void addPost(String title, String body, String tag, String topic) {
 
-    Post post = new Post(title, body, tag, mAuth.getCurrentUser().getUid());
+    Post post = new Post(title, body, tag, mAuth.getCurrentUser().getUid(), topic);
 
     firebaseActions.addPost(
         post,

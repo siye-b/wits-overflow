@@ -14,18 +14,19 @@ public class PostTest {
   String UID = "uid";
   String TAG = "tag";
   String PID = "pid";
+  String TOPIC = "topic";
 
   private Post post;
   private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
 
   @Before
   public void testConstructorWithAllParams() {
-    post = new Post(TITLE, BODY, TAG, UID, PID);
+    post = new Post(TITLE, BODY, TAG, UID, PID, TOPIC);
   }
 
   @Test
   public void testConstructorWithParams() {
-    post = new Post(TITLE, BODY, TAG, UID);
+    post = new Post(TITLE, BODY, TAG, UID, TOPIC);
   }
 
   @Test
