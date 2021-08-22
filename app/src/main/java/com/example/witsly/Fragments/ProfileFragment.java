@@ -6,61 +6,86 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
 
+  private AppCompatImageView profilePic;
+  private FloatingActionButton btnImageUploader;
+  private AppCompatButton btnSave;
+  Uri imgUri;
+  FirebaseActions firebaseActions = new FirebaseActions();
 
-    private AppCompatImageView profilePic;
-    Uri imgUri;
-    FirebaseActions firebaseActions;
+  @Override
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_profile, container, false);
+    profilePic = view.findViewById(R.id.userProfilePicture);
+    btnImageUploader = view.findViewById(R.id.uploadProfilePicture);
 
+    btnImageUploader.setOnClickListener(img -> selectImage());
+    btnSave = view.findViewById(R.id.btnSave);
 
-    @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        profilePic = view.findViewById(R.id.userProfilePicture);
+    btnSave.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        saveChanges();
+      }
+    });
 
-        view.findViewById(R.id.uploadProfilePicture).setOnClickListener(
-                v -> choosePicture()
-        );
+    return view;
+  }
 
+  private void choosePicture() {
+    CropImage.activity()
+        .setGuidelines(CropImageView.Guidelines.ON)
+        .setAspectRatio(1, 1)
+        .setCropShape(CropImageView.CropShape.OVAL)
+        .setFixAspectRatio(true)
+        .start(getContext(), this);
+  }
 
-        return view;
+  private void selectImage() {
+    CropImage.activity()
+        .setGuidelines(CropImageView.Guidelines.ON)
+        .setFixAspectRatio(true)
+        .setAspectRatio(1, 1)
+        .setCropShape(CropImageView.CropShape.OVAL)
+        .setActivityTitle("Select an Image")
+        .start(getContext(), this);
+  }
+
+  private void saveChanges(){
+    //Change Bio
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+      CropImage.ActivityResult result = CropImage.getActivityResult(data);
+      if (resultCode == RESULT_OK) {
+        imgUri = result.getUri();
+        profilePic.setImageURI(imgUri);
+        firebaseActions.uploadPicture(imgUri);
+      } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+        Exception error = result.getError();
+        Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+      }
     }
-
-    private void choosePicture() {
-        startActivityForResult(
-                new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT), 1
-        );
-
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-
-        firebaseActions = new FirebaseActions();
-
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            imgUri = data.getData();
-            profilePic.setImageURI(imgUri);
-            profilePic.setBackgroundDrawable(null);
-            firebaseActions.uploadPicture(imgUri);
-
-
-        }
-
-    }
+  }
 }

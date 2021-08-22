@@ -11,6 +11,7 @@ public class UserTest{
     String NAME = "name";
     String SURNAME = "surname";
     String EMAIL = "email";
+    String BIO = " bio";
     Boolean ADMIN = false;
 
     private User user;
@@ -35,6 +36,9 @@ public class UserTest{
     public void getEMAIL() {
         assertEquals(EMAIL, user.getEmail());
     }
+
+    @Test
+    public void getBIO() { assertEquals(BIO, user.getBio()); }
 
     @Test
     public void setNAME() {
@@ -67,5 +71,12 @@ public class UserTest{
         Boolean NEW_ADMIN = false;
         user.setAdmin(NEW_ADMIN);
         assertEquals(NEW_ADMIN, user.isAdmin());
+    }
+
+    @Test
+    public void setBIO() {
+        String NEW_BIO = "new bio";
+        user.setBio(NEW_BIO);
+        assertEquals(NEW_BIO, user.getBio());
     }
 }

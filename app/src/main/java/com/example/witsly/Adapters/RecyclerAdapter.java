@@ -162,6 +162,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 				v -> {
 					Bundle bundle = new Bundle();
 					bundle.putString("postID", post.getPID());
+					//bundle.putString("profID", post.getUID());
 
 					AppCompatActivity activity = (AppCompatActivity) context;
 

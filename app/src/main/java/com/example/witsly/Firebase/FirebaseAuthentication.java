@@ -1,8 +1,9 @@
 package com.example.witsly.Firebase;
 
 import com.example.witsly.Interfaces.FirebaseAuthHandler;
-import com.example.witsly.Interfaces.HandleLogin;
+import com.example.witsly.Interfaces.LoginHandler;
 import com.example.witsly.Models.User;
+import com.example.witsly.Utils.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -16,10 +17,10 @@ public class FirebaseAuthentication {
 
   public void logout(FirebaseAuthHandler r) {
     FirebaseAuth.getInstance().signOut();
-    r.processAuth(true, "");
+    r.processAuth(true, "Logged out");
   }
 
-  public void login(String email, String password, HandleLogin f) {
+  public void login(String email, String password, LoginHandler f) {
     mAuth
         .signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(
@@ -66,7 +67,7 @@ public class FirebaseAuthentication {
     FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
     mFirebaseDatabase
-        .getReference("Users")
+        .getReference(FirebaseUtils.USERS)
         .child(mAuth.getCurrentUser().getUid())
         .setValue(user)
         .addOnCompleteListener(
