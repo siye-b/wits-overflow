@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.witsly.Adapters.TopicsAdapter;
+//import com.example.witsly.Adapters.TopicsAdapter;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,11 +32,7 @@ public class Topics extends AppCompatActivity {
         cms = findViewById(R.id.topic2);
         maths = findViewById(R.id.topic3);
 
-
-
         cam.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
                 click(v);
@@ -72,17 +68,17 @@ public class Topics extends AppCompatActivity {
 
             case R.id.topic3:
                 Intent intent3 = new Intent(this, PostActivity.class);
-                intent3.putExtra("topic","Maths");
+                intent3.putExtra("topic","maths");
                 startActivity(intent3);
         }
 
     }
 
 
-    public  Topics(ArrayList<Topics> TopicList, Context context, Object e, TextView mTopicAdd) {
+    /*public  Topics(ArrayList<Topics> TopicList, Context context, Object e, TextView mTopicAdd) {
         //mTopicList = TopicList;
         mTop = ((FloatingActionButton) e);
         //this.mTopicAdd = mTopicAdd;
-        //startActivity(new Intent(this, TopicsAdapter.class));
-    }
+        startActivity(new Intent(this, TopicsAdapter.class));
+    }*/
 }

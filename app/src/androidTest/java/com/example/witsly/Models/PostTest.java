@@ -50,6 +50,18 @@ public class PostTest {
   }
 
   @Test
+  public void getTOPIC() {
+    assertEquals(TOPIC, post.getTopic());
+  }
+
+  @Test
+  public void setTOPIC() {
+    String NEW_TOPIC = "topic";
+    post.setUID(NEW_TOPIC);
+    assertEquals(NEW_TOPIC, post.getTopic());
+  }
+
+  @Test
   public void setUID() {
     String NEW_UID = "uid1";
     post.setUID(NEW_UID);

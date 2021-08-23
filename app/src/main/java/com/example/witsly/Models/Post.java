@@ -78,6 +78,14 @@ public class Post {
 		return vote;
 	}
 
+	public String getTopic() {
+		return topic;
+	}
+
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
 	public void setDate(String date) {
 		this.date = date;
 	}

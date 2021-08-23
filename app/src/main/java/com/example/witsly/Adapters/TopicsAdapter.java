@@ -1,4 +1,4 @@
-package com.example.witsly.Adapters;
+/*package com.example.witsly.Adapters;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
@@ -79,3 +79,4 @@ public class TopicsAdapter  extends RecyclerView.Adapter<TopicsAdapter.ViewHolde
 
 
 
+*/
