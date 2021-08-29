@@ -18,10 +18,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Firebase.FirebaseActions;
+import com.example.witsly.Fragments.TopicsFragment;
 import com.example.witsly.Fragments.ViewQuestion;
 import com.example.witsly.Models.Post;
 import com.example.witsly.R;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	private final Context context;
 	private OnItemClickListener mListener;
 	private final FirebaseActions firebaseActions = new FirebaseActions();
+	private FloatingActionButton mFab;
 
 	@Override
 	public Filter getFilter() {
@@ -54,6 +57,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
 		Chip mChip;
+		Chip mTopicChip;
 		TextView mPosterDetails;
 		TextView mPostTitle;
 		TextView mPostBody;
@@ -64,6 +68,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 			super(itemView);
 
 			mChip = itemView.findViewById(R.id.tag);
+			mTopicChip = itemView.findViewById(R.id.topic_tag);
 			mPosterDetails = itemView.findViewById(R.id.tv_poster2);
 			mPostTitle = itemView.findViewById(R.id.tv_card_title2);
 			mPostBody = itemView.findViewById(R.id.tv_card_body2);
@@ -80,9 +85,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		}
 	}
 
-	public RecyclerAdapter(ArrayList<Post> postList, Context context) {
+	public RecyclerAdapter(ArrayList<Post> postList, Context context, FloatingActionButton floatingActionButton) {
 		mPostList = postList;
 		mListFilter = new ArrayList<>(mPostList);
+		mFab = floatingActionButton;
 		this.context = context;
 	}
 
@@ -109,6 +115,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 			holder.mPostTitle.setText(post.isSolved() ? post.getTitle() + " [SOLVED]" : post.getTitle());
 
 		holder.mChip.setText(post.getTag());
+		holder.mTopicChip.setText(post.getTopic());
 
 		if (post.getBody().length() > 30)
 			holder.mPostBody.setText((post.getBody()).substring(0, 30));
@@ -174,6 +181,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 					transaction.addToBackStack(null);
 					transaction.commit();
 				});
+
+		//Handles click events for Floating Action Button
+		mFab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				AppCompatActivity activity = (AppCompatActivity) context;
+
+				Fragment topicsFragment = new TopicsFragment();
+				FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+				transaction.replace(R.id.container_frag, topicsFragment);
+
+				transaction.addToBackStack(null);
+				transaction.commit();
+
+			}
+		});
 	}
 
 	@Override

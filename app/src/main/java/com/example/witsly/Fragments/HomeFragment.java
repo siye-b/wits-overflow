@@ -36,7 +36,12 @@ public class HomeFragment extends Fragment {
     View view = inflater.inflate(R.layout.fragment_home, container, false);
 
     FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
-    mFAB.setOnClickListener(v -> startActivity(new Intent(getActivity(), Topics.class)));
+    /*mFAB.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //TODO: Start *TopicsFragment* here.
+        }
+    });*/
 
     setHasOptionsMenu(true);
 
@@ -46,7 +51,7 @@ public class HomeFragment extends Fragment {
     firebaseActions.getAllPost(
         (response) -> {
           Collections.sort(response, Post.VoteComparator);
-          mRecyclerViewAdapter = new RecyclerAdapter(response, getActivity());
+          mRecyclerViewAdapter = new RecyclerAdapter(response, getActivity(), mFAB);
           mRecyclerView.setLayoutManager(mRecyclerManager);
           mRecyclerView.setAdapter(mRecyclerViewAdapter);
         });

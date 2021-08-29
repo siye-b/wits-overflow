@@ -10,6 +10,11 @@
             android:icon="@drawable/ic_baseline_person_24"
             android:title="@string/profile" />
 
+        <item
+            android:id="@+id/user_subscriptions"
+            android:icon="@drawable/ic_calendar"
+            android:title="@string/subscriptions" />
+
     </group>
     <item
         android:id="@+id/user_logout"

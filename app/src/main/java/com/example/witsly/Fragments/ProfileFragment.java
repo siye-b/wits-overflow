@@ -29,6 +29,8 @@ public class ProfileFragment extends Fragment {
   Uri imgUri;
   FirebaseActions firebaseActions = new FirebaseActions();
 
+  public static int IMAGE_VERIFY = 1;
+
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class ProfileFragment extends Fragment {
     profilePic = view.findViewById(R.id.userProfilePicture);
     btnImageUploader = view.findViewById(R.id.uploadProfilePicture);
 
-    btnImageUploader.setOnClickListener(img -> selectImage());
+    btnImageUploader.setOnClickListener(img -> choosePicture());
     btnSave = view.findViewById(R.id.btnSave);
 
     btnSave.setOnClickListener(new View.OnClickListener() {
@@ -50,15 +52,14 @@ public class ProfileFragment extends Fragment {
   }
 
   private void choosePicture() {
-    CropImage.activity()
-        .setGuidelines(CropImageView.Guidelines.ON)
-        .setAspectRatio(1, 1)
-        .setCropShape(CropImageView.CropShape.OVAL)
-        .setFixAspectRatio(true)
-        .start(getContext(), this);
+    Intent intent = new Intent();
+    intent.setType("image/*");
+    intent.setAction(Intent.ACTION_GET_CONTENT);
+    startActivityForResult(intent, IMAGE_VERIFY);
   }
 
-  private void selectImage() {
+  //Do not remove the code below
+  /*private void selectImage() {
     CropImage.activity()
         .setGuidelines(CropImageView.Guidelines.ON)
         .setFixAspectRatio(true)
@@ -66,7 +67,7 @@ public class ProfileFragment extends Fragment {
         .setCropShape(CropImageView.CropShape.OVAL)
         .setActivityTitle("Select an Image")
         .start(getContext(), this);
-  }
+  }*/
 
   private void saveChanges(){
     //Change Bio
@@ -76,7 +77,8 @@ public class ProfileFragment extends Fragment {
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+    //The Code below still works for physical devices, do not remove the code
+    /*if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
       CropImage.ActivityResult result = CropImage.getActivityResult(data);
       if (resultCode == RESULT_OK) {
         imgUri = result.getUri();
@@ -86,6 +88,15 @@ public class ProfileFragment extends Fragment {
         Exception error = result.getError();
         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
       }
+    }*/
+
+    if (requestCode == IMAGE_VERIFY && resultCode == RESULT_OK && data != null
+            && data.getData() != null){
+      imgUri = data.getData();
+      profilePic.setBackground(null);
+      profilePic.setImageURI(imgUri);
     }
+
+
   }
 }

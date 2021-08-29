@@ -15,6 +15,7 @@
         android:theme="@style/Theme.Witsly">
         <activity
             android:name=".Activities.ViewProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".Activities.Topics"

@@ -64,18 +64,38 @@
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/tag"
-                android:textSize="12sp"
-                android:layout_gravity="start"
-                android:paddingHorizontal="5dp"
-                android:layout_marginLeft="2dp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_poster_title2"
-                android:backgroundTint="#2979FF"
-                android:textColor="@color/white"
-                android:text="General"></com.google.android.material.chip.Chip>
+                android:orientation="horizontal">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/topic_tag"
+                    android:textSize="12sp"
+                    android:layout_gravity="start"
+                    android:paddingHorizontal="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#49484A"
+                    android:textColor="@color/white"
+                    android:text="Topic">
+                </com.google.android.material.chip.Chip>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/tag"
+                    android:textSize="12sp"
+                    android:layout_gravity="start"
+                    android:paddingHorizontal="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#2979FF"
+                    android:textColor="@color/white"
+                    android:text="General">
+                </com.google.android.material.chip.Chip>
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/tv_card_body2"

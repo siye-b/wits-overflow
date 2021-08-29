@@ -11,7 +11,7 @@ public class User {
     this.name = name;
     this.surname = surname;
     this.email = email;
-    this.bio = bio;
+    this.bio = "";
 
     // it sets all new registered users as non admin by default
     admin = false;
