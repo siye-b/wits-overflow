@@ -1,5 +1,9 @@
-package com.example.witsly.Adapters;
+/*package com.example.witsly.Adapters;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,59 +11,50 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.Activities.PostActivity;
+import com.example.witsly.Activities.Topics;
 import com.example.witsly.R;
-//import com.google.android.gms.ads.mediation.Adapter;
-import com.google.firebase.database.annotations.NotNull;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder> {
-
-
-    private final Button AddTopic;
-    CardView newcard;
-
-    public TopicsAdapter(Button addTopic) {
-        AddTopic = addTopic;
-    }
+import java.util.ArrayList;
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+public class TopicsAdapter  extends RecyclerView.Adapter<TopicsAdapter.ViewHolder>{
 
-        private final Button AddTopic;
-        private final CardView newcard;
-        private final TextView mAddTopicT;
+    private final ArrayList<Topics> mTopicList;
 
-        ViewHolder(@NonNull View itemView){
-            super(itemView);
+    private FloatingActionButton mTop;
 
-            AddTopic = itemView.findViewById(R.id.buttontopic);
-            newcard  = itemView.findViewById(R.id.cardV);
-            mAddTopicT = itemView.findViewById(R.id.tv_topic_name);
-            
-            newcard.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    click(v);
-                }
-            });
+    private TextView mTopicAdd;
 
-        }
-
-        private void click(View v) {
-        }
-
-    }
+    private Button buttontopic;
 
     @NonNull
-    @NotNull
     @Override
-    public TopicsAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view =
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.answer_card, parent, false);
 
         return new TopicsAdapter.ViewHolder(view);
+    }
+
+    public TopicsAdapter(ArrayList<Topics> TopicList, Context context, Object e, TextView mTopicAdd) {
+        mTopicList = TopicList;
+        mTop = ((FloatingActionButton) e);
+        this.mTopicAdd = mTopicAdd;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        ViewHolder(@NonNull View itemView){
+            super(itemView);
+
+            mTopicAdd = itemView.findViewById(R.id.tv_topic_name);
+            buttontopic = itemView.findViewById(R.id.buttontopic);
+        }
     }
 
     @Override
@@ -69,7 +64,19 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mTopicList.size();
+
     }
 
-}
+  //  public void TopicsAdapter(View v){
+      //  switch (v.getId()){
+            //buttontopic = itemView.findViewById(R.id.buttontopic);
+        //        startActivity(new Intent(this, Topics.class));
+       // }
+
+    }
+
+
+
+
+*/
