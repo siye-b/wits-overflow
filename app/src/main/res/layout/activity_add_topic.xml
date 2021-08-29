@@ -26,6 +26,7 @@
                 android:padding="16dp">
 
                 <ImageView
+                    android:id="@+id/cardV"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     app:srcCompat="@drawable/ic_calendar" />
@@ -43,7 +44,7 @@
                     android:id="@+id/buttontopic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Add Topic"
+                    android:text="Add_Topic"
                     app:backgroundTint="@color/Background"
                     app:rippleColor="#E1C3C3"
                     app:srcCompat="@drawable/ic_baseline_add_24"
