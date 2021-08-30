@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.witsly.Interfaces.AddAnswer;
+import com.example.witsly.Interfaces.AddBio;
 import com.example.witsly.Interfaces.AddComment;
 import com.example.witsly.Interfaces.AddPost;
 import com.example.witsly.Interfaces.AddTag;
@@ -14,7 +15,9 @@ import com.example.witsly.Interfaces.DeletePost;
 import com.example.witsly.Interfaces.FirebaseAuthHandler;
 import com.example.witsly.Interfaces.GetAllPosts;
 import com.example.witsly.Interfaces.GetAnswers;
+import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
+import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.MarkPost;
@@ -84,7 +87,7 @@ public class FirebaseActions {
         });
   }
 
-  public void markAnswer(String pid, String aid) {
+    public void markAnswer(String pid, String aid) {
 
     DatabaseReference answer =
         firebaseDatabase.getReference(FirebaseUtils.ANSWERS).child(aid).child("correct");
@@ -309,7 +312,7 @@ public class FirebaseActions {
    });
   }
 
-  public void getBio(String uid) {
+  public void getBio(String uid, GetBio b) {
       DatabaseReference mDatabaseReference =
               FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
       mDatabaseReference
@@ -320,6 +323,11 @@ public class FirebaseActions {
                           public void onDataChange(@NonNull DataSnapshot snapshot) {
                               String bio = snapshot.child(FirebaseUtils.BIO).getValue(String.class);
 
+                              if (snapshot.exists()) {
+                                  User userB = snapshot.getValue(User.class);
+                                  assert userB != null;
+                                  getUserDetails(userB.getBio(), user -> b.processResponse( userB));
+                              }
                           }
 
                           @Override

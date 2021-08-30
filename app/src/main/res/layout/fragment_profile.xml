@@ -59,13 +59,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_pp"
         android:layout_marginTop="25dp"
+        android:inputType="text"
         android:paddingLeft="10dp"
+        android:singleLine="true"
         android:text="Biography (Tell the community about yourself.)"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:inputType="text"
-        android:singleLine="true">
-    </TextView>
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck"></TextView>
 
 
     <!--<androidx.appcompat.widget.AppCompatEditText
@@ -97,10 +97,11 @@
             android:id="@+id/bio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:inputType="textMultiLine"
             android:gravity="top"
-            android:textSize="14sp"></com.google.android.material.textfield.TextInputEditText>
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textSize="14sp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"></com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton

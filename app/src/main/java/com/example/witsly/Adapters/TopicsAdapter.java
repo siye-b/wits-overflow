@@ -1,9 +1,5 @@
-/*package com.example.witsly.Adapters;
+package com.example.witsly.Adapters;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,50 +7,59 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.witsly.Activities.PostActivity;
-import com.example.witsly.Activities.Topics;
 import com.example.witsly.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+//import com.google.android.gms.ads.mediation.Adapter;
+import com.google.firebase.database.annotations.NotNull;
 
-import java.util.ArrayList;
+public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder> {
 
 
-public class TopicsAdapter  extends RecyclerView.Adapter<TopicsAdapter.ViewHolder>{
+    private final Button AddTopic;
+    CardView newcard;
 
-    private final ArrayList<Topics> mTopicList;
-
-    private FloatingActionButton mTop;
-
-    private TextView mTopicAdd;
-
-    private Button buttontopic;
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view =
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.answer_card, parent, false);
-
-        return new TopicsAdapter.ViewHolder(view);
+    public TopicsAdapter(Button addTopic) {
+        AddTopic = addTopic;
     }
 
-    public TopicsAdapter(ArrayList<Topics> TopicList, Context context, Object e, TextView mTopicAdd) {
-        mTopicList = TopicList;
-        mTop = ((FloatingActionButton) e);
-        this.mTopicAdd = mTopicAdd;
-    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final Button AddTopic;
+        private final CardView newcard;
+        private final TextView mAddTopicT;
 
         ViewHolder(@NonNull View itemView){
             super(itemView);
 
-            mTopicAdd = itemView.findViewById(R.id.tv_topic_name);
-            buttontopic = itemView.findViewById(R.id.buttontopic);
+            AddTopic = itemView.findViewById(R.id.buttontopic);
+            newcard  = itemView.findViewById(R.id.cardV);
+            mAddTopicT = itemView.findViewById(R.id.tv_topic_name);
+            
+            newcard.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    click(v);
+                }
+            });
+
         }
+
+        private void click(View v) {
+        }
+
+    }
+
+    @NonNull
+    @NotNull
+    @Override
+    public TopicsAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View view =
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_add_topic, parent, false);
+
+        return new TopicsAdapter.ViewHolder(view);
     }
 
     @Override
@@ -64,19 +69,7 @@ public class TopicsAdapter  extends RecyclerView.Adapter<TopicsAdapter.ViewHolde
 
     @Override
     public int getItemCount() {
-        return mTopicList.size();
-
+        return 0;
     }
 
-  //  public void TopicsAdapter(View v){
-      //  switch (v.getId()){
-            //buttontopic = itemView.findViewById(R.id.buttontopic);
-        //        startActivity(new Intent(this, Topics.class));
-       // }
-
-    }
-
-
-
-
-*/
+}
