@@ -309,6 +309,24 @@ public class FirebaseActions {
    });
   }
 
+  public void getBio(String uid) {
+      DatabaseReference mDatabaseReference =
+              FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
+      mDatabaseReference
+              .child(uid)
+              .addListenerForSingleValueEvent(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot snapshot) {
+                              String bio = snapshot.child(FirebaseUtils.BIO).getValue(String.class);
+
+                          }
+
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {}
+                      });
+  }
+
   public void upVoteAnswer(String pid, String uid) {
     DatabaseReference likes =
         firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(uid);

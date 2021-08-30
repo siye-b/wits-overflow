@@ -27,6 +27,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvReputation = findViewById(R.id.profile_reputation);
         tvBio = findViewById(R.id.profile_bio);
 
+
+
         /*Intent prevIntent = getIntent();
         profID = prevIntent.getStringExtra("profID");*/
     }

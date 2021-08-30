@@ -32,6 +32,7 @@ public class ViewProfile extends Fragment {
         tvReputation = view.findViewById(R.id.profile_reputation);
         tvBio = view.findViewById(R.id.profile_bio);
 
+
         return view;
 
     }
