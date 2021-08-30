@@ -6,6 +6,7 @@ public interface FirebaseUtils {
   String POSTS = "Posts";
   String ANSWERS = "Answers";
   String USERS = "Users";
+  String BIO = "bio";
   String LIKES = "Likes";
   String DISLIKES = "Dislikes";
   String TAGS = "Tags";

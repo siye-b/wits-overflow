@@ -291,6 +291,24 @@ public class FirebaseActions {
         });
   }
 
+  public void AddBio(String userBio, String uid) {
+   DatabaseReference bio =
+           firebaseDatabase.getReference(FirebaseUtils.USERS).child(uid).child(FirebaseUtils.BIO);
+
+   bio.addListenerForSingleValueEvent(new ValueEventListener() {
+       @Override
+       public void onDataChange(@NonNull DataSnapshot snapshot) {
+           bio.setValue(userBio);
+
+       }
+
+       @Override
+       public void onCancelled(@NonNull DatabaseError error) {
+
+       }
+   });
+  }
+
   public void upVoteAnswer(String pid, String uid) {
     DatabaseReference likes =
         firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(uid);
