@@ -20,6 +20,7 @@ import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.MarkPost;
 import com.example.witsly.Interfaces.UserDetails;
+import com.example.witsly.Interfaces.getProfileImage;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.Models.Post;
@@ -341,7 +342,7 @@ public class FirebaseActions {
             });
   }
 
-  public void upVoteAnswer(String pid, String uid) {
+  public void upVoteAnswer(String pid) {
     DatabaseReference likes =
         firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(currentUser.getUid());
     DatabaseReference vote =
@@ -483,12 +484,16 @@ public class FirebaseActions {
     reference.putFile(uri).addOnSuccessListener(taskSnapshot -> {}).addOnFailureListener(e -> {});
   }
 
-  public Uri getProfilePic() {
+  public void getProfilePic(getProfileImage image) {
+
     StorageReference storageReference = storage.getReference();
     StorageReference pathReference =
         storageReference.child(FirebaseUtils.IMG_PATH + currentUser.getUid());
 
-    return null;
+    pathReference
+        .getDownloadUrl()
+        .addOnSuccessListener(image::processResponse)
+        .addOnFailureListener(exception -> {});
   }
 
   public void deleteAnswer(String postKey, DeletePost dp) {

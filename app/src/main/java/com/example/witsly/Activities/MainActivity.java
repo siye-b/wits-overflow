@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,8 +25,7 @@ import com.example.witsly.Fragments.ProfileFragment;
 import com.example.witsly.ProDialog;
 import com.example.witsly.R;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,10 +34,12 @@ public class MainActivity extends AppCompatActivity
   private FragmentManager fragmentManager;
   private FragmentTransaction fragmentTransaction;
   private TextView hFullName, hEmail;
+  private ImageView hProfileImage;
   private ProDialog proDialog;
   NavigationView navigationView;
   private final FirebaseActions firebaseActions = new FirebaseActions();
   private final FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
+  private final String currentUser = firebaseActions.getUid();
 
   @SuppressLint("SetTextI18n")
   @Override
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity
 
     hFullName = headerView.findViewById(R.id.headerFullName);
     hEmail = headerView.findViewById(R.id.headerEmail);
+    hProfileImage = headerView.findViewById(R.id.headerProfilePic);
 
     ActionBarDrawerToggle actionDrawerToggle =
         new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -72,13 +75,9 @@ public class MainActivity extends AppCompatActivity
 
     proDialog.start();
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser mUser = mAuth.getCurrentUser();
-
-    if (mUser != null) {
-      String user = mUser.getUid();
+    if (currentUser != null) {
       firebaseActions.getUserDetails(
-          user,
+          currentUser,
           response -> {
             String name = response.getName();
             String surname = response.getSurname();
@@ -86,6 +85,14 @@ public class MainActivity extends AppCompatActivity
             hFullName.setText(name + " " + surname);
             hEmail.setText(email);
             proDialog.stop();
+          });
+
+      firebaseActions.getProfilePic(
+          uri -> {
+            if (uri != null) {
+              hProfileImage.setBackground(null);
+              Picasso.get().load(uri).into(hProfileImage);
+            }
           });
     }
   }

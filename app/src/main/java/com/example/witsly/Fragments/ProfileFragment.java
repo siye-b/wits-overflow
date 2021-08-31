@@ -19,6 +19,7 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
@@ -52,6 +53,8 @@ public class ProfileFragment extends Fragment {
         value -> {
           UserBio.setHint(value.getBio());
         });
+
+    firebaseActions.getProfilePic(img -> Picasso.get().load(img).into(profilePic));
 
     return view;
   }
@@ -98,7 +101,8 @@ public class ProfileFragment extends Fragment {
         && data.getData() != null) {
       imgUri = data.getData();
       profilePic.setBackground(null);
-      profilePic.setImageURI(imgUri);
+      Picasso.get().load(imgUri).into(profilePic);
+      firebaseActions.uploadPicture(imgUri);
     }
 
     // The Code below still works for physical devices, do not remove the code

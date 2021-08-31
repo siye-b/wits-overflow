@@ -141,7 +141,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
     holder.like.setOnClickListener(
         l -> {
-          firebaseActions.upVoteAnswer(answer.getAID(), currentUser);
+          firebaseActions.upVoteAnswer(answer.getAID());
           Toast.makeText(mContext, "Like", Toast.LENGTH_SHORT).show();
         });
 
