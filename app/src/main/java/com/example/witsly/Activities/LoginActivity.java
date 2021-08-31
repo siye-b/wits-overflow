@@ -22,11 +22,10 @@ public class LoginActivity extends AppCompatActivity {
 
   public TextInputLayout loginEmail, loginPassword;
   private FirebaseAuth mAuth;
-  private TextView tv_register, tv_forgotPW;
   public Button loginButton;
   private FirebaseUser mUser;
-  private FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
-  private Verifier verifier = new Verifier();
+  private final FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
+  private final Verifier verifier = new Verifier();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     mUser = mAuth.getCurrentUser();
     loginEmail = findViewById(R.id.til_email);
     loginPassword = findViewById(R.id.til_password);
-    tv_register = findViewById(R.id.tv_register);
-    tv_forgotPW = findViewById(R.id.tv_password);
+    TextView tv_register = findViewById(R.id.tv_register);
+    TextView tv_forgotPW = findViewById(R.id.tv_password);
     loginButton = findViewById(R.id.btn_singin);
 
     if (mUser != null)
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(
                 new Intent(this, MainActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-          } else if (response.equals(2))
+          } else if (response.equals(1))
             new AlertDialog.Builder(LoginActivity.this)
                 .setTitle("Email verification")
                 .setMessage(msg)
@@ -105,6 +104,10 @@ public class LoginActivity extends AppCompatActivity {
                                   Toast.makeText(
                                           LoginActivity.this, "Link not sent", Toast.LENGTH_LONG)
                                       .show());
+
+                      loginPassword.getEditText().getText().clear();
+                      firebaseAuthentication.logout();
+                      Toast.makeText(LoginActivity.this, "Link Sent", Toast.LENGTH_LONG).show();
                     })
                 .setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss())
                 .create()

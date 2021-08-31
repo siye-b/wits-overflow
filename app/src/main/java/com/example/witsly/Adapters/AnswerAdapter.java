@@ -23,8 +23,6 @@ import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
   private final ArrayList<Answer> mAnswerList;
   private final FirebaseActions firebaseActions = new FirebaseActions();
-  FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+  private final String currentUser = firebaseActions.getUid();
 
   private final Context mContext;
   private FloatingActionButton mFab;
@@ -57,7 +55,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
     private final TextView mAddComment;
     private final TextView mClose;
-
 
     ViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -132,25 +129,19 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
             holder.mAnswerRV.setAdapter(commentsAdapter);
           }
         });
-    
-    
 
-
-      firebaseActions.getPost(answer.getPID(), (post, user)->{
-          if(post.getUID().equals(mUser.getUid())){
-              holder.closeButton.setVisibility(View.VISIBLE);
-          }
-      });
-
+    firebaseActions.getPost(
+        answer.getPID(),
+        (post, user) -> {
+          if (post.getUID().equals(currentUser)) holder.closeButton.setVisibility(View.VISIBLE);
+        });
 
     holder.closeButton.setOnClickListener(
-        b -> {
-          firebaseActions.markAnswer(answer.getPID(), answer.getAID());
-        });
+        b -> firebaseActions.markAnswer(answer.getPID(), answer.getAID()));
 
     holder.like.setOnClickListener(
         l -> {
-          firebaseActions.upVoteAnswer(answer.getAID(), mUser.getUid());
+          firebaseActions.upVoteAnswer(answer.getAID(), currentUser);
           Toast.makeText(mContext, "Like", Toast.LENGTH_SHORT).show();
         });
 
@@ -163,9 +154,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
           holder.mAddComment.setOnClickListener(
               add -> {
                 String commentText = holder.mComment.getText().toString().trim();
-                if (!commentText.equals("")) {
+                if (!commentText.equals(""))
                   firebaseActions.addComment(
-                      new Comment(commentText, mUser.getUid(), answer.getAID()),
+                      new Comment(commentText, currentUser, answer.getAID()),
                       ac -> {
                         if (ac) {
                           holder.replyLayout.setVisibility(View.GONE);
@@ -174,21 +165,20 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
                           holder.mComment.setText("");
                           firebaseActions.isCurrentUserAdmin(
                               (isAdmin, str) -> {
-                                if (isAdmin || answer.getUID().equals(mUser.getUid()))
+                                if (isAdmin || answer.getUID().equals(currentUser))
                                   holder.mDelete.setVisibility(View.VISIBLE);
                               });
                         }
                       });
-                } else {
+                else
                   Toast.makeText(mContext, "Fill in the Comment section", Toast.LENGTH_SHORT)
                       .show();
-                }
               });
         });
 
     firebaseActions.isCurrentUserAdmin(
         (isAdmin, str) -> {
-          if (isAdmin || answer.getUID().equals(mUser.getUid())) {
+          if (isAdmin || answer.getUID().equals(currentUser)) {
             holder.mDelete.setVisibility(View.VISIBLE);
             holder.mDelete.setOnClickListener(
                 c ->
@@ -198,14 +188,11 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
           }
         });
 
-    holder.mAnswerDetails.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(mContext, ViewProfileActivity.class);
-            //intent.putExtra("profID", mUser.getUid());
-            mContext.startActivity(intent);
-        }
-    });
+    holder.mAnswerDetails.setOnClickListener(
+        v -> {
+          Intent intent = new Intent(mContext, ViewProfileActivity.class);
+          mContext.startActivity(intent);
+        });
   }
 
   @Override

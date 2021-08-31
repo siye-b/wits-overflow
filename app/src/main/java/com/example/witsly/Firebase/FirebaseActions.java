@@ -7,7 +7,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.witsly.Interfaces.AddAnswer;
-import com.example.witsly.Interfaces.AddBio;
 import com.example.witsly.Interfaces.AddComment;
 import com.example.witsly.Interfaces.AddPost;
 import com.example.witsly.Interfaces.AddTag;
@@ -17,7 +16,6 @@ import com.example.witsly.Interfaces.GetAllPosts;
 import com.example.witsly.Interfaces.GetAnswers;
 import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
-import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.MarkPost;
@@ -29,6 +27,7 @@ import com.example.witsly.Models.Tag;
 import com.example.witsly.Models.User;
 import com.example.witsly.Utils.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +38,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class FirebaseActions {
   private static final String TAG = "LOG";
@@ -48,10 +46,13 @@ public class FirebaseActions {
   private ArrayList<Answer> answersArrayList;
   private ArrayList<Comment> commentsArrayList;
   private ArrayList<Tag> tagArrayList;
-  private FirebaseStorage storage = FirebaseStorage.getInstance();
+  private FirebaseStorage storage;
+  private FirebaseUser currentUser;
 
   public FirebaseActions() {
     firebaseDatabase = FirebaseDatabase.getInstance();
+    currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    storage = FirebaseStorage.getInstance();
   }
 
   public void addPost(Post post, AddPost a) {
@@ -87,7 +88,7 @@ public class FirebaseActions {
         });
   }
 
-    public void markAnswer(String pid, String aid) {
+  public void markAnswer(String pid, String aid) {
 
     DatabaseReference answer =
         firebaseDatabase.getReference(FirebaseUtils.ANSWERS).child(aid).child("correct");
@@ -294,50 +295,55 @@ public class FirebaseActions {
         });
   }
 
-  public void AddBio(String userBio, String uid) {
-   DatabaseReference bio =
-           firebaseDatabase.getReference(FirebaseUtils.USERS).child(uid).child(FirebaseUtils.BIO);
+  public void AddBio(String userBio) {
+    DatabaseReference bio =
+        firebaseDatabase
+            .getReference(FirebaseUtils.USERS)
+            .child(currentUser.getUid())
+            .child(FirebaseUtils.BIO);
 
-   bio.addListenerForSingleValueEvent(new ValueEventListener() {
-       @Override
-       public void onDataChange(@NonNull DataSnapshot snapshot) {
-           bio.setValue(userBio);
+    bio.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            bio.setValue(userBio);
+          }
 
-       }
-
-       @Override
-       public void onCancelled(@NonNull DatabaseError error) {
-
-       }
-   });
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
 
-  public void getBio(String uid, GetBio b) {
-      DatabaseReference mDatabaseReference =
-              FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
-      mDatabaseReference
-              .child(uid)
-              .addListenerForSingleValueEvent(
-                      new ValueEventListener() {
-                          @Override
-                          public void onDataChange(@NonNull DataSnapshot snapshot) {
-                              String bio = snapshot.child(FirebaseUtils.BIO).getValue(String.class);
+  public String getUid() {
+    return currentUser.getUid();
+  }
 
-                              if (snapshot.exists()) {
-                                  User userB = snapshot.getValue(User.class);
-                                  assert userB != null;
-                                  getUserDetails(userB.getBio(), user -> b.processResponse( userB));
-                              }
-                          }
+  public void getBio(GetBio b) {
+    DatabaseReference mDatabaseReference =
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
+    mDatabaseReference
+        .child(currentUser.getUid())
+        .addListenerForSingleValueEvent(
+            new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String bio = snapshot.child(FirebaseUtils.BIO).getValue(String.class);
 
-                          @Override
-                          public void onCancelled(@NonNull DatabaseError error) {}
-                      });
+                if (snapshot.exists()) {
+                  User userB = snapshot.getValue(User.class);
+                  assert userB != null;
+                  getUserDetails(userB.getBio(), user -> b.processResponse(userB));
+                }
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {}
+            });
   }
 
   public void upVoteAnswer(String pid, String uid) {
     DatabaseReference likes =
-        firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(uid);
+        firebaseDatabase.getReference(FirebaseUtils.LIKES).child(pid).child(currentUser.getUid());
     DatabaseReference vote =
         firebaseDatabase.getReference(FirebaseUtils.ANSWERS).child(pid).child(FirebaseUtils.VOTE);
     likes.addListenerForSingleValueEvent(
@@ -418,7 +424,7 @@ public class FirebaseActions {
     DatabaseReference mDatabaseReference =
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
     mDatabaseReference
-        .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+        .child(currentUser.getUid())
         .addListenerForSingleValueEvent(
             new ValueEventListener() {
               @Override
@@ -473,14 +479,14 @@ public class FirebaseActions {
   public void uploadPicture(Uri uri) {
     StorageReference storageReference = storage.getReference();
     StorageReference reference =
-        storageReference.child(FirebaseUtils.IMG_PATH + FirebaseAuth.getInstance().getUid());
+        storageReference.child(FirebaseUtils.IMG_PATH + currentUser.getUid());
     reference.putFile(uri).addOnSuccessListener(taskSnapshot -> {}).addOnFailureListener(e -> {});
   }
 
   public Uri getProfilePic() {
     StorageReference storageReference = storage.getReference();
     StorageReference pathReference =
-        storageReference.child(FirebaseUtils.IMG_PATH + FirebaseAuth.getInstance().getUid());
+        storageReference.child(FirebaseUtils.IMG_PATH + currentUser.getUid());
 
     return null;
   }

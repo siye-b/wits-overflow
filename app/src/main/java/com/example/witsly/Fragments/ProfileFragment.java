@@ -1,14 +1,15 @@
 package com.example.witsly.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -18,11 +19,6 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-
-import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
 
@@ -30,7 +26,6 @@ public class ProfileFragment extends Fragment {
   private FloatingActionButton btnImageUploader;
   private AppCompatButton btnSave;
   private TextInputEditText UserBio;
-  FirebaseAuth user;
   Uri imgUri;
   FirebaseActions firebaseActions = new FirebaseActions();
 
@@ -46,30 +41,26 @@ public class ProfileFragment extends Fragment {
     btnImageUploader.setOnClickListener(img -> choosePicture());
     btnSave = view.findViewById(R.id.btnSave);
     UserBio = view.findViewById(R.id.bio);
-    user = FirebaseAuth.getInstance();
 
+    // Get the current user to return a model
+    // since there is a built in function user.getBio
+    // UserBio.setText(user.getBio);
 
-
-
-    //Get the current user to return a model
-    //since there is a built in function user.getBio
-    //UserBio.setText(user.getBio);
-
-
-    btnSave.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        saveChanges();
-      }
-    });
+    btnSave.setOnClickListener(v -> saveChanges());
 
     firebaseActions.getBio(
-            user.getCurrentUser().getUid(),
-            value -> {
-              UserBio.setHint(value.getBio());
-            });
+        value -> {
+          UserBio.setHint(value.getBio());
+        });
 
     return view;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    // after the view has been created we want to get all the profile image
+
   }
 
   private void choosePicture() {
@@ -79,7 +70,7 @@ public class ProfileFragment extends Fragment {
     startActivityForResult(intent, IMAGE_VERIFY);
   }
 
-  //Do not remove the code below
+  // Do not remove the code below
   /*private void selectImage() {
     CropImage.activity()
         .setGuidelines(CropImageView.Guidelines.ON)
@@ -90,20 +81,27 @@ public class ProfileFragment extends Fragment {
         .start(getContext(), this);
   }*/
 
-  private void saveChanges(){
-    //Change Bio
-    user = FirebaseAuth.getInstance();
-    String Cuid = user.getCurrentUser().getUid();
+  private void saveChanges() {
+    // Change Bio
 
     String bio = UserBio.getText().toString().trim();
-    firebaseActions.AddBio(bio, Cuid);
+    firebaseActions.AddBio(bio);
   }
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    //The Code below still works for physical devices, do not remove the code
+    if (requestCode == IMAGE_VERIFY
+        && resultCode == RESULT_OK
+        && data != null
+        && data.getData() != null) {
+      imgUri = data.getData();
+      profilePic.setBackground(null);
+      profilePic.setImageURI(imgUri);
+    }
+
+    // The Code below still works for physical devices, do not remove the code
     /*if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
       CropImage.ActivityResult result = CropImage.getActivityResult(data);
       if (resultCode == RESULT_OK) {
@@ -115,14 +113,6 @@ public class ProfileFragment extends Fragment {
         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
       }
     }*/
-
-    if (requestCode == IMAGE_VERIFY && resultCode == RESULT_OK && data != null
-            && data.getData() != null){
-      imgUri = data.getData();
-      profilePic.setBackground(null);
-      profilePic.setImageURI(imgUri);
-    }
-
 
   }
 }

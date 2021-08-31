@@ -20,15 +20,14 @@ import com.example.witsly.R;
 import com.example.witsly.Utils.FirebaseUtils;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class PostActivity extends AppCompatActivity {
 
   public TextInputLayout title, body;
-  private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
   private final FirebaseActions firebaseActions = new FirebaseActions();
+  String currentUser = firebaseActions.getUid();
   public MaterialAutoCompleteTextView tagInput;
   private ArrayList<Tag> mTags;
   Tag tag;
@@ -85,30 +84,29 @@ public class PostActivity extends AppCompatActivity {
 
         String tagID = null;
 
-        if (validateFields(postTitle, tag, postBody)){
+        if (validateFields(postTitle, tag, postBody))
           if (!TextUtils.isEmpty(postBody)
-                  || !TextUtils.isEmpty(postTitle)
-                  || !TextUtils.isEmpty(tag)) {
+              || !TextUtils.isEmpty(postTitle)
+              || !TextUtils.isEmpty(tag)) {
 
             for (Tag t : mTags) if (t.getTag().equals(tag)) tagID = t.getTagID();
 
             if (tagID == null)
               firebaseActions.addTag(
-                      new Tag(tag),
-                      tagID1 -> {
-                        if (tagID1 != null) addPost(postTitle, postBody, tag, topic);
-                      });
+                  new Tag(tag),
+                  tagID1 -> {
+                    if (tagID1 != null) addPost(postTitle, postBody, tag, topic);
+                  });
             else addPost(postTitle, postBody, tag, topic);
 
           } else Toast.makeText(this, "Fill in all the fields", Toast.LENGTH_LONG).show();
-        }
     }
     return super.onOptionsItemSelected(item);
   }
 
   private void addPost(String title, String body, String tag, String topic) {
 
-    Post post = new Post(title, body, tag, mAuth.getCurrentUser().getUid(), topic);
+    Post post = new Post(title, body, tag, currentUser, topic);
 
     firebaseActions.addPost(
         post,
@@ -123,10 +121,10 @@ public class PostActivity extends AppCompatActivity {
         });
   }
 
-  private boolean validateFields(String title, String tag, String body){
-    if(title.length() < 1 || tag.length() < 1 || body.length() < 1){
+  private boolean validateFields(String title, String tag, String body) {
+    if (title.length() < 1 || tag.length() < 1 || body.length() < 1) {
       Toast.makeText(this, "Please ensure all fields ae filled!", Toast.LENGTH_SHORT).show();
       return false;
-    }else return true;
+    } else return true;
   }
 }

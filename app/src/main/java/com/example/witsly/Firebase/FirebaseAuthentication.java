@@ -7,6 +7,8 @@ import com.example.witsly.Utils.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class FirebaseAuthentication {
 
   private final FirebaseAuth mAuth;
@@ -15,21 +17,40 @@ public class FirebaseAuthentication {
     mAuth = FirebaseAuth.getInstance();
   }
 
-  public void logout(FirebaseAuthHandler r) {
-    FirebaseAuth.getInstance().signOut();
-    r.processAuth(true, "Logged out");
+  public String getUID() {
+
+    return mAuth.getCurrentUser().getUid();
   }
 
+  public void sendVerificationEmail() {
+    Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification();
+  }
+
+  public void logout() {
+    FirebaseAuth.getInstance().signOut();
+  }
+
+  private Boolean isVerified() {
+    return mAuth.getCurrentUser().isEmailVerified();
+  }
+
+  /**
+   * if email is verified return 0 -> login ;
+   *
+   * <p>if email (registered) and not verified return 1 ->verify;
+   *
+   * <p>if not email return 2 -> register
+   */
   public void login(String email, String password, LoginHandler f) {
     mAuth
         .signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(
             task -> {
               if (task.isSuccessful())
-                if (mAuth.getCurrentUser().isEmailVerified()) f.processAuth(0, "Logging in");
-                else f.processAuth(2, "Account not verified");
+                if (isVerified()) f.processAuth(0, "Logging in");
+                else f.processAuth(1, "Account not verified");
             })
-        .addOnFailureListener(e -> f.processAuth(1, e.getMessage()));
+        .addOnFailureListener(e -> f.processAuth(2, e.getMessage()));
   }
 
   public void resetPassword(String email, FirebaseAuthHandler f) {
@@ -53,7 +74,8 @@ public class FirebaseAuthentication {
                     surname,
                     (response, msg) -> {
                       if (response) {
-                        FirebaseAuth.getInstance().signOut();
+                        sendVerificationEmail();
+                        logout();
                         f.processAuth(true, msg);
 
                       } else f.processAuth(false, msg);
@@ -72,7 +94,7 @@ public class FirebaseAuthentication {
         .setValue(user)
         .addOnCompleteListener(
             task1 -> {
-              f.processAuth(true, "User registered");
+              f.processAuth(true, FirebaseUtils.USER_REGISTERED);
             })
         .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
   }
