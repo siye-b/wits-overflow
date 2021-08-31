@@ -36,7 +36,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	private final Context context;
 	private OnItemClickListener mListener;
 	private final FirebaseActions firebaseActions = new FirebaseActions();
-	private FloatingActionButton mFab;
 
 	@Override
 	public Filter getFilter() {
@@ -85,10 +84,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		}
 	}
 
-	public RecyclerAdapter(ArrayList<Post> postList, Context context, FloatingActionButton floatingActionButton) {
+	public RecyclerAdapter(ArrayList<Post> postList, Context context) {
 		mPostList = postList;
 		mListFilter = new ArrayList<>(mPostList);
-		mFab = floatingActionButton;
 		this.context = context;
 	}
 
@@ -182,22 +180,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 					transaction.commit();
 				});
 
-		//Handles click events for Floating Action Button
-		mFab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Bundle bundle = new Bundle();
-				AppCompatActivity activity = (AppCompatActivity) context;
 
-				Fragment topicsFragment = new TopicsFragment();
-				FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container_frag, topicsFragment);
-
-				transaction.addToBackStack(null);
-				transaction.commit();
-
-			}
-		});
 	}
 
 	@Override

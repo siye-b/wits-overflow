@@ -10,6 +10,7 @@ import com.example.witsly.Interfaces.AddAnswer;
 import com.example.witsly.Interfaces.AddComment;
 import com.example.witsly.Interfaces.AddPost;
 import com.example.witsly.Interfaces.AddTag;
+import com.example.witsly.Interfaces.AddTopic;
 import com.example.witsly.Interfaces.DeletePost;
 import com.example.witsly.Interfaces.FirebaseAuthHandler;
 import com.example.witsly.Interfaces.GetAllPosts;
@@ -18,6 +19,7 @@ import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetTags;
+import com.example.witsly.Interfaces.GetTopics;
 import com.example.witsly.Interfaces.MarkPost;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.getProfileImage;
@@ -25,6 +27,7 @@ import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.Tag;
+import com.example.witsly.Models.Topic;
 import com.example.witsly.Models.User;
 import com.example.witsly.Utils.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +50,7 @@ public class FirebaseActions {
   private ArrayList<Answer> answersArrayList;
   private ArrayList<Comment> commentsArrayList;
   private ArrayList<Tag> tagArrayList;
+  private ArrayList<Topic> topicArrayList;
   private FirebaseStorage storage;
   private FirebaseUser currentUser;
 
@@ -419,6 +423,41 @@ public class FirebaseActions {
           public void onCancelled(@NonNull DatabaseError error) {}
         });
   }
+
+    public void addTopic(Topic topic, AddTopic t) {
+
+        DatabaseReference rel = firebaseDatabase.getReference(FirebaseUtils.TOPICS).push();
+
+        rel.setValue(topic)
+                .addOnCompleteListener(
+                        c -> {
+                            if (c.isSuccessful()) t.processResponse(rel.getKey());
+                        })
+                .addOnFailureListener(e -> t.processResponse(null));
+    }
+
+    public void getTopics(GetTopics t) {
+        topicArrayList = new ArrayList<>();
+        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.TOPICS);
+        databaseReference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        topicArrayList.clear();
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                            Topic topic = postSnapshot.getValue(Topic.class);
+                            assert topic != null;
+                            topic.setTopicID(postSnapshot.getKey());
+                            topicArrayList.add(topic);
+                        }
+                        t.processResponse(topicArrayList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
+    }
 
   public void isCurrentUserAdmin(FirebaseAuthHandler f) {
 

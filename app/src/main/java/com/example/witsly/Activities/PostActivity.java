@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Post;
 import com.example.witsly.Models.Tag;
+import com.example.witsly.Models.Topic;
 import com.example.witsly.R;
 import com.example.witsly.Utils.FirebaseUtils;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -28,10 +30,11 @@ public class PostActivity extends AppCompatActivity {
   public TextInputLayout title, body;
   private final FirebaseActions firebaseActions = new FirebaseActions();
   String currentUser = firebaseActions.getUid();
-  public MaterialAutoCompleteTextView tagInput;
+  public MaterialAutoCompleteTextView tagInput, topicInput;
   private ArrayList<Tag> mTags;
+  private ArrayList<Topic> mTopics;
   Tag tag;
-  String topic;
+  Topic topic;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +45,24 @@ public class PostActivity extends AppCompatActivity {
     (getSupportActionBar()).setTitle("New Post");
     (getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-    Intent i = getIntent();
-    topic = i.getStringExtra("topic");
 
     tagInput = findViewById(R.id.tagInput);
+    topicInput = findViewById(R.id.topicInput);
     title = findViewById(R.id.textInputLayoutTitle);
     body = findViewById(R.id.textInputLayoutBody);
+
+    firebaseActions.getTopics(
+            topics -> {
+                ArrayAdapter<Topic> arrayAdapter =
+                        new ArrayAdapter<Topic>(this, android.R.layout.simple_list_item_1, topics);
+                topicInput.setAdapter(arrayAdapter);
+                mTopics = topics;
+                topicInput.setOnItemClickListener(
+                        (parent, view, position, id) -> {
+                            topic = ((Topic) topics.get(position));
+                        });
+
+            });
 
     firebaseActions.getTags(
         tags -> {
@@ -60,6 +75,8 @@ public class PostActivity extends AppCompatActivity {
                 tag = ((Tag) tags.get(position));
               });
         });
+
+
   }
 
   @Override
@@ -81,17 +98,22 @@ public class PostActivity extends AppCompatActivity {
         String postTitle = (title.getEditText()).getText().toString().trim();
         String postBody = (body.getEditText()).getText().toString().trim();
         String tag = tagInput.getText().toString().toLowerCase().trim();
+        String topic = topicInput.getText().toString().trim();
 
         String tagID = null;
+        String topicID = null;
 
         if (validateFields(postTitle, tag, postBody))
           if (!TextUtils.isEmpty(postBody)
               || !TextUtils.isEmpty(postTitle)
-              || !TextUtils.isEmpty(tag)) {
+              || !TextUtils.isEmpty(tag)
+              || !TextUtils.isEmpty(topic)){
 
             for (Tag t : mTags) if (t.getTag().equals(tag)) tagID = t.getTagID();
 
-            if (tagID == null)
+            for (Topic top : mTopics) if (top.getTopic().equals(topic)) topicID = top.getTopicID();
+
+            if (tagID == null && topicID == null)
               firebaseActions.addTag(
                   new Tag(tag),
                   tagID1 -> {

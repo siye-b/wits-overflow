@@ -16,6 +16,7 @@ public class User {
     admin = false;
   }
 
+
   public void setImage(String image) {
     this.image = image;
   }

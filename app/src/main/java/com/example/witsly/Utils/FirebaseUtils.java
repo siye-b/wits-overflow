@@ -18,4 +18,5 @@ public interface FirebaseUtils {
   String IMG_PATH = "images/";
   String USER_REGISTERED = "User Registered";
   String CANCEL = "Cancel";
+  String TOPICS = "Topics";
 }

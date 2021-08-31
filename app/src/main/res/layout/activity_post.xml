@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/holder"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTitle"
+        app:layout_constraintTop_toBottomOf="@+id/topic_holder"
         app:boxBackgroundColor="#FFF">
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:layout_width="match_parent"
@@ -73,8 +73,29 @@
             android:paddingRight="13dp"
             android:completionThreshold="1"
             android:hint="TAG"
-            android:textColorHint="#808080"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutTitle">
+            android:textColorHint="#808080">
+        </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic_holder"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTitle"
+        app:boxBackgroundColor="#FFF">
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/topicInput"
+            android:paddingStart="13dp"
+            android:paddingLeft="13dp"
+            android:paddingEnd="13dp"
+            android:paddingRight="13dp"
+            android:completionThreshold="1"
+            android:hint="TOPIC"
+            android:textColorHint="#808080">
         </com.google.android.material.textfield.MaterialAutoCompleteTextView>
 
     </com.google.android.material.textfield.TextInputLayout>
