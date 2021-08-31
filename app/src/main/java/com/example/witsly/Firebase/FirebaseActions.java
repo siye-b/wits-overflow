@@ -450,6 +450,7 @@ public class FirebaseActions {
               @Override
               public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User value = snapshot.getValue(User.class);
+
                 f.processResponse(value);
               }
 
@@ -478,10 +479,34 @@ public class FirebaseActions {
   }
 
   public void uploadPicture(Uri uri) {
+
+    DatabaseReference imgUrl =
+        firebaseDatabase
+            .getReference(FirebaseUtils.USERS)
+            .child(currentUser.getUid())
+            .child(FirebaseUtils.IMAGE);
+
     StorageReference storageReference = storage.getReference();
     StorageReference reference =
         storageReference.child(FirebaseUtils.IMG_PATH + currentUser.getUid());
-    reference.putFile(uri).addOnSuccessListener(taskSnapshot -> {}).addOnFailureListener(e -> {});
+    reference
+        .putFile(uri)
+        .addOnSuccessListener(
+            taskSnapshot ->
+                imgUrl.addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        reference
+                            .getDownloadUrl()
+                            .addOnSuccessListener(
+                                downloadUrl -> imgUrl.setValue(downloadUrl.toString()));
+                      }
+
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError error) {}
+                    }))
+        .addOnFailureListener(e -> {});
   }
 
   public void getProfilePic(getProfileImage image) {
@@ -513,6 +538,16 @@ public class FirebaseActions {
           @Override
           public void onCancelled(@NonNull DatabaseError error) {}
         });
+  }
+
+  public void getUserProfileImg(String UserID, getProfileImage p) {
+    StorageReference storageReference = storage.getReference();
+    StorageReference pathReference = storageReference.child(FirebaseUtils.IMG_PATH + UserID);
+
+    pathReference
+        .getDownloadUrl()
+        .addOnSuccessListener(p::processResponse)
+        .addOnFailureListener(exception -> {});
   }
 
   public void deleteComment(String postKey, DeletePost dp) {

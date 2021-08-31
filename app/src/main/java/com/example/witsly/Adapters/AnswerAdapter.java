@@ -191,6 +191,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     holder.mAnswerDetails.setOnClickListener(
         v -> {
           Intent intent = new Intent(mContext, ViewProfileActivity.class);
+          intent.putExtra("USER_ID", answer.getUID());
+
           mContext.startActivity(intent);
         });
   }

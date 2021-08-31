@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
 
     proDialog.start();
 
-    if (currentUser != null) {
+    if (currentUser != null)
       firebaseActions.getUserDetails(
           currentUser,
           response -> {
@@ -85,16 +85,12 @@ public class MainActivity extends AppCompatActivity
             hFullName.setText(name + " " + surname);
             hEmail.setText(email);
             proDialog.stop();
-          });
 
-      firebaseActions.getProfilePic(
-          uri -> {
-            if (uri != null) {
+            if (!response.getImage().equals("")) {
               hProfileImage.setBackground(null);
-              Picasso.get().load(uri).into(hProfileImage);
+              Picasso.get().load(response.getImage()).into(hProfileImage);
             }
           });
-    }
   }
 
   @Override

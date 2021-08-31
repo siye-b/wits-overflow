@@ -1,13 +1,10 @@
 package com.example.witsly.Fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,13 +17,11 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.witsly.Activities.ViewProfileActivity;
 import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -186,16 +181,17 @@ public class ViewQuestion extends Fragment {
             mRecyclerView.setLayoutManager(mRecyclerManager);
           });
 
-      details.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent(getContext(), ViewProfileActivity.class);
-              //TODO
-              //Add extra that goes to ViewProfileActivity
-              //intent.putExtra("profID", userID);
-              startActivity(intent);
-          }
-      });
+      details.setOnClickListener(
+          new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              // Intent intent = new Intent(getContext(), ViewProfileActivity.class);
+              // Add extra that goes to ViewProfileActivity
+              // intent.putExtra("profID", userID);
+              // startActivity(intent);
+              Toast.makeText(getActivity(), "Hello", Toast.LENGTH_SHORT).show();
+            }
+          });
     }
 
     return view;

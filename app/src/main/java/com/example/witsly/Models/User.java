@@ -2,7 +2,7 @@ package com.example.witsly.Models;
 
 public class User {
 
-  private String name, surname, email, bio = "";
+  private String name, surname, email, bio, image;
   private Boolean admin;
 
   public User() {}
@@ -11,10 +11,17 @@ public class User {
     this.name = name;
     this.surname = surname;
     this.email = email;
-    this.bio = "";
-
-    // it sets all new registered users as non admin by default
+    bio = "";
+    image = "";
     admin = false;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  public String getImage() {
+    return image;
   }
 
   public String getEmail() {
@@ -29,7 +36,9 @@ public class User {
     return name;
   }
 
-  public String getBio() { return bio; }
+  public String getBio() {
+    return bio;
+  }
 
   public boolean isAdmin() {
     return admin;
@@ -51,5 +60,7 @@ public class User {
     this.surname = surname;
   }
 
-  public void setBio(String bio) { this.bio = bio; }
+  public void setBio(String bio) {
+    this.bio = bio;
+  }
 }

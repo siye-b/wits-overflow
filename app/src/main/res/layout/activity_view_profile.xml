@@ -42,8 +42,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/profile_image">
-                    </androidx.appcompat.widget.AppCompatImageView>
+                        android:id="@+id/profile_image_details"></androidx.appcompat.widget.AppCompatImageView>
                 </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
@@ -61,8 +60,7 @@
                         android:text="John Smith"
                         android:textColor="@color/white"
                         android:textSize="18dp"
-                        android:textStyle="bold">
-                    </TextView>
+                        android:textStyle="bold"></TextView>
 
                     <TextView
                         android:id="@+id/profile_reputation"
@@ -71,8 +69,7 @@
                         android:layout_marginVertical="1dp"
                         android:text="Reputation: 1000"
                         android:textColor="@color/white"
-                        android:textSize="14dp">
-                    </TextView>
+                        android:textSize="14dp"></TextView>
 
                     <TextView
                         android:id="@+id/profile_bio"
@@ -81,8 +78,7 @@
                         android:layout_marginVertical="1dp"
                         android:text="Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem felis, fermentum vitae imperdiet nec, pulvinar in felis. Sed semper mi est, vitae convallis massa fringilla quis. Praesent iaculis turpis ut dui iaculis, vel accumsan tortor auctor...."
                         android:textColor="@color/white"
-                        android:textSize="14dp">
-                    </TextView>
+                        android:textSize="14dp"></TextView>
                 </LinearLayout>
 
             </LinearLayout>
@@ -92,33 +88,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_container"
-                android:paddingHorizontal="2dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:paddingHorizontal="2dp"></androidx.recyclerview.widget.RecyclerView>
 
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-   <!-- <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/Background">
+    <!-- <androidx.appcompat.widget.LinearLayoutCompat
+         android:layout_width="match_parent"
+         android:layout_height="200dp"
+         android:layout_alignParentTop="true"
+         android:background="@color/Background">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+         <androidx.appcompat.widget.LinearLayoutCompat
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent">
 
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-        </androidx.appcompat.widget.LinearLayoutCompat>
+         <androidx.appcompat.widget.LinearLayoutCompat
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent">
+         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>-->
-
+     </androidx.appcompat.widget.LinearLayoutCompat>-->
 
 
 </RelativeLayout>
