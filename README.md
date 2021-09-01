@@ -30,7 +30,7 @@ Dimakatso Caroline -[insert social media links here]
 
 Umair Bham -[insert social media links here]
 
-Lizo Hadebe -[insert social media links here]
+Lizo Radebe -[insert social media links here]
 
 Bonisiwe Mdletshe -[insert social media links here]
 
@@ -38,4 +38,3 @@ Nomthandazo Sukazi-[insert social media links here]
 
 Bongisipho Mntambo -[insert social media links here]
 
-Mr Robot - Unknown social media status
