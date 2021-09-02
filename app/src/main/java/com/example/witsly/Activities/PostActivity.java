@@ -113,7 +113,7 @@ public class PostActivity extends AppCompatActivity {
 
             for (Topic top : mTopics) if (top.getTopic().equals(topic)) topicID = top.getTopicID();
 
-            if (tagID == null && topicID == null) {
+            if (tagID == null && topicID == null)
                firebaseActions.addTag(
                         new Tag(tag),
                         tagID1 -> {
@@ -124,7 +124,7 @@ public class PostActivity extends AppCompatActivity {
                                     });
                          });
 
-            }
+
             else addPost(postTitle, postBody, tag, topic);
 
           } else Toast.makeText(this, "Fill in all the fields", Toast.LENGTH_LONG).show();
