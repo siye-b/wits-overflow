@@ -41,7 +41,6 @@ public class Topics extends AppCompatActivity {
 
 
 
-
         cam.setOnClickListener(new View.OnClickListener() {
 
 

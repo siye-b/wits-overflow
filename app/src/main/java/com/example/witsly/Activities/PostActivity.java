@@ -113,12 +113,18 @@ public class PostActivity extends AppCompatActivity {
 
             for (Topic top : mTopics) if (top.getTopic().equals(topic)) topicID = top.getTopicID();
 
-            if (tagID == null && topicID == null)
-              firebaseActions.addTag(
-                  new Tag(tag),
-                  tagID1 -> {
-                    if (tagID1 != null) addPost(postTitle, postBody, tag, topic);
-                  });
+            if (tagID == null && topicID == null) {
+               firebaseActions.addTag(
+                        new Tag(tag),
+                        tagID1 -> {
+                            firebaseActions.addTopic(
+                                    new Topic(topic),
+                                    topicID1 -> {
+                                        if( topicID1 != null && tagID1 != null) addPost(postTitle, postBody, tag, topic);
+                                    });
+                         });
+
+            }
             else addPost(postTitle, postBody, tag, topic);
 
           } else Toast.makeText(this, "Fill in all the fields", Toast.LENGTH_LONG).show();
