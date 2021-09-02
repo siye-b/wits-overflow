@@ -29,7 +29,11 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     String userID = getIntent().getStringExtra("USER_ID");
 
-    firebaseActions.getUserDetails(
+    int rep = firebaseActions.reputation(userID);
+    tvReputation.setText(rep);
+
+
+      firebaseActions.getUserDetails(
         userID,
         user -> {
           tvDetails.setText(user.getName() + " " + user.getSurname());

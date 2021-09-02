@@ -300,6 +300,34 @@ public class FirebaseActions {
         });
   }
 
+
+    public int reputation(String userid){
+
+        final int[] points = {0};
+        DatabaseReference reference = firebaseDatabase.getReference(FirebaseUtils.ANSWERS);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot answersnapshot : snapshot.getChildren()){
+
+                    int vote = Integer.valueOf((Integer) answersnapshot.child("vote").getValue());
+                    String uid = String.valueOf(answersnapshot.child("uid").getValue());
+
+                    if(userid == uid){
+                        points[0] += vote;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return points[0];
+    }
+
   public void AddBio(String userBio) {
     DatabaseReference bio =
         firebaseDatabase
