@@ -117,15 +117,30 @@ public class PostActivity extends AppCompatActivity {
                firebaseActions.addTag(
                         new Tag(tag),
                         tagID1 -> {
-                            firebaseActions.addTopic(
+                             firebaseActions.addTopic(
                                     new Topic(topic),
                                     topicID1 -> {
-                                        if( topicID1 != null && tagID1 != null) addPost(postTitle, postBody, tag, topic);
-                                    });
+                                        if( tagID1 != null && topicID1 != null ) addPost(postTitle, postBody, tag, topic);
+
+                                     });
                          });
+            else if (tagID == null )
+                  firebaseActions.addTag(
+                          new Tag(tag),
+                          tagID1 -> {
+                              if( tagID1 != null) addPost(postTitle, postBody, tag, topic);
+
+                          });
+            else if (topicID == null)
+                firebaseActions.addTopic(
+                        new Topic(topic),
+                        topicID1 -> {
+                            if( topicID1 != null ) addPost(postTitle, postBody, tag, topic);
+
+                        });
 
 
-            else addPost(postTitle, postBody, tag, topic);
+              else addPost(postTitle, postBody, tag, topic);
 
           } else Toast.makeText(this, "Fill in all the fields", Toast.LENGTH_LONG).show();
     }

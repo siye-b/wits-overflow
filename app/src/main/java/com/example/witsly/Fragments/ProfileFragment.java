@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,7 +48,11 @@ public class ProfileFragment extends Fragment {
     // since there is a built in function user.getBio
     // UserBio.setText(user.getBio);
 
-    btnSave.setOnClickListener(v -> saveChanges());
+    btnSave.setOnClickListener(v -> {
+      saveChanges();
+      //Toast.makeText(getContext(), "User Bio Added Successfully", Toast.LENGTH_SHORT).show();
+      //UserBio.setText("");
+    });
 
     firebaseActions.getBio(
         value -> {
@@ -85,10 +90,10 @@ public class ProfileFragment extends Fragment {
   }*/
 
   private void saveChanges() {
-    // Change Bio
 
     String bio = UserBio.getText().toString().trim();
     firebaseActions.AddBio(bio);
+
   }
 
   @Override
