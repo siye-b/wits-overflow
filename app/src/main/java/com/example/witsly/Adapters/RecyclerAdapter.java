@@ -199,7 +199,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 						String query = constraint.toString().toLowerCase().trim();
 						String tQuery = constraint.toString();
 						for (Post card : mListFilter)
-							if (card.getTag().trim().startsWith(query) || card.getTitle().contains(tQuery))
+							if (card.getTag().trim().startsWith(query) || card.getTitle().contains(tQuery) || card.getTitle().startsWith(query))
 								filterList.add(card);
 					}
 					FilterResults filterResults = new FilterResults();
