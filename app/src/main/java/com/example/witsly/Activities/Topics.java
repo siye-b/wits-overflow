@@ -18,8 +18,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 
-
-
 public class Topics extends AppCompatActivity {
     CardView cms ,cam, maths;
    // private  final TextView question;
@@ -42,7 +40,6 @@ public class Topics extends AppCompatActivity {
 
 
         cam.setOnClickListener(new View.OnClickListener() {
-
 
             @Override
             public void onClick(View v) {

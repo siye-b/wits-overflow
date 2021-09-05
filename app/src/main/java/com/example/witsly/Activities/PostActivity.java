@@ -139,7 +139,6 @@ public class PostActivity extends AppCompatActivity {
 
                         });
 
-
               else addPost(postTitle, postBody, tag, topic);
 
           } else Toast.makeText(this, "Fill in all the fields", Toast.LENGTH_LONG).show();
