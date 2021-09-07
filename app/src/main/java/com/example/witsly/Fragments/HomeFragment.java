@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Activities.PostActivity;
-import com.example.witsly.Activities.Topics;
 import com.example.witsly.Adapters.RecyclerAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Post;

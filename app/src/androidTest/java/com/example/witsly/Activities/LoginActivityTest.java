@@ -27,6 +27,9 @@ public class LoginActivityTest {
     private String EMAIL = "1871892@students.wits.ac.za";
     private String PASSWORD = "Umair123!";
 
+    private String BAD_EMAIL = "user@gmail.com";
+    private String BAD_PASSWORD = "imamirrorball";
+
   @Rule
   public ActivityScenarioRule<LoginActivity> activityScenarioRule =
       new ActivityScenarioRule<>(LoginActivity.class);
@@ -43,6 +46,17 @@ public class LoginActivityTest {
             });
   }
 
+    @Test
+    public void bad_login() {
+        activityScenarioRule
+                .getScenario()
+                .onActivity(
+                        activity -> {
+                            activity.loginEmail.getEditText().setText(BAD_EMAIL);
+                            activity.loginPassword.getEditText().setText(BAD_PASSWORD);
+                            activity.loginButton.performClick();
+                        });
+    }
 
     @Test
     public void create_account() {

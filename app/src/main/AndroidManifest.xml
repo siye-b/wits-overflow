@@ -18,9 +18,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:exported="true" />
         <activity
-            android:name=".Activities.Topics"
-            android:exported="true" />
-        <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

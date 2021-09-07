@@ -50,4 +50,9 @@ public class TagTest{
         tag.setTagID(NEW_TAGId);
         assertEquals(NEW_TAGId, tag.getTagID());
     }
+
+    @Test
+    public void to_String(){
+        assertEquals(TAG, tag.toString());
+    }
 }
