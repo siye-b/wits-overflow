@@ -1,5 +1,8 @@
 package com.example.witsly.Activities;
 
+import android.app.AlertDialog;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import com.example.witsly.Activities.LoginActivity;
@@ -27,4 +30,5 @@ public class LoginActivityTest {
               activity.loginButton.performClick();
             });
   }
+
 }
