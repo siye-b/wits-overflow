@@ -1,6 +1,6 @@
 # Wits Overflow Andriod Mobile App
  
-This is an app is intended for finding quick help with programming erros around the Wits community, FAQs and general forum-like discussions on the topics of programming-related issues and bugs. The latest version of the App functions like StackExchange- having different boards for Math ,CAM and Coms
+This is an app, intended for finding quick help with programming errors around the Wits community, FAQs and general forum-like discussions on the topics of programming-related issues, bugs and CSAM related courses. The latest version of the App functions like StackExchange- having different boards for Math ,CAM and COMS.
 
 ## Requirements
 Android Studio 3.2+ (installed on a Linux, Mac or Windows machine)
