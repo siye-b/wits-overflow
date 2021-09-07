@@ -1,12 +1,7 @@
 package com.example.witsly.Activities;
 
-<<<<<<< Updated upstream
-import android.app.AlertDialog;
-
 import androidx.appcompat.app.AppCompatActivity;
-=======
 import androidx.test.espresso.Espresso;
->>>>>>> Stashed changes
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 
@@ -25,7 +20,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 
-/*public class LoginActivityTest {
+public class LoginActivityTest {
 
   /*private String EMAIL = "user@wits.ac.za";
   private String PASSWORD = "v-JU%wr75qTuTT@f";*/
@@ -48,9 +43,7 @@ import org.junit.runners.JUnit4;
             });
   }
 
-<<<<<<< Updated upstream
-}*/
-=======
+
     @Test
     public void create_account() {
         try{
@@ -72,4 +65,4 @@ import org.junit.runners.JUnit4;
         }
     }
 }
->>>>>>> Stashed changes
+
