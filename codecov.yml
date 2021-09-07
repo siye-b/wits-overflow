@@ -1,10 +1,33 @@
 ignore:
   - "app/src/main/java/com/example/witsly/Adapters/CommentsAdapter.java"
   - "app/src/main/java/com/example/witsly/Adapters/AnswerAdapter.java"
+  - "app/src/main/java/com/example/witsly/Adapters/TopicAdapter.java"
+  - "app/src/main/java/com/example/witsly/Adapters/RecyclerAdapter.java"
+  - "app/src/main/java/com/example/witsly/Adapters/TopicsAdapter.java"
+
+  
+  
   - "app/src/main/java/com/example/witsly/Fragments/ProfileFragment.java"
   - "app/src/main/java/com/example/witsly/Fragments/ViewQuestion.java"
+  - "app/src/main/java/com/example/witsly/Fragments/ViewProfile.java"
+
+  
+  
   - "app/src/main/java/com/example/witsly/Firebase/FirebaseActions.java"
   - "app/src/main/java/com/example/witsly/Firebase/FirebaseAuthentication.java"
+  
+  
+  - "app/src/main/java/com/example/witsly/Models/Topic.java"
+  
+  
+  - "app/src/main/java/com/example/witsly/Activities/ViewProfileActivity.java"
+  - "app/src/main/java/com/example/witsly/Activities/PostActivity.java"
+
+
+
+
+
+
 
 
 
