@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
   private FirebaseAuth mAuth;
   public Button loginButton;
   private FirebaseUser mUser;
+  public TextView tv_register, tv_forgotPW;
   private final FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
   private final Verifier verifier = new Verifier();
 
@@ -38,8 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     mUser = mAuth.getCurrentUser();
     loginEmail = findViewById(R.id.til_email);
     loginPassword = findViewById(R.id.til_password);
-    TextView tv_register = findViewById(R.id.tv_register);
-    TextView tv_forgotPW = findViewById(R.id.tv_password);
+    tv_register = findViewById(R.id.tv_register);
+    tv_forgotPW = findViewById(R.id.tv_password);
     loginButton = findViewById(R.id.btn_singin);
 
     if (mUser != null)
@@ -150,4 +151,9 @@ public class LoginActivity extends AppCompatActivity {
     builder.create();
     builder.show();
   }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

@@ -117,4 +117,10 @@ public class MainActivity extends AppCompatActivity
     }
     return true;
   }
+
+  @Override
+  protected void onDestroy() {
+    proDialog.stop();
+    super.onDestroy();
+  }
 }
