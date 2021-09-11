@@ -28,6 +28,31 @@ public class ViewProfileActivity extends AppCompatActivity {
     tvBio = findViewById(R.id.profile_bio);
 
     String userID = getIntent().getStringExtra("USER_ID");
+    
+    
+      //reputation
+      DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
+      reference.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+              int points = 0;
+              for(DataSnapshot answersnapshot : snapshot.getChildren()){
+                  int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
+                  String uid = answersnapshot.child("uid").getValue(String.class);
+
+                  if(userID.equals(uid)){
+                      points += vote;
+                  }
+              }
+              tvReputation.setText(String.valueOf(points));
+
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+
+          }
+      });
 
     firebaseActions.getUserDetails(
         userID,
