@@ -67,6 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="1dp"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="Reputation: 1000"
                         android:textColor="@color/white"
                         android:textSize="14dp"></TextView>
@@ -76,6 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="1dp"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem felis, fermentum vitae imperdiet nec, pulvinar in felis. Sed semper mi est, vitae convallis massa fringilla quis. Praesent iaculis turpis ut dui iaculis, vel accumsan tortor auctor...."
                         android:textColor="@color/white"
                         android:textSize="14dp"></TextView>
