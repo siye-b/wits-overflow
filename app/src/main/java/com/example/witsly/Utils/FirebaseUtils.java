@@ -19,7 +19,4 @@ public interface FirebaseUtils {
   String USER_REGISTERED = "User Registered";
   String CANCEL = "Cancel";
   String TOPICS = "Topics";
-
-  //Notifications
-  final String CHANNEL_ID = "Channel_1";
 }
