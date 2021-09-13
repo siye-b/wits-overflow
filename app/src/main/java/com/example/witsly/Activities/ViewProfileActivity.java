@@ -5,17 +5,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
   public AppCompatImageView profilePic;
-  public TextView tvDetails, tvReputation, tvBio;
+  public TextView tvDetails,  tvBio;
   public FirebaseActions firebaseActions = new FirebaseActions();
 
   @Override
@@ -24,35 +30,10 @@ public class ViewProfileActivity extends AppCompatActivity {
     setContentView(R.layout.activity_view_profile);
     profilePic = findViewById(R.id.profile_image_details);
     tvDetails = findViewById(R.id.profile_name);
-    tvReputation = findViewById(R.id.profile_reputation);
+    //tvReputation = findViewById(R.id.profile_reputation);
     tvBio = findViewById(R.id.profile_bio);
 
     String userID = getIntent().getStringExtra("USER_ID");
-    
-    
-      //reputation
-      DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
-      reference.addValueEventListener(new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot snapshot) {
-              int points = 0;
-              for(DataSnapshot answersnapshot : snapshot.getChildren()){
-                  int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
-                  String uid = answersnapshot.child("uid").getValue(String.class);
-
-                  if(userID.equals(uid)){
-                      points += vote;
-                  }
-              }
-              tvReputation.setText(String.valueOf(points));
-
-          }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-
-          }
-      });
 
     firebaseActions.getUserDetails(
         userID,

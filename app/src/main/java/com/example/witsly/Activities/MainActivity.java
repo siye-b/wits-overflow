@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +26,12 @@ import com.example.witsly.Fragments.ProfileFragment;
 import com.example.witsly.ProDialog;
 import com.example.witsly.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
@@ -33,7 +40,7 @@ public class MainActivity extends AppCompatActivity
   private DrawerLayout drawerLayout;
   private FragmentManager fragmentManager;
   private FragmentTransaction fragmentTransaction;
-  private TextView hFullName, hEmail;
+  private TextView hFullName, hEmail ,tvReputation;
   private ImageView hProfileImage;
   private ProDialog proDialog;
   NavigationView navigationView;
@@ -61,6 +68,7 @@ public class MainActivity extends AppCompatActivity
     hFullName = headerView.findViewById(R.id.headerFullName);
     hEmail = headerView.findViewById(R.id.headerEmail);
     hProfileImage = headerView.findViewById(R.id.headerProfilePic);
+    tvReputation = headerView.findViewById(R.id.headerReputation);
 
     ActionBarDrawerToggle actionDrawerToggle =
         new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -82,9 +90,39 @@ public class MainActivity extends AppCompatActivity
             String name = response.getName();
             String surname = response.getSurname();
             String email = response.getEmail();
+            String currentuserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
             hFullName.setText(name + " " + surname);
             hEmail.setText(email);
             proDialog.stop();
+
+            //reputation
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
+            reference.addValueEventListener(new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //String userID = getIntent().getStringExtra("USER_ID");
+                int points = 0;
+                for(DataSnapshot answersnapshot : snapshot.getChildren()){
+                  int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
+                  String uid = answersnapshot.child("uid").getValue(String.class);
+
+                  if(uid.equals(currentuserID)){
+                    points += vote;
+                  }
+                }
+                tvReputation.setText(String.valueOf(points) + " points");
+                //Log.d("TAG","userID is: " + currentuserID);
+                //Log.d("TAG", "Reputation points is: " + points*15);
+
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {
+
+              }
+            });
+
 
             if (!response.getImage().equals("")) {
               hProfileImage.setBackground(null);
