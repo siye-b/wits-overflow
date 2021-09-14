@@ -22,6 +22,9 @@ allprojects {
             url "https://maven.google.com"
         }
         jcenter()
+        maven {
+            url  'http://dl.bintray.com/gigamole/maven/'
+        }
     }
 }
 
