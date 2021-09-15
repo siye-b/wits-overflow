@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Firebase.FirebaseAuthentication;
+import com.example.witsly.Fragments.AchievementFragment;
 import com.example.witsly.Fragments.HomeFragment;
 import com.example.witsly.Fragments.ProfileFragment;
 import com.example.witsly.ProDialog;
@@ -145,6 +146,12 @@ public class MainActivity extends AppCompatActivity
       fragmentManager = getSupportFragmentManager();
       fragmentTransaction = fragmentManager.beginTransaction();
       fragmentTransaction.replace(R.id.container_frag, new ProfileFragment());
+      fragmentTransaction.commit();
+    }
+    if (item.getItemId() == R.id.user_achievements) {
+      fragmentManager = getSupportFragmentManager();
+      fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(R.id.container_frag, new AchievementFragment());
       fragmentTransaction.commit();
     }
     if (item.getItemId() == R.id.user_logout) {
