@@ -29,9 +29,9 @@ public class AchievementFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_achievement, container, false);
 
         ArrayList<Achievement> achievementList = new ArrayList<>();
-        achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Verified Account", "verify your acccount's email", false));
+        achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Verified Account", "verify your acccount's email",  true));
         achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Contributor", "Leave a comment in a question", false));
-        achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Asker", "Post a question and get an upvote", false));
+        achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Asker", "Post a question and get an upvote", true));
         achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Good Question", "Get 5 upvotes on your question", false));
         achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Great Question", "Get 10 upvote on your question", false));
         achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Top Question", "Get 50 upvotes on your question", false));
