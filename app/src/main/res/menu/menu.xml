@@ -15,6 +15,12 @@
             android:icon="@drawable/ic_calendar"
             android:title="@string/subscriptions" />
 
+        <item
+            android:id="@+id/user_achievements"
+            android:icon="@drawable/ic_achievement"
+            android:title="@string/Achievements"/>
+
+
     </group>
     <item
         android:id="@+id/user_logout"
