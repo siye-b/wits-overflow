@@ -96,13 +96,11 @@ public class MainActivity extends AppCompatActivity
             hFullName.setText(name + " " + surname);
             hEmail.setText(email);
             proDialog.stop();
-
-            //reputation
+            //reputation (Answers)
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
             reference.addValueEventListener(new ValueEventListener() {
               @Override
               public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //String userID = getIntent().getStringExtra("USER_ID");
                 int points = 0;
                 for(DataSnapshot answersnapshot : snapshot.getChildren()){
                   int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
@@ -112,10 +110,34 @@ public class MainActivity extends AppCompatActivity
                     points += vote;
                   }
                 }
-                tvReputation.setText(String.valueOf(points) + " points");
-                //Log.d("TAG","userID is: " + currentuserID);
-                //Log.d("TAG", "Reputation points is: " + points*15);
+                votesGlobalVar.Asum = points;
 
+                //reputation (questions)
+                DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child("Posts");
+                reference2.addValueEventListener(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot postsnapshot : snapshot.getChildren()){
+                      int qvote = Integer.parseInt(String.valueOf(postsnapshot.child("vote").getValue()));
+                      String quid = postsnapshot.child("uid").getValue(String.class);
+
+                      if(quid.equals(currentuserID)){
+                        votesGlobalVar.Psum += qvote;
+                      }
+                    }
+                    votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
+                    Log.d("TAG", "question votes : " + votesGlobalVar.Psum);
+                    Log.d("TAG", "total votes : " + votesGlobalVar.totsum);
+                    tvReputation.setText( votesGlobalVar.totsum + " points");
+                    Log.d("TAG", "answer points : " + votesGlobalVar.Asum);
+
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+
+                  }
+                });
               }
 
               @Override
