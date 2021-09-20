@@ -29,6 +29,7 @@ public class AchievementFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     int points;
+    int commentPoints;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +62,28 @@ public class AchievementFragment extends Fragment {
             }
         });
 
+        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child(FirebaseUtils.ANSWERS);
+        reference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                points = 0;
+                for(DataSnapshot answerSnapshot : snapshot.getChildren()){
+                    int vote = Integer.parseInt(String.valueOf(answerSnapshot.child(FirebaseUtils.VOTE).getValue()));
+                    String uid = answerSnapshot.child("uid").getValue(String.class);
+
+                    if(uid.equals(cuID)){
+                        commentPoints += vote;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         ArrayList<Achievement> achievementList = new ArrayList<>();
         /*achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Verified Account", "verify your acccount's email",  true));
@@ -79,10 +102,13 @@ public class AchievementFragment extends Fragment {
             }
             else if(points>=10 && points<50) {
                 achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Great Question", "Get 10 upvote on your question", true));
+                achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Good Question", "Get 5 upvotes on your question", true));
 
             }
             else if(points>=50) {
                 achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Top Question", "Get 50 upvotes on your question", true));
+                achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Good Question", "Get 5 upvotes on your question", true));
+                achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Great Question", "Get 10 upvote on your question", true));
 
             }
             else {
@@ -91,9 +117,20 @@ public class AchievementFragment extends Fragment {
                 achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Top Question", "Get 50 upvotes on your question", false));
             }
         }
+        if(commentPoints >= 1 ){
+            achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Contributor", "Leave a comment in a question", true));
+        }
         else{
-            achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Asker", "Post a question and get an upvote", false));
+            if(points <1) {
+                achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Asker", "Post a question and get an upvote", false));
+                achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Good Question", "Get 5 upvotes on your question", false));
+                achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Great Question", "Get 10 upvote on your question", false));
+                achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Top Question", "Get 50 upvotes on your question", false));
+            }
+            if(commentPoints <1){
+                achievementList.add(new Achievement(R.drawable.ic_verifiedaccount, "Contributor", "Leave a comment in a question", false));
 
+            }
         }
 
 
