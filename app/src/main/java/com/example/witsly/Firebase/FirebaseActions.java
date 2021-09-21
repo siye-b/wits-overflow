@@ -3,6 +3,7 @@ package com.example.witsly.Firebase;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -15,6 +16,7 @@ import com.example.witsly.Interfaces.DeletePost;
 import com.example.witsly.Interfaces.FirebaseAuthHandler;
 import com.example.witsly.Interfaces.GetAllPosts;
 import com.example.witsly.Interfaces.GetAnswers;
+import com.example.witsly.Interfaces.GetBadge;
 import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
@@ -23,6 +25,7 @@ import com.example.witsly.Interfaces.GetTopics;
 import com.example.witsly.Interfaces.MarkPost;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.getProfileImage;
+import com.example.witsly.Models.Achievement;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.Models.Post;
@@ -147,6 +150,68 @@ public class FirebaseActions {
               public void onCancelled(@NotNull DatabaseError error) {}
             });
   }
+  /*public void getTotalPostsVotes(String id, GetBadge h){
+
+      DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(FirebaseUtils.POSTS);
+      reference.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+              int points = 0;
+              Achievement achievement;
+              for(DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                  int vote = Integer.parseInt(String.valueOf(postSnapshot.child(FirebaseUtils.VOTE).getValue()));
+                  String uid = postSnapshot.child("uid").getValue(String.class);
+
+                  if (uid.equals(id)) {
+                      points += vote;
+
+                  }
+                  /*if(/*snapshot size is not equal to children counter/) {
+                      achievement = postSnapshot.getValue(Achievement.class);
+                      assert achievement != null;
+                      achievement.setTotVotes(points);
+                      h.processResponse(achievement);
+                  }/
+              }
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) { }
+      });
+
+  }
+  public void getTotalCommentsVotes(String id, GetBadge h){
+      DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(FirebaseUtils.ANSWERS);
+      reference.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+              int points = 0;
+              Achievement achievement;
+              for(DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                  int vote = Integer.parseInt(String.valueOf(postSnapshot.child(FirebaseUtils.VOTE).getValue()));
+                  String uid = postSnapshot.child("uid").getValue(String.class);
+
+                  if (uid.equals(id)) {
+                      points += vote;
+
+                  }
+                  /*if(/*snapshot size is not equal to children counter/) {
+                      achievement = postSnapshot.getValue(Achievement.class);
+                      assert achievement != null;
+                      achievement.setTotVCommentVotes(points);
+                      h.processResponse(achievement);
+                  }/
+              }
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) { }
+      });
+  }*/
 
   public void getAllPost(GetAllPosts g) {
 
