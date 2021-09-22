@@ -75,7 +75,7 @@
             android:paddingVertical="5dp"
             android:textColor="@android:color/white"
             android:textSize="13dp"
-            android:text="I love soccer"
+            android:text="I love soccers"
             />
 
 

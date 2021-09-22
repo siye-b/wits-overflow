@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment {
 
     return view;
 
-    //Bio
+    //BioT
     /*DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Bio");
     reference.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
