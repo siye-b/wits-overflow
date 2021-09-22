@@ -5,7 +5,7 @@ public class Achievement {
     private String mText1;
     private String mText2;
     private boolean j;
-
+    // For Bonisiwe
     public Achievement(int imageResource, String text1, String text2){
         mImageResource = imageResource;
         mText1 = text1;

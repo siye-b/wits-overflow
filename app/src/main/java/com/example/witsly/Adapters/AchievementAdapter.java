@@ -21,6 +21,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         public ImageView mImageView;
         public TextView mTextView1;
         public TextView mTextView2;
+        // For Bonisiwe
 
         public AchievementHolder(@NonNull View itemView) {
             super(itemView);

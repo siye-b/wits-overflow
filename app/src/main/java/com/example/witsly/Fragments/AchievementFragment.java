@@ -20,6 +20,7 @@ public class AchievementFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    // For Bonisiwe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
