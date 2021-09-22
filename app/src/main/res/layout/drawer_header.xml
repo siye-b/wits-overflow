@@ -69,6 +69,19 @@
 
 
         <TextView
+            android:id="@+id/headerBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="5dp"
+            android:textColor="@android:color/white"
+            android:textSize="13dp"
+            android:text="I love soccer"
+            />
+
+
+
+
+        <TextView
             android:id="@+id/headerEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

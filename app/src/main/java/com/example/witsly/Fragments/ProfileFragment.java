@@ -2,13 +2,14 @@ package com.example.witsly.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,11 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
@@ -28,41 +34,100 @@ public class ProfileFragment extends Fragment {
   private FloatingActionButton btnImageUploader;
   private AppCompatButton btnSave;
   private TextInputEditText UserBio;
+  private TextView tvBio;
   Uri imgUri;
   FirebaseActions firebaseActions = new FirebaseActions();
+  DatabaseReference ref;
 
   public static int IMAGE_VERIFY = 1;
+  private Activity headerView;
+  //private NavigationView navigationView;
 
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+
+
     profilePic = view.findViewById(R.id.userProfilePicture);
     btnImageUploader = view.findViewById(R.id.uploadProfilePicture);
 
     btnImageUploader.setOnClickListener(img -> choosePicture());
     btnSave = view.findViewById(R.id.btnSave);
     UserBio = view.findViewById(R.id.bio);
+    tvBio = view.findViewById(R.id.headerBio);
+    //setContentView();
+    //tvBio = headerView.findViewById(R.id.profile_bio);
 
     // Get the current user to return a model
     // since there is a built in function user.getBio
     // UserBio.setText(user.getBio);
+      super.onCreate(savedInstanceState);
+      //setContentView(R.layout.fragment_profile);
 
-    btnSave.setOnClickListener(v -> {
-      saveChanges();
-      //Toast.makeText(getContext(), "User Bio Added Successfully", Toast.LENGTH_SHORT).show();
-      //UserBio.setText("");
+    btnSave.setOnClickListener(new View.OnClickListener() {
+        @Override
+
+        public void onClick(View v) {
+            saveChanges();
+            UserBio.getText().toString();
+            ref = FirebaseDatabase.getInstance().getReference().child("Users").child("bio");
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String bi = snapshot.child("bio").getValue(String.class);
+                    System.out.println(bi);
+                    tvBio.setText(bi);
+
+                }
+
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
     });
-
     firebaseActions.getBio(
         value -> {
-          UserBio.setHint(value.getBio());
+          //UserBio.setHint(value.getBio());
+          UserBio.setText(value.getBio());
+
         });
 
     firebaseActions.getProfilePic(img -> Picasso.get().load(img).into(profilePic));
 
     return view;
+
+    //Bio
+    /*DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Bio");
+    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+        for(DataSnapshot answersnapshot : snapshot.getChildren()){
+         // int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
+          String uid = answersnapshot.child("uid").getValue(String.class);
+
+          //String currentuserID;
+          String currentuserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        }
+
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError error) {
+
+      }
+    });
+
+     */
   }
+
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
