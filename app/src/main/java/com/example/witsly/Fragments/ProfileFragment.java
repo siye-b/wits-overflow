@@ -21,11 +21,7 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
@@ -66,30 +62,10 @@ public class ProfileFragment extends Fragment {
       super.onCreate(savedInstanceState);
       //setContentView(R.layout.fragment_profile);
 
-    btnSave.setOnClickListener(new View.OnClickListener() {
-        @Override
+    btnSave.setOnClickListener(v -> {
+      saveChanges();
+      UserBio.getText().toString();
 
-        public void onClick(View v) {
-            saveChanges();
-            UserBio.getText().toString();
-            ref = FirebaseDatabase.getInstance().getReference().child("Users").child("bio");
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String bi = snapshot.child("bio").getValue(String.class);
-                    System.out.println(bi);
-                    tvBio.setText(bi);
-
-                }
-
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
     });
     firebaseActions.getBio(
         value -> {
@@ -102,30 +78,6 @@ public class ProfileFragment extends Fragment {
 
     return view;
 
-    //BioT
-    /*DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Bio");
-    reference.addListenerForSingleValueEvent(new ValueEventListener() {
-      @Override
-      public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-        for(DataSnapshot answersnapshot : snapshot.getChildren()){
-         // int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
-          String uid = answersnapshot.child("uid").getValue(String.class);
-
-          //String currentuserID;
-          String currentuserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        }
-
-      }
-
-      @Override
-      public void onCancelled(@NonNull DatabaseError error) {
-
-      }
-    });
-
-     */
   }
 
 

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
   private DrawerLayout drawerLayout;
   private FragmentManager fragmentManager;
   private FragmentTransaction fragmentTransaction;
-  private TextView hFullName, hEmail ,tvReputation;
+  private TextView hFullName, hEmail ,tvReputation,tvBio;
   private ImageView hProfileImage;
   private ProDialog proDialog;
   NavigationView navigationView;
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity
     hEmail = headerView.findViewById(R.id.headerEmail);
     hProfileImage = headerView.findViewById(R.id.headerProfilePic);
     tvReputation = headerView.findViewById(R.id.headerReputation);
+    tvBio = headerView.findViewById(R.id.headerBio);
 
     ActionBarDrawerToggle actionDrawerToggle =
         new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -145,6 +146,35 @@ public class MainActivity extends AppCompatActivity
 
               }
             });
+
+
+            //Bio display
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("USER_BIO");
+            ref.addValueEventListener(new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot snapshot) {
+               // Integer.parseInt(String.valueOf(snapshot.child("bio").getValue()));
+                String bio = snapshot.child("bio").getValue(String.class);
+                //bio.equals(currentuserID);
+                tvBio.setText(bio);
+
+
+              }
+             // System.out.print(tvBio);
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {
+
+              }
+            });
+
+            firebaseActions.getBio(
+                    value -> {
+                    
+                      tvBio.setText(value.getBio());
+
+                    });
+
 
 
             if (!response.getImage().equals("")) {
