@@ -16,12 +16,12 @@ import com.example.witsly.R;
 import java.util.ArrayList;
 
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementHolder> {
-    private ArrayList<Achievement> mAchievementList;
+    private final ArrayList<Achievement> mAchievementList;
     public static class  AchievementHolder extends  RecyclerView.ViewHolder{
         public ImageView mImageView;
         public TextView mTextView1;
         public TextView mTextView2;
-        // For Bonisiwe
+
 
         public AchievementHolder(@NonNull View itemView) {
             super(itemView);

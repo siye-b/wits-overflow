@@ -1,4 +1,4 @@
-# Wits Overflow Andriod Mobile App
+# Wits Overflow Android Mobile App
  
 This is an app, intended for finding quick help with programming errors around the Wits community, FAQs and general forum-like discussions on the topics of programming-related issues, bugs and CSAM related courses. The latest version of the App functions like StackExchange- having different boards for Math ,CAM and COMS.
 
