@@ -131,12 +131,12 @@ public class AchievementFragment extends Fragment {
         if (points >= 1) {
             achievementList.add(
                     new Achievement(
-                            R.drawable.ic_verifiedaccount, "Asker", "Post a question and get an upvote", true));
+                            R.drawable.ic_asker, "Asker", "Post a question and get an upvote", true));
 
             if (points >= 5 && points < 10) {
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_goodquestion,
                                 "Good Question",
                                 "Get 5 upvotes on your question",
                                 true));
@@ -144,13 +144,13 @@ public class AchievementFragment extends Fragment {
             } else if (points >= 10 && points < 50) {
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_greatquestion,
                                 "Great Question",
                                 "Get 10 upvote on your question",
                                 true));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_goodquestion,
                                 "Good Question",
                                 "Get 5 upvotes on your question",
                                 true));
@@ -158,19 +158,19 @@ public class AchievementFragment extends Fragment {
             } else if (points >= 50) {
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_topquestion,
                                 "Top Question",
                                 "Get 50 upvotes on your question",
                                 true));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_goodquestion,
                                 "Good Question",
                                 "Get 5 upvotes on your question",
                                 true));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_greatquestion,
                                 "Great Question",
                                 "Get 10 upvote on your question",
                                 true));
@@ -178,19 +178,19 @@ public class AchievementFragment extends Fragment {
             } else {
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_goodquestion,
                                 "Good Question",
                                 "Get 5 upvotes on your question",
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_greatquestion,
                                 "Great Question",
                                 "Get 10 upvote on your question",
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_topquestion,
                                 "Top Question",
                                 "Get 50 upvotes on your question",
                                 false));
@@ -199,25 +199,25 @@ public class AchievementFragment extends Fragment {
             if (points < 1) {
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_asker,
                                 "Asker",
                                 "Post a question and get an upvote",
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_goodquestion,
                                 "Good Question",
                                 "Get 5 upvotes on your question",
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_greatquestion,
                                 "Great Question",
                                 "Get 10 upvote on your question",
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_verifiedaccount,
+                                R.drawable.ic_topquestion,
                                 "Top Question",
                                 "Get 50 upvotes on your question",
                                 false));
