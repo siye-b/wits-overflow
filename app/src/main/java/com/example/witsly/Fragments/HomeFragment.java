@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment {
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+
     FloatingActionButton mFAB = view.findViewById(R.id.btn_new_post);
     mFAB.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment {
           mRecyclerView.setLayoutManager(mRecyclerManager);
           mRecyclerView.setAdapter(mRecyclerViewAdapter);
         });
+      firebaseActions.AddReputation();
 
     return view;
   }

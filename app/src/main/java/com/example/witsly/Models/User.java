@@ -2,8 +2,12 @@ package com.example.witsly.Models;
 
 public class User {
 
-  private String name, surname, email, bio, image;
+
+
+
+  private String name, surname, email, bio, image, reputation;
   private Boolean admin;
+  ;
 
   public User() {}
 
@@ -14,6 +18,7 @@ public class User {
     bio = "";
     image = "";
     admin = false;
+    reputation = "";
   }
 
 
@@ -61,7 +66,16 @@ public class User {
     this.surname = surname;
   }
 
+  public String getReputation() {
+    return reputation;
+  }
+
+  public void setReputation(String reputation) {
+    this.reputation = reputation;
+  }
+
   public void setBio(String bio) {
     this.bio = bio;
   }
+
 }

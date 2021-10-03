@@ -23,6 +23,7 @@ import com.example.witsly.Models.Answer;
 import com.example.witsly.Models.Comment;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -112,6 +113,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
         user -> holder.mAnswerDetails.setText(user.getName() + " " + user.getSurname()));
 
     String aid = answer.getAID();
+    String uid = answer.getUID();
+
     firebaseActions.getComments(
         aid,
         c -> {

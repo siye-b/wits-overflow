@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.witsly.Activities.votesGlobalVar;
 import com.example.witsly.Interfaces.AddAnswer;
 import com.example.witsly.Interfaces.AddComment;
 import com.example.witsly.Interfaces.AddPost;
@@ -18,6 +19,7 @@ import com.example.witsly.Interfaces.GetAnswers;
 import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
+import com.example.witsly.Interfaces.GetReputation;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.GetTopics;
 import com.example.witsly.Interfaces.MarkPost;
@@ -319,10 +321,105 @@ public class FirebaseActions {
         });
   }
 
-  public String getUid() {
-    return currentUser.getUid();
-  }
+    public String getUid() {
+        return currentUser.getUid();
+    }
 
+    public void AddReputation(){
+        DatabaseReference rep =
+                firebaseDatabase
+                        .getReference(FirebaseUtils.USERS)
+                        .child(currentUser.getUid())
+                        .child(FirebaseUtils.REPUTATION);
+
+        //reputation (Answers)
+        votesGlobalVar.totsum=0;
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
+      reference.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+              votesGlobalVar.Asum = 0;
+
+              for(DataSnapshot answersnapshot : snapshot.getChildren()) {
+                  int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
+                  String uid = answersnapshot.child("uid").getValue(String.class);
+
+                  if (uid.equals(currentUser.getUid())) {
+                      votesGlobalVar.Asum += vote;
+                  }
+              }
+
+              //reputation (questions)
+              DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child("Posts");
+              reference2.addValueEventListener(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot snapshot) {
+                      votesGlobalVar.Psum=0;
+                      for(DataSnapshot postsnapshot : snapshot.getChildren()){
+                          int qvote = Integer.parseInt(String.valueOf(postsnapshot.child("vote").getValue()));
+                          String quid = postsnapshot.child("uid").getValue(String.class);
+
+                          if(quid.equals(currentUser.getUid())){
+                              votesGlobalVar.Psum += qvote;
+                          }
+                      }
+                      votesGlobalVar.totsum=0;
+                      votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
+                      rep.addListenerForSingleValueEvent(new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                              rep.setValue(votesGlobalVar.totsum+ " points");
+                          }
+
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+
+                          }
+                      });
+                      Log.d("TAG", "question votes : " + votesGlobalVar.Psum);
+                      Log.d("TAG", "total votes : " + votesGlobalVar.totsum);
+                      //tvReputation.setText( votesGlobalVar.totsum + " points");
+                      Log.d("TAG", "answer points : " + votesGlobalVar.Asum);
+
+                  }
+
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+
+                  }
+              });
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+
+          }
+      });
+
+  }
+    public void getReputation(GetReputation a){
+        DatabaseReference mDatabaseReference =
+                FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
+        mDatabaseReference
+                .child(currentUser.getUid())
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    User userB = snapshot.getValue(User.class);
+                                    assert userB != null;
+                                    a.processResponse(userB);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {}
+                        });
+    }
   public void getBio(GetBio b) {
     DatabaseReference mDatabaseReference =
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);

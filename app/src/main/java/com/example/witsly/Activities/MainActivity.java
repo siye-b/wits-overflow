@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -72,6 +73,18 @@ public class MainActivity extends AppCompatActivity
     tvReputation = headerView.findViewById(R.id.headerReputation);
     tvBio = headerView.findViewById(R.id.headerBio);
 
+    //firebaseActions.AddReputation();
+    firebaseActions.getReputation( a->
+    {
+      tvReputation.setText( a.getReputation());
+      //Toast.makeText(this,a.getReputation(),Toast.LENGTH_LONG).show();
+    });
+
+    /**
+     * THE PROBLEM : IT IS ADDING ON REPUTATION WHEN USER LOGS OUT AND LOGS IN TOO
+     * I AM NOT SURE HOW IT SUPPOSED TO WORK
+     */
+
     ActionBarDrawerToggle actionDrawerToggle =
         new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
     drawerLayout.addDrawerListener(actionDrawerToggle);
@@ -98,7 +111,7 @@ public class MainActivity extends AppCompatActivity
             hEmail.setText(email);
             proDialog.stop();
             //reputation (Answers)
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
+            /*DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
             reference.addValueEventListener(new ValueEventListener() {
               @Override
               public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -145,8 +158,7 @@ public class MainActivity extends AppCompatActivity
               public void onCancelled(@NonNull DatabaseError error) {
 
               }
-            });
-
+            });*/
 
             //Bio display
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("USER_BIO");

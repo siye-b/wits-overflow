@@ -158,7 +158,7 @@ public class AchievementFragment extends Fragment {
             } else if (points >= 50) {
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_topquestion,
+                                R.drawable.ic_asker,
                                 "Top Question",
                                 "Get 50 upvotes on your question",
                                 true));
@@ -190,7 +190,7 @@ public class AchievementFragment extends Fragment {
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_topquestion,
+                                R.drawable.ic_asker,
                                 "Top Question",
                                 "Get 50 upvotes on your question",
                                 false));
@@ -217,7 +217,7 @@ public class AchievementFragment extends Fragment {
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_topquestion,
+                                R.drawable.ic_asker,
                                 "Top Question",
                                 "Get 50 upvotes on your question",
                                 false));
