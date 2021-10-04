@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardPreventCornerOverlap="true"
+    app:cardElevation="1dp"
+    android:id="@+id/ccard"
+    app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/tv_commenter_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Posted by: John Smith"
+            android:textColor="@color/darkGrey"
+            android:textSize="12sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:textColor="@color/black"
+            android:text="Body of the comment should go here."
+            android:textSize="14sp"
+            android:id="@+id/tv_commenter_body"
+            android:layout_below="@+id/tv_commenter_name">
+
+        </TextView>
+
+        <TextView
+            android:visibility="gone"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:id="@+id/delete_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_commenter_body"
+            android:background="?attr/selectableItemBackground"
+            android:text="Delete" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

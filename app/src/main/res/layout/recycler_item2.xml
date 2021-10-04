@@ -5,61 +5,49 @@
     android:layout_height="wrap_content"
     app:cardPreventCornerOverlap="true"
     app:cardElevation="4dp"
+    android:id="@+id/cardView"
     app:cardCornerRadius="3dp"
     app:cardUseCompatPadding="true">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp">
+
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-            <RadioGroup
-                android:layout_gravity="center"
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="3dp"
-                android:orientation="vertical"
-                android:paddingHorizontal="5dp">
+                android:gravity="center"
+                android:text="Votes:"></TextView>
 
+            <TextView
 
-                <RadioButton
-                    android:id="@+id/btn_upvote2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/like_button"
-                    android:button="@android:color/transparent" />
-
-                <TextView
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:id="@+id/tv_vote_count2"
-                    android:text="0"
-                    android:layout_height="30dp" />
-
-                <RadioButton
-                    android:id="@+id/btn_downvote2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/dislike_button"
-                    android:button="@android:color/transparent" />
-
-
-            </RadioGroup>
-
+                android:id="@+id/tv_vote_count2"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:gravity="center"
+                android:text="100k" />
 
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:id="@+id/LL"
+            android:paddingLeft="5dp"
             android:layout_marginLeft="40dp"
             android:layout_alignParentRight="true"
             android:gravity="center"
@@ -76,16 +64,50 @@
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/topic_tag"
+                    android:textSize="12sp"
+                    android:layout_gravity="start"
+                    android:paddingHorizontal="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#49484A"
+                    android:textColor="@color/white"
+                    android:text="Topic">
+                </com.google.android.material.chip.Chip>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/tag"
+                    android:textSize="12sp"
+                    android:layout_gravity="start"
+                    android:paddingHorizontal="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#2979FF"
+                    android:textColor="@color/white"
+                    android:text="General">
+                </com.google.android.material.chip.Chip>
+
+            </LinearLayout>
+
+
+
             <TextView
                 android:id="@+id/tv_card_body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:paddingHorizontal="5dp"
                 android:text="Body should go here."
                 android:textSize="16sp"
                 android:layout_marginVertical="5dp"
                 android:textColor="@color/darkGrey"
-                android:layout_below="@+id/tv_card_title2" />
+                android:layout_below="@+id/tag" />
 
             <TextView
                 android:id="@+id/tv_poster2"

@@ -30,4 +30,7 @@ public class ProDialog {
 
     myAlert.dismiss();
   }
+
+
+
 }

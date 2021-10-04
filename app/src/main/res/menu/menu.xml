@@ -5,10 +5,32 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:id="@+id/user_home"
             android:title="@string/home" />
+
+        <item
+            android:id="@+id/user_feed"
+            android:icon="@drawable/outline_feed_24"
+            android:title="@string/feed" />
+
+        <item
+            android:id="@+id/user_subscriptions"
+            android:icon="@drawable/ic_calendar"
+            android:title="@string/subscriptions" />
+
         <item
             android:id="@+id/user_profile"
             android:icon="@drawable/ic_baseline_person_24"
             android:title="@string/profile" />
+
+        <item
+            android:id="@+id/user_achievements"
+            android:icon="@drawable/ic_achievement"
+            android:title="@string/Achievements"/>
+
+        <item
+            android:id="@+id/user_settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/settings" />
+
 
     </group>
     <item

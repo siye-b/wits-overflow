@@ -1,12 +1,181 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar"
+        android:visibility="invisible"
+        layout="@layout/drawer_toolbar"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="145dp"
+        android:layout_height="145dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/rl_pp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            app:cardCornerRadius="80dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/Background"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/userProfilePicture"
+                android:background="@drawable/ic_baseline_person_24" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            app:backgroundTint="@color/Background"
+            app:rippleColor="#E1C3C3"
+            app:srcCompat="@drawable/ic_baseline_camera_alt_24"
+            app:tint="@color/white"
+            android:id="@+id/uploadProfilePicture"
+            tools:ignore="SpeakableTextPresentCheck">
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+    </RelativeLayout>
 
     <TextView
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_bio"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="PROFILE" />
+        android:layout_below="@id/rl_pp"
+        android:layout_marginTop="18dp"
+        android:inputType="text"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:text="Biography (Tell the community about yourself.)"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck">
+    </TextView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/tv_bio"
+        android:id="@+id/bio_holder"
+        app:counterEnabled="true"
+        app:counterMaxLength="250"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textSize="14sp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_prof_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bio_holder"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck">
+    </TextView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/tv_prof_name"
+        android:id="@+id/name_holder"
+        app:counterEnabled="true"
+        app:counterMaxLength="250"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/prof_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textSize="14sp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_prof_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_holder"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:text="Surname"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck">
+    </TextView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/tv_prof_surname"
+        android:id="@+id/surname_holder"
+        app:counterEnabled="true"
+        app:counterMaxLength="250"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/prof_surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textSize="14sp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button_ripple"
+        android:text="SAVE"
+        android:textColor="@color/white"
+        android:id="@+id/btnSave">
+    </androidx.appcompat.widget.AppCompatButton>
+
 
 </RelativeLayout>

@@ -7,10 +7,31 @@
 
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>I
+
+        <item name="colorPrimary">@color/ActivatedStroke</item>
+        <item name="colorPrimaryVariant">#3D5AFE</item>
+        <item name="colorPrimaryDark">@color/Background</item>
+    </style>
+    
+    <style name="TextInputLayoutStroke" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/text_input_layout_stroke</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
     </style>
 
 
+    <style name="ThemeOverlay.App.TextInputLayout" parent="">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorError">@color/Red</item>
+        <item name="colorAccent">@color/ActivatedStroke</item>
+        <item name="boxCornerRadiusBottomEnd">50dp</item>
+        <item name="boxCornerRadiusBottomStart">50dp</item>
+        <item name="boxCornerRadiusTopEnd">50dp</item>
+        <item name="boxCornerRadiusTopStart">50dp</item>
+        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox</item>
+    </style>
 
 
 </resources>

@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/frag_home">
 
     <include
         android:layout_width="match_parent"
@@ -15,10 +16,10 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="12dp"
         android:layout_below="@+id/toolbar"
+        android:background="@color/white"
         android:clipToPadding="false"
-        android:background="@color/white" />
+        android:paddingBottom="12dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_new_post"
@@ -26,10 +27,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
+        app:backgroundTint="@color/Background"
         app:rippleColor="#E1C3C3"
-        app:srcCompat="@drawable/ic_baseline_add_24" />
+        app:srcCompat="@drawable/ic_baseline_add_24"
+        app:tint="@color/white" />
 
 </RelativeLayout>

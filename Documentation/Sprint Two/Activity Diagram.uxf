@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.baselet.element.old.allinone.ActivityDiagramText</type>
+    <coordinates>
+      <x>816</x>
+      <y>448</y>
+      <w>561</w>
+      <h>656</h>
+    </coordinates>
+    <panel_attributes>title:Example Hotline
+Start
+Telephone\     rings
+While[open\calls]
+	[free]
+	Fork
+		If
+			[responsible]
+			take call
+			help caller
+
+			[not responsible]
+			forward call\(with subactions)..
+		EndIf
+
+		|
+		|
+		|
+		document call~id1
+	Sync
+
+	[busy]
+	record\call
+	wait until\   free&gt;
+	&gt;free
+	playback\recorded cal-&gt;id1
+[no open calls]
+End
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.baselet.element.old.allinone.ActivityDiagramText</type>
+    <coordinates>
+      <x>816</x>
+      <y>360</y>
+      <w>64</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>title:start
+Start
+
+End
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>120</x>
+      <y>144</y>
+      <w>112</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Create a file.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>112</x>
+      <y>64</y>
+      <w>128</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Open the word
+processing package.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>168</x>
+      <y>0</y>
+      <w>16</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>8</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>96</y>
+      <w>24</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>112</x>
+      <y>232</y>
+      <w>136</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>
+Save the file under
+a unique name within
+its directory.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>120</x>
+      <y>328</y>
+      <w>112</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Type the document.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>232</x>
+      <y>464</y>
+      <w>176</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>open the graphics package,
+, create the graphics, and
+paste the graphics into the
+document.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>160</x>
+      <y>408</y>
+      <w>32</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>type=decision</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>184</x>
+      <y>416</y>
+      <w>152</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>170.0;60.0;170.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>416</y>
+      <w>232</w>
+      <h>472</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>270.0;570.0;270.0;480.0;10.0;480.0;10.0;10.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>184</x>
+      <y>408</y>
+      <w>152</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+(graphics are
+necessary)</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0;170.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>408</y>
+      <w>176</w>
+      <h>408</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+(graphics are
+not necessary)</panel_attributes>
+    <additional_attributes>200.0;20.0;10.0;20.0;10.0;490.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>352</x>
+      <y>584</y>
+      <w>152</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>170.0;70.0;170.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>328</x>
+      <y>576</y>
+      <w>32</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>type=decision</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>352</x>
+      <y>576</y>
+      <w>152</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+(Spreadsheet is
+necessary)</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0;170.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>392</x>
+      <y>640</y>
+      <w>208</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>open the spreadsheet package,
+create thespreadsheet, and paste
+the spreadsheet into the document.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>160</x>
+      <y>872</y>
+      <w>112</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Save the file.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>160</x>
+      <y>952</y>
+      <w>112</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Print a hard copy 
+of the document.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>160</x>
+      <y>1032</y>
+      <w>112</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Exit the word 
+processing package.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>176</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>280</y>
+      <w>24</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>360</y>
+      <w>24</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>528</y>
+      <w>24</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>584</y>
+      <w>168</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>190.0;200.0;10.0;200.0;10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>208</x>
+      <y>688</y>
+      <w>296</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;140.0;180.0;140.0;180.0;70.0;350.0;70.0;350.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>208</x>
+      <y>904</y>
+      <w>24</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>208</x>
+      <y>984</y>
+      <w>24</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>576</y>
+      <w>112</w>
+      <h>184</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+(Spreadsheet 
+not necessary)</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0;10.0;210.0</additional_attributes>
+  </element>
+</diagram>

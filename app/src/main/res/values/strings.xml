@@ -5,4 +5,71 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="feed">My Feed</string>
+    <string name="kebab">&#8942;</string>
+    <string name="settings">Settings</string>
+
+    <string-array name="tags">
+        <item>".net"</item>
+        <item>"algorithm"</item>
+        <item>"android"</item>
+        <item>"angular"</item>
+        <item>"api"</item>
+        <item>"c"</item>
+        <item>"c#"</item>
+        <item>"c++"</item>
+        <item>"class"</item>
+        <item>"complexity"</item>
+        <item>"css"</item>
+        <item>"data-structure"</item>
+        <item>"database"</item>
+        <item>"date"</item>
+        <item>"django"</item>
+        <item>"error"</item>
+        <item>"file"</item>
+        <item>"firebase"</item>
+        <item>"general"</item>
+        <item>"git"</item>
+        <item>"graphics"</item>
+        <item>"html"</item>
+        <item>"ios"</item>
+        <item>"java"</item>
+        <item>"javascript"</item>
+        <item>"jquery"</item>
+        <item>"json"</item>
+        <item>"kotlin"</item>
+        <item>"linux"</item>
+        <item>"machine-learning"</item>
+        <item>"matlab"</item>
+        <item>"maven"</item>
+        <item>"mongodb"</item>
+        <item>"mysql"</item>
+        <item>"numpy"</item>
+        <item>"objective-c"</item>
+        <item>"oracle"</item>
+        <item>"other"</item>
+        <item>"php"</item>
+        <item>"python"</item>
+        <item>"r"</item>
+        <item>"reactjs"</item>
+        <item>"ruby"</item>
+        <item>"script"</item>
+        <item>"shell"</item>
+        <item>"sorting"</item>
+        <item>"sql"</item>
+        <item>"sqlite"</item>
+        <item>"swift"</item>
+        <item>"tensorflow"</item>
+        <item>"typescript"</item>
+        <item>"vb"</item>
+        <item>"vba"</item>
+        <item>"windows"</item>
+        <item>"wordpress"</item>
+        <item>"xaml"</item>
+        <item>"xml"</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Achievements">Achievements</string>
 </resources>
