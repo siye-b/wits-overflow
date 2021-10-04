@@ -187,8 +187,7 @@ public class MainActivity extends AppCompatActivity
 
                     });
 
-
-
+            
             if (!response.getImage().equals("")) {
               hProfileImage.setBackground(null);
               Picasso.get().load(response.getImage()).into(hProfileImage);
