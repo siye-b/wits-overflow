@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 public class ViewProfileActivity extends AppCompatActivity {
 
   public AppCompatImageView profilePic;
-  public TextView tvDetails,  tvBio;
+  public TextView tvDetails,  tvBio, tvReputation;
   public FirebaseActions firebaseActions = new FirebaseActions();
 
   @Override
@@ -30,7 +30,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     setContentView(R.layout.activity_view_profile);
     profilePic = findViewById(R.id.profile_image_details);
     tvDetails = findViewById(R.id.profile_name);
-    //tvReputation = findViewById(R.id.profile_reputation);
+    tvReputation = findViewById(R.id.profile_reputation);
     tvBio = findViewById(R.id.profile_bio);
 
     String userID = getIntent().getStringExtra("USER_ID");
@@ -46,5 +46,12 @@ public class ViewProfileActivity extends AppCompatActivity {
             Picasso.get().load(Uri.parse(user.getImage())).into(profilePic);
           }
         });
+
+      firebaseActions.getReputation( a->
+      {
+          tvReputation.setText( a.getReputation());
+          //Toast.makeText(this,a.getReputation(),Toast.LENGTH_LONG).show();
+      });
+
   }
 }
