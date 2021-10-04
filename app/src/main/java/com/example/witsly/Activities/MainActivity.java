@@ -24,7 +24,9 @@ import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Firebase.FirebaseAuthentication;
 import com.example.witsly.Fragments.AchievementFragment;
 import com.example.witsly.Fragments.HomeFragment;
+import com.example.witsly.Fragments.MyFeedFragment;
 import com.example.witsly.Fragments.ProfileFragment;
+import com.example.witsly.Fragments.SubscriptionFragment;
 import com.example.witsly.ProDialog;
 import com.example.witsly.R;
 import com.google.android.material.navigation.NavigationView;
@@ -216,6 +218,18 @@ public class MainActivity extends AppCompatActivity
       fragmentManager = getSupportFragmentManager();
       fragmentTransaction = fragmentManager.beginTransaction();
       fragmentTransaction.replace(R.id.container_frag, new AchievementFragment());
+      fragmentTransaction.commit();
+    }
+    if(item.getItemId() == R.id.user_feed){
+      fragmentManager = getSupportFragmentManager();
+      fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(R.id.container_frag, new MyFeedFragment());
+      fragmentTransaction.commit();
+    }
+    if (item.getItemId() == R.id.user_subscriptions) {
+      fragmentManager = getSupportFragmentManager();
+      fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(R.id.container_frag, new SubscriptionFragment());
       fragmentTransaction.commit();
     }
     if (item.getItemId() == R.id.user_logout) {

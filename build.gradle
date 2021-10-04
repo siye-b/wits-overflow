@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:7.0.2'
         classpath 'org.jacoco:org.jacoco.core:0.8.5'
         classpath 'com.google.gms:google-services:4.3.10'
         classpath 'com.theartofdev.edmodo:android-image-cropper:2.8.+'

@@ -58,30 +58,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_pp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="18dp"
         android:inputType="text"
         android:paddingLeft="10dp"
         android:singleLine="true"
         android:text="Biography (Tell the community about yourself.)"
         android:textColor="@color/black"
         android:textSize="16sp"
-        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck"></TextView>
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck">
+    </TextView>
 
-
-    <!--<androidx.appcompat.widget.AppCompatEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:minLines="5"
-        android:gravity="top"
-        android:singleLine="false"
-        android:layout_below="@id/tv_bio"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="1dp"
-        android:hint="Tell the community a little bit about yourself in about 250 characters or less."
-        android:inputType="textMultiLine"
-        android:maxLength="250">
-    </androidx.appcompat.widget.AppCompatEditText>-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -89,6 +75,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="1dp"
         android:layout_below="@id/tv_bio"
+        android:id="@+id/bio_holder"
         app:counterEnabled="true"
         app:counterMaxLength="250"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -101,7 +88,81 @@
             android:inputType="textMultiLine"
             android:singleLine="false"
             android:textSize="14sp"
-            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"></com.google.android.material.textfield.TextInputEditText>
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_prof_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bio_holder"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck">
+    </TextView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/tv_prof_name"
+        android:id="@+id/name_holder"
+        app:counterEnabled="true"
+        app:counterMaxLength="250"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/prof_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textSize="14sp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_prof_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_holder"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:text="Surname"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck">
+    </TextView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/tv_prof_surname"
+        android:id="@+id/surname_holder"
+        app:counterEnabled="true"
+        app:counterMaxLength="250"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/prof_surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textSize="14sp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton

@@ -50,7 +50,6 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
     @Override
     public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
         Topic topic = mTopicList.get(position);
-
         holder.mTVTopics.setText(topic.getTopic());
 
 
@@ -58,10 +57,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, PostActivity.class);
-                //Use below if needed.
-                //intent.putExtra("Topic", "");
-                mContext.startActivity(intent);
+
             }
         });
 

@@ -6,7 +6,9 @@
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
     <string name="subscriptions">Subscriptions</string>
+    <string name="feed">My Feed</string>
     <string name="kebab">&#8942;</string>
+    <string name="settings">Settings</string>
 
     <string-array name="tags">
         <item>".net"</item>
