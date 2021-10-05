@@ -1,15 +1,13 @@
 package com.example.witsly.Activities;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,40 +15,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
 
-import com.example.witsly.Firebase.FirebaseActions;
-import com.example.witsly.Firebase.FirebaseAuthentication;
 import com.example.witsly.Fragments.AchievementFragment;
 import com.example.witsly.Fragments.HomeFragment;
 import com.example.witsly.Fragments.MyFeedFragment;
 import com.example.witsly.Fragments.ProfileFragment;
 import com.example.witsly.Fragments.SubscriptionFragment;
+import com.example.witsly.Managers.UiManager;
+import com.example.witsly.Managers.UserManager;
 import com.example.witsly.ProDialog;
 import com.example.witsly.R;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+    implements NavigationView.OnNavigationItemSelectedListener,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
   private DrawerLayout drawerLayout;
-  private FragmentManager fragmentManager;
-  private FragmentTransaction fragmentTransaction;
-  private TextView hFullName, hEmail ,tvReputation,tvBio;
-  private ImageView hProfileImage;
+  private TextView fullName, email, reputation, bio;
+  private ImageView profileImage;
   private ProDialog proDialog;
-  NavigationView navigationView;
-  private final FirebaseActions firebaseActions = new FirebaseActions();
-  private final FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
-  private final String currentUser = firebaseActions.getUid();
+  private NavigationView navigationView;
 
   @SuppressLint("SetTextI18n")
   @Override
@@ -58,34 +44,13 @@ public class MainActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    drawerLayout = findViewById(R.id.MainDrawer);
-
     Toolbar toolbar = findViewById(R.id.tool_bar);
+    UserManager.userManager(this);
+
+    loadFragment(new HomeFragment());
+
     setSupportActionBar(toolbar);
-
-    proDialog = new ProDialog(this);
-
-    navigationView = findViewById(R.id.navigationView);
-    navigationView.setNavigationItemSelectedListener(this);
-    View headerView = navigationView.getHeaderView(0);
-
-    hFullName = headerView.findViewById(R.id.headerFullName);
-    hEmail = headerView.findViewById(R.id.headerEmail);
-    hProfileImage = headerView.findViewById(R.id.headerProfilePic);
-    tvReputation = headerView.findViewById(R.id.headerReputation);
-    tvBio = headerView.findViewById(R.id.headerBio);
-
-    //firebaseActions.AddReputation();
-    firebaseActions.getReputation( a->
-    {
-      tvReputation.setText( a.getReputation());
-      //Toast.makeText(this,a.getReputation(),Toast.LENGTH_LONG).show();
-    });
-
-    /**
-     * THE PROBLEM : IT IS ADDING ON REPUTATION WHEN USER LOGS OUT AND LOGS IN TOO
-     * I AM NOT SURE HOW IT SUPPOSED TO WORK
-     */
+    drawerLayout = findViewById(R.id.MainDrawer);
 
     ActionBarDrawerToggle actionDrawerToggle =
         new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -94,107 +59,18 @@ public class MainActivity extends AppCompatActivity
     actionDrawerToggle.setDrawerIndicatorEnabled(true);
     actionDrawerToggle.syncState();
 
-    fragmentManager = getSupportFragmentManager();
-    fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.add(R.id.container_frag, new HomeFragment()).commit();
+    navigationView = findViewById(R.id.navigationView);
+    navigationView.setNavigationItemSelectedListener(this);
+    View headerView = navigationView.getHeaderView(0);
 
-    proDialog.start();
+    fullName = headerView.findViewById(R.id.headerFullName);
+    email = headerView.findViewById(R.id.headerEmail);
+    profileImage = headerView.findViewById(R.id.headerProfilePic);
+    reputation = headerView.findViewById(R.id.headerReputation);
+    bio = headerView.findViewById(R.id.headerBio);
 
-    if (currentUser != null)
-      firebaseActions.getUserDetails(
-          currentUser,
-          response -> {
-            String name = response.getName();
-            String surname = response.getSurname();
-            String email = response.getEmail();
-            String currentuserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-            hFullName.setText(name + " " + surname);
-            hEmail.setText(email);
-            proDialog.stop();
-            //reputation (Answers)
-            /*DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
-            reference.addValueEventListener(new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int points = 0;
-                for(DataSnapshot answersnapshot : snapshot.getChildren()){
-                  int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
-                  String uid = answersnapshot.child("uid").getValue(String.class);
-
-                  if(uid.equals(currentuserID)){
-                    points += vote;
-                  }
-                }
-                votesGlobalVar.Asum = points;
-
-                //reputation (questions)
-                DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child("Posts");
-                reference2.addValueEventListener(new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot postsnapshot : snapshot.getChildren()){
-                      int qvote = Integer.parseInt(String.valueOf(postsnapshot.child("vote").getValue()));
-                      String quid = postsnapshot.child("uid").getValue(String.class);
-
-                      if(quid.equals(currentuserID)){
-                        votesGlobalVar.Psum += qvote;
-                      }
-                    }
-                    votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
-                    Log.d("TAG", "question votes : " + votesGlobalVar.Psum);
-                    Log.d("TAG", "total votes : " + votesGlobalVar.totsum);
-                    tvReputation.setText( votesGlobalVar.totsum + " points");
-                    Log.d("TAG", "answer points : " + votesGlobalVar.Asum);
-
-                  }
-
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError error) {
-
-                  }
-                });
-              }
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-
-              }
-            });*/
-
-            //Bio display
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("USER_BIO");
-            ref.addValueEventListener(new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot snapshot) {
-               // Integer.parseInt(String.valueOf(snapshot.child("bio").getValue()));
-                String bio = snapshot.child("bio").getValue(String.class);
-                //bio.equals(currentuserID);
-                tvBio.setText(bio);
-
-
-              }
-             // System.out.print(tvBio);
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-
-              }
-            });
-
-            firebaseActions.getBio(
-                    value -> {
-                    
-                      tvBio.setText(value.getBio());
-
-                    });
-
-            
-            if (!response.getImage().equals("")) {
-              hProfileImage.setBackground(null);
-              Picasso.get().load(response.getImage()).into(hProfileImage);
-            }
-          });
+    if (UserManager.loggedIn())
+      UiManager.setProfile(this, fullName, email, reputation, bio, profileImage);
   }
 
   @Override
@@ -202,47 +78,36 @@ public class MainActivity extends AppCompatActivity
 
     drawerLayout.closeDrawer(GravityCompat.START);
 
-    if (item.getItemId() == R.id.user_home) {
-      fragmentManager = getSupportFragmentManager();
-      fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.container_frag, new HomeFragment()).commit();
-    }
-    if (item.getItemId() == R.id.user_profile) {
-      fragmentManager = getSupportFragmentManager();
-      fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.container_frag, new ProfileFragment());
-      fragmentTransaction.commit();
-    }
-    if (item.getItemId() == R.id.user_achievements) {
-      fragmentManager = getSupportFragmentManager();
-      fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.container_frag, new AchievementFragment());
-      fragmentTransaction.commit();
-    }
-    if(item.getItemId() == R.id.user_feed){
-      fragmentManager = getSupportFragmentManager();
-      fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.container_frag, new MyFeedFragment());
-      fragmentTransaction.commit();
-    }
-    if (item.getItemId() == R.id.user_subscriptions) {
-      fragmentManager = getSupportFragmentManager();
-      fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.container_frag, new SubscriptionFragment());
-      fragmentTransaction.commit();
-    }
-    if (item.getItemId() == R.id.user_logout) {
-      firebaseAuthentication.logout();
-      startActivity(
-          new Intent(this, LoginActivity.class)
-              .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-    }
+    if (item.getItemId() == R.id.user_home) loadFragment(new HomeFragment());
+    if (item.getItemId() == R.id.user_profile) loadFragment(new ProfileFragment());
+    if (item.getItemId() == R.id.user_achievements) loadFragment(new AchievementFragment());
+    if (item.getItemId() == R.id.user_feed) loadFragment(new MyFeedFragment());
+    if (item.getItemId() == R.id.user_subscriptions) loadFragment(new SubscriptionFragment());
+    if (item.getItemId() == R.id.user_logout) UiManager.logOut(this);
     return true;
+  }
+
+  private void loadFragment(Fragment fragment) {
+    getSupportFragmentManager().beginTransaction().replace(R.id.container_frag, fragment).commit();
+  }
+
+  @Override
+  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    if (key.equals(UserManager.PROFILE_IMG_LINK)) UiManager.setImage(this, profileImage);
+    if (key.equals(UserManager.BIO)) UiManager.setBio(this, null, bio);
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    UserManager.userManager(this);
+    UserManager.registerPref(this, this);
   }
 
   @Override
   protected void onDestroy() {
-    proDialog.stop();
     super.onDestroy();
+    UserManager.userManager(this);
+    UserManager.UnRegisterPref(this, this);
   }
 }

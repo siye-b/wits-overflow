@@ -22,7 +22,10 @@ import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetReputation;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.GetTopics;
+import com.example.witsly.Interfaces.GetUser;
 import com.example.witsly.Interfaces.MarkPost;
+import com.example.witsly.Interfaces.UpdateBio;
+import com.example.witsly.Interfaces.UploadImg;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.getProfileImage;
 import com.example.witsly.Models.Answer;
@@ -60,6 +63,26 @@ public class FirebaseActions {
     firebaseDatabase = FirebaseDatabase.getInstance();
     currentUser = FirebaseAuth.getInstance().getCurrentUser();
     storage = FirebaseStorage.getInstance();
+  }
+
+  public void getUser(GetUser user) {
+    DatabaseReference mDatabaseReference =
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
+    mDatabaseReference
+        .child(currentUser.getUid())
+        .addListenerForSingleValueEvent(
+            new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User value = snapshot.getValue(User.class);
+                user.processResponse(value, true);
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {
+                user.processResponse(null, false);
+              }
+            });
   }
 
   public void addPost(Post post, AddPost a) {
@@ -302,7 +325,8 @@ public class FirebaseActions {
         });
   }
 
-  public void AddBio(String userBio) {
+  public void UpdateBIO(String userBio, UpdateBio b) {
+
     DatabaseReference bio =
         firebaseDatabase
             .getReference(FirebaseUtils.USERS)
@@ -314,6 +338,29 @@ public class FirebaseActions {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
             bio.setValue(userBio);
+            b.processResponse(true);
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+            b.processResponse(false);
+          }
+        });
+  }
+
+  public void AddBio(String userBio) {
+    DatabaseReference bio =
+        firebaseDatabase
+            .getReference(FirebaseUtils.USERS)
+            .child(currentUser.getUid())
+            .child(FirebaseUtils.BIO);
+
+    bio.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            bio.setValue(userBio);
           }
 
           @Override
@@ -321,105 +368,99 @@ public class FirebaseActions {
         });
   }
 
-    public String getUid() {
-        return currentUser.getUid();
-    }
+  public String getUid() {
+    return currentUser.getUid();
+  }
 
-    public void AddReputation(){
-        DatabaseReference rep =
-                firebaseDatabase
-                        .getReference(FirebaseUtils.USERS)
-                        .child(currentUser.getUid())
-                        .child(FirebaseUtils.REPUTATION);
+  public void AddReputation() {
+    DatabaseReference rep =
+        firebaseDatabase
+            .getReference(FirebaseUtils.USERS)
+            .child(currentUser.getUid())
+            .child(FirebaseUtils.REPUTATION);
 
-        //reputation (Answers)
-        votesGlobalVar.totsum=0;
+    // reputation (Answers)
+    votesGlobalVar.totsum = 0;
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
-      reference.addValueEventListener(new ValueEventListener() {
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
+    reference.addValueEventListener(
+        new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
-              votesGlobalVar.Asum = 0;
+            votesGlobalVar.Asum = 0;
 
-              for(DataSnapshot answersnapshot : snapshot.getChildren()) {
-                  int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
-                  String uid = answersnapshot.child("uid").getValue(String.class);
+            for (DataSnapshot answersnapshot : snapshot.getChildren()) {
+              int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
+              String uid = answersnapshot.child("uid").getValue(String.class);
 
-                  if (uid.equals(currentUser.getUid())) {
-                      votesGlobalVar.Asum += vote;
-                  }
-              }
+              if (uid.equals(currentUser.getUid())) votesGlobalVar.Asum += vote;
+            }
 
-              //reputation (questions)
-              DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child("Posts");
-              reference2.addValueEventListener(new ValueEventListener() {
+            // reputation (questions)
+            DatabaseReference reference2 =
+                FirebaseDatabase.getInstance().getReference().child("Posts");
+            reference2.addValueEventListener(
+                new ValueEventListener() {
                   @Override
                   public void onDataChange(@NonNull DataSnapshot snapshot) {
-                      votesGlobalVar.Psum=0;
-                      for(DataSnapshot postsnapshot : snapshot.getChildren()){
-                          int qvote = Integer.parseInt(String.valueOf(postsnapshot.child("vote").getValue()));
-                          String quid = postsnapshot.child("uid").getValue(String.class);
+                    votesGlobalVar.Psum = 0;
+                    for (DataSnapshot postsnapshot : snapshot.getChildren()) {
+                      int qvote =
+                          Integer.parseInt(String.valueOf(postsnapshot.child("vote").getValue()));
+                      String quid = postsnapshot.child("uid").getValue(String.class);
 
-                          if(quid.equals(currentUser.getUid())){
-                              votesGlobalVar.Psum += qvote;
-                          }
-                      }
-                      votesGlobalVar.totsum=0;
-                      votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
-                      rep.addListenerForSingleValueEvent(new ValueEventListener() {
+                      if (quid.equals(currentUser.getUid())) votesGlobalVar.Psum += qvote;
+                    }
+                    votesGlobalVar.totsum = 0;
+                    votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
+                    rep.addListenerForSingleValueEvent(
+                        new ValueEventListener() {
                           @Override
                           public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                              rep.setValue(votesGlobalVar.totsum+ " points");
+                            rep.setValue(votesGlobalVar.totsum + " points");
                           }
 
                           @Override
-                          public void onCancelled(@NonNull DatabaseError error) {
-
-                          }
-                      });
-                      Log.d("TAG", "question votes : " + votesGlobalVar.Psum);
-                      Log.d("TAG", "total votes : " + votesGlobalVar.totsum);
-                      //tvReputation.setText( votesGlobalVar.totsum + " points");
-                      Log.d("TAG", "answer points : " + votesGlobalVar.Asum);
-
+                          public void onCancelled(@NonNull DatabaseError error) {}
+                        });
+                    Log.d("TAG", "question votes : " + votesGlobalVar.Psum);
+                    Log.d("TAG", "total votes : " + votesGlobalVar.totsum);
+                    // tvReputation.setText( votesGlobalVar.totsum + " points");
+                    Log.d("TAG", "answer points : " + votesGlobalVar.Asum);
                   }
-
 
                   @Override
-                  public void onCancelled(@NonNull DatabaseError error) {
-
-                  }
-              });
+                  public void onCancelled(@NonNull DatabaseError error) {}
+                });
           }
 
           @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-
-          }
-      });
-
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
-    public void getReputation(GetReputation a){
-        DatabaseReference mDatabaseReference =
-                FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
-        mDatabaseReference
-                .child(currentUser.getUid())
-                .addListenerForSingleValueEvent(
-                        new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    User userB = snapshot.getValue(User.class);
-                                    assert userB != null;
-                                    a.processResponse(userB);
-                                }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {}
-                        });
-    }
+  public void getReputation(GetReputation a) {
+    DatabaseReference mDatabaseReference =
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
+    mDatabaseReference
+        .child(currentUser.getUid())
+        .addListenerForSingleValueEvent(
+            new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                  User userB = snapshot.getValue(User.class);
+                  assert userB != null;
+                  a.processResponse(userB);
+                }
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {}
+            });
+  }
+
   public void getBio(GetBio b) {
     DatabaseReference mDatabaseReference =
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
@@ -521,40 +562,40 @@ public class FirebaseActions {
         });
   }
 
-    public void addTopic(Topic topic, AddTopic t) {
+  public void addTopic(Topic topic, AddTopic t) {
 
-        DatabaseReference rel = firebaseDatabase.getReference(FirebaseUtils.TOPICS).push();
+    DatabaseReference rel = firebaseDatabase.getReference(FirebaseUtils.TOPICS).push();
 
-        rel.setValue(topic)
-                .addOnCompleteListener(
-                        c -> {
-                            if (c.isSuccessful()) t.processResponse(rel.getKey());
-                        })
-                .addOnFailureListener(e -> t.processResponse(null));
-    }
+    rel.setValue(topic)
+        .addOnCompleteListener(
+            c -> {
+              if (c.isSuccessful()) t.processResponse(rel.getKey());
+            })
+        .addOnFailureListener(e -> t.processResponse(null));
+  }
 
-    public void getTopics(GetTopics t) {
-        topicArrayList = new ArrayList<>();
-        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.TOPICS);
-        databaseReference.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        topicArrayList.clear();
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+  public void getTopics(GetTopics t) {
+    topicArrayList = new ArrayList<>();
+    DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.TOPICS);
+    databaseReference.addValueEventListener(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            topicArrayList.clear();
+            for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
-                            Topic topic = postSnapshot.getValue(Topic.class);
-                            assert topic != null;
-                            topic.setTopicID(postSnapshot.getKey());
-                            topicArrayList.add(topic);
-                        }
-                        t.processResponse(topicArrayList);
-                    }
+              Topic topic = postSnapshot.getValue(Topic.class);
+              assert topic != null;
+              topic.setTopicID(postSnapshot.getKey());
+              topicArrayList.add(topic);
+            }
+            t.processResponse(topicArrayList);
+          }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
-                });
-    }
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
+  }
 
   public void isCurrentUserAdmin(FirebaseAuthHandler f) {
 
@@ -614,7 +655,7 @@ public class FirebaseActions {
         });
   }
 
-  public void uploadPicture(Uri uri) {
+  public void uploadPicture(Uri uri, UploadImg img) {
 
     DatabaseReference imgUrl =
         firebaseDatabase
@@ -636,13 +677,18 @@ public class FirebaseActions {
                         reference
                             .getDownloadUrl()
                             .addOnSuccessListener(
-                                downloadUrl -> imgUrl.setValue(downloadUrl.toString()));
+                                downloadUrl -> {
+                                  imgUrl.setValue(downloadUrl.toString());
+                                  img.processResponse(downloadUrl.toString());
+                                });
                       }
 
                       @Override
-                      public void onCancelled(@NonNull DatabaseError error) {}
+                      public void onCancelled(@NonNull DatabaseError error) {
+                        img.processResponse(null);
+                      }
                     }))
-        .addOnFailureListener(e -> {});
+        .addOnFailureListener(e -> img.processResponse(null));
   }
 
   public void getProfilePic(getProfileImage image) {
