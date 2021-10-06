@@ -75,12 +75,7 @@ public class MainActivity extends AppCompatActivity
     tvReputation = headerView.findViewById(R.id.headerReputation);
     tvBio = headerView.findViewById(R.id.headerBio);
 
-    //firebaseActions.AddReputation();
-    firebaseActions.getReputation( a->
-    {
-      tvReputation.setText( a.getReputation());
-      //Toast.makeText(this,a.getReputation(),Toast.LENGTH_LONG).show();
-    });
+
 
     /**
      * THE PROBLEM : IT IS ADDING ON REPUTATION WHEN USER LOGS OUT AND LOGS IN TOO
@@ -100,101 +95,59 @@ public class MainActivity extends AppCompatActivity
 
     proDialog.start();
 
-    if (currentUser != null)
+    if (currentUser != null) {
       firebaseActions.getUserDetails(
-          currentUser,
-          response -> {
-            String name = response.getName();
-            String surname = response.getSurname();
-            String email = response.getEmail();
-            String currentuserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+              currentUser,
+              response -> {
+                String name = response.getName();
+                String surname = response.getSurname();
+                String email = response.getEmail();
+                String currentuserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            hFullName.setText(name + " " + surname);
-            hEmail.setText(email);
-            proDialog.stop();
-            //reputation (Answers)
-            /*DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
-            reference.addValueEventListener(new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int points = 0;
-                for(DataSnapshot answersnapshot : snapshot.getChildren()){
-                  int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
-                  String uid = answersnapshot.child("uid").getValue(String.class);
+                hFullName.setText(name + " " + surname);
+                hEmail.setText(email);
+                proDialog.stop();
 
-                  if(uid.equals(currentuserID)){
-                    points += vote;
-                  }
-                }
-                votesGlobalVar.Asum = points;
-
-                //reputation (questions)
-                DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child("Posts");
-                reference2.addValueEventListener(new ValueEventListener() {
+                //Bio display
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("USER_BIO");
+                ref.addValueEventListener(new ValueEventListener() {
                   @Override
                   public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot postsnapshot : snapshot.getChildren()){
-                      int qvote = Integer.parseInt(String.valueOf(postsnapshot.child("vote").getValue()));
-                      String quid = postsnapshot.child("uid").getValue(String.class);
+                    // Integer.parseInt(String.valueOf(snapshot.child("bio").getValue()));
+                    String bio = snapshot.child("bio").getValue(String.class);
+                    //bio.equals(currentuserID);
+                    tvBio.setText(bio);
 
-                      if(quid.equals(currentuserID)){
-                        votesGlobalVar.Psum += qvote;
-                      }
-                    }
-                    votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
-                    Log.d("TAG", "question votes : " + votesGlobalVar.Psum);
-                    Log.d("TAG", "total votes : " + votesGlobalVar.totsum);
-                    tvReputation.setText( votesGlobalVar.totsum + " points");
-                    Log.d("TAG", "answer points : " + votesGlobalVar.Asum);
 
                   }
+                  // System.out.print(tvBio);
 
                   @Override
                   public void onCancelled(@NonNull DatabaseError error) {
 
                   }
                 });
-              }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
+                firebaseActions.getBio(
+                        value -> {
 
-              }
-            });*/
+                          tvBio.setText(value.getBio());
 
-            //Bio display
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("USER_BIO");
-            ref.addValueEventListener(new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot snapshot) {
-               // Integer.parseInt(String.valueOf(snapshot.child("bio").getValue()));
-                String bio = snapshot.child("bio").getValue(String.class);
-                //bio.equals(currentuserID);
-                tvBio.setText(bio);
+                        });
+                firebaseActions.getReputation( a->
+                {
+                  tvReputation.setText( a.getReputation());
+
+                });
+
+                if (!response.getImage().equals("")) {
+                  hProfileImage.setBackground(null);
+                  Picasso.get().load(response.getImage()).into(hProfileImage);
+                }
+              });
+    }
 
 
-              }
-             // System.out.print(tvBio);
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-
-              }
-            });
-
-            firebaseActions.getBio(
-                    value -> {
-                    
-                      tvBio.setText(value.getBio());
-
-                    });
-
-            
-            if (!response.getImage().equals("")) {
-              hProfileImage.setBackground(null);
-              Picasso.get().load(response.getImage()).into(hProfileImage);
-            }
-          });
   }
 
   @Override
@@ -245,4 +198,5 @@ public class MainActivity extends AppCompatActivity
     proDialog.stop();
     super.onDestroy();
   }
+
 }

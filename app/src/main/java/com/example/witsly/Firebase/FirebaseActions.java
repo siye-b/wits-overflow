@@ -366,11 +366,11 @@ public class FirebaseActions {
                       }
                       votesGlobalVar.totsum=0;
                       votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
-                      rep.addListenerForSingleValueEvent(new ValueEventListener() {
+                      rep.addValueEventListener(new ValueEventListener() {
                           @Override
                           public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                               rep.setValue(votesGlobalVar.totsum+ " points");
+
                           }
 
                           @Override
@@ -378,13 +378,13 @@ public class FirebaseActions {
 
                           }
                       });
+
                       Log.d("TAG", "question votes : " + votesGlobalVar.Psum);
                       Log.d("TAG", "total votes : " + votesGlobalVar.totsum);
                       //tvReputation.setText( votesGlobalVar.totsum + " points");
                       Log.d("TAG", "answer points : " + votesGlobalVar.Asum);
 
                   }
-
 
                   @Override
                   public void onCancelled(@NonNull DatabaseError error) {

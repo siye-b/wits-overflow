@@ -49,8 +49,8 @@ public class ViewProfileActivity extends AppCompatActivity {
 
       firebaseActions.getReputation( a->
       {
-          tvReputation.setText( a.getReputation());
-          //Toast.makeText(this,a.getReputation(),Toast.LENGTH_LONG).show();
+               tvReputation.setText(a.getReputation());
+
       });
 
   }
