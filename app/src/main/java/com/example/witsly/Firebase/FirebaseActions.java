@@ -366,7 +366,7 @@ public class FirebaseActions {
                       }
                       votesGlobalVar.totsum=0;
                       votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
-                      rep.addValueEventListener(new ValueEventListener() {
+                      rep.addListenerForSingleValueEvent(new ValueEventListener() {
                           @Override
                           public void onDataChange(@NonNull DataSnapshot snapshot) {
                               rep.setValue(votesGlobalVar.totsum+ " points");
@@ -412,7 +412,8 @@ public class FirebaseActions {
                                 if (snapshot.exists()) {
                                     User userB = snapshot.getValue(User.class);
                                     assert userB != null;
-                                    a.processResponse(userB);
+                                    getUserDetails(userB.getReputation(), user -> a.processResponse(userB));
+
                                 }
                             }
 

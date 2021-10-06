@@ -40,18 +40,13 @@ public class ViewProfileActivity extends AppCompatActivity {
         user -> {
           tvDetails.setText(user.getName() + " " + user.getSurname());
           tvBio.setText(user.getBio());
+          tvReputation.setText(user.getReputation());
 
           if (!user.getImage().equals("")) {
             Log.d("ImageLink", user.getImage());
             Picasso.get().load(Uri.parse(user.getImage())).into(profilePic);
           }
         });
-
-      firebaseActions.getReputation( a->
-      {
-               tvReputation.setText(a.getReputation());
-
-      });
 
   }
 }
