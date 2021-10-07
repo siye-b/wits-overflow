@@ -1,8 +1,10 @@
 package com.example.witsly.Firebase;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -32,6 +34,8 @@ import com.example.witsly.Models.Tag;
 import com.example.witsly.Models.Topic;
 import com.example.witsly.Models.User;
 import com.example.witsly.Utils.FirebaseUtils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +44,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -47,7 +52,8 @@ import java.util.ArrayList;
 
 public class FirebaseActions {
   private static final String TAG = "LOG";
-  private final FirebaseDatabase firebaseDatabase;
+    private static ArrayList<Topic> topic_subs;
+    private final FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
   private ArrayList<Answer> answersArrayList;
   private ArrayList<Comment> commentsArrayList;
@@ -420,6 +426,26 @@ public class FirebaseActions {
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {}
                         });
+    }
+
+    public static void subscribe(Topic topic, Context mContext){
+        topic_subs = new ArrayList<>();
+        FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(topic))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //String msg = getString(R.string.msg_subscribed);
+
+                        Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
+                        topic_subs.add(topic);
+                        if (!task.isSuccessful()) {
+                            // msg = getString(R.string.msg_subscribe_failed);
+                            Toast.makeText(mContext, "failed to subscribe to "+ topic, Toast.LENGTH_SHORT).show();
+                        }
+                        Log.d(TAG, "subscribed topics : "+  topic_subs);
+
+                    }
+                });
     }
   public void getBio(GetBio b) {
     DatabaseReference mDatabaseReference =

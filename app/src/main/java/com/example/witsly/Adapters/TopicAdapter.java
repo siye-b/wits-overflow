@@ -1,26 +1,36 @@
 package com.example.witsly.Adapters;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Activities.PostActivity;
+import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Topic;
 import com.example.witsly.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
 public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHolder>{
 
     private ArrayList<Topic> mTopicList;
+    private ArrayList<Topic> subscribed_Topic;
     private final Context mContext;
+    private static ArrayList<Topic> topic_subs;
 
     public static class TopicViewHolder extends RecyclerView.ViewHolder{
         TextView mTVTopics;
@@ -57,6 +67,9 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                topic_subs = new ArrayList<>();
+                //subscribe to topic
+                FirebaseActions.subscribe(topic,mContext);
 
             }
         });
