@@ -19,6 +19,7 @@ public interface FirebaseUtils {
   String USER_REGISTERED = "User Registered";
   String CANCEL = "Cancel";
   String TOPICS = "Topics";
+  String TOPIC = "topic";
   String REPUTATION = "reputation";
 
   //Notifications

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 
 public class AddSubscriptionFragment extends Fragment {
-    private ArrayList<Topic> mTopics;
     private TopicAdapter adapterm;
     private final FirebaseActions firebaseActions = new FirebaseActions();
 

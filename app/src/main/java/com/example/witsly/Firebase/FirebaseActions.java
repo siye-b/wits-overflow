@@ -21,9 +21,11 @@ import com.example.witsly.Interfaces.GetAnswers;
 import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
+import com.example.witsly.Interfaces.GetPostsSubscribedTo;
 import com.example.witsly.Interfaces.GetReputation;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.GetTopics;
+import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
 import com.example.witsly.Interfaces.MarkPost;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.getProfileImage;
@@ -59,6 +61,8 @@ public class FirebaseActions {
   private ArrayList<Comment> commentsArrayList;
   private ArrayList<Tag> tagArrayList;
   private ArrayList<Topic> topicArrayList;
+  private ArrayList<Topic> subscribedTopicArrayList;
+  private ArrayList<Post> subscribedPostArrayList;
   private FirebaseStorage storage;
   private FirebaseUser currentUser;
 
@@ -179,6 +183,61 @@ public class FirebaseActions {
           @Override
           public void onCancelled(@NonNull DatabaseError error) {}
         });
+  }
+  public void getTopicsSubscribedTo(GetTopicsSubscribedTo g){
+
+      subscribedTopicArrayList = new ArrayList<>();
+          DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.POSTS);
+          databaseReference.addValueEventListener(
+                  new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot snapshot) {
+                          subscribedTopicArrayList.clear();
+                          for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                              Post post = postSnapshot.getValue(Post.class);
+                              assert post != null;
+                              post.setPID(postSnapshot.getKey());
+                              String uid = postSnapshot.child("uid").getValue(String.class);
+                              if(uid.equals(getUid())) {
+                                  //problem here getting topic , supposed to be a string but have to pass topic to the array
+                                  Topic topic = postSnapshot.child(FirebaseUtils.TOPIC).getValue(Topic.class);
+                                  subscribedTopicArrayList.add(topic);
+                              }
+                          }
+                          g.processResponse(subscribedTopicArrayList);
+                      }
+
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError error) {}
+                  });
+
+  }
+  public void getPostsSubscribedTo(GetPostsSubscribedTo g){
+      subscribedPostArrayList = new ArrayList<>();
+      DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.POSTS);
+      databaseReference.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot snapshot) {
+                      subscribedPostArrayList.clear();
+                      for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                          Post post = postSnapshot.getValue(Post.class);
+                          assert post != null;
+                          post.setPID(postSnapshot.getKey());
+                          String uid = postSnapshot.child("uid").getValue(String.class);
+                          if(uid.equals(currentUser.getUid())) {
+                              subscribedPostArrayList.add(post);
+                          }
+                      }
+                      g.processResponse(subscribedPostArrayList);
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {}
+              });
+
   }
 
   public void getComments(String AnswerID, GetComments c) {
