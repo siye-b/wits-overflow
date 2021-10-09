@@ -15,7 +15,7 @@ USB cable (to connect Android device to your computer)
  Connect the Android device to the computer and be sure to approve any ADB permission prompts that appear on your phone. Select Run -> Run app. Select the deployment target in the connected devices to the device on which the app will be installed. This will install the app on the device.
 
 ## Running the tests
-To run tests we used TravisCI as well as Coverals for our Test Driven Development. 
+To run tests we used TravisCI as well as Coverals for our Test Driven Development for continuous delivery and continous intergration. 
 
 [![Build Status](https://travis-ci.com/umair-b/wits-overflow.svg?branch=main)](https://travis-ci.com/umair-b/wits-overflow)
 
