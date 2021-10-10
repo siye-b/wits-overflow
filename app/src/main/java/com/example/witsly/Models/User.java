@@ -3,13 +3,13 @@ package com.example.witsly.Models;
 public class User {
 
 
-
-
   private String name, surname, email, bio, image, reputation;
+  private Topic subscriptions;
   private Boolean admin;
-  ;
 
-  public User() {}
+
+  public User() {
+  }
 
   public User(String name, String surname, String email) {
     this.name = name;
@@ -19,6 +19,7 @@ public class User {
     image = "";
     admin = false;
     reputation = "";
+    subscriptions = new Topic();
   }
 
 
@@ -72,6 +73,14 @@ public class User {
 
   public void setReputation(String reputation) {
     this.reputation = reputation;
+  }
+
+  public void setSubscriptions(Topic subscriptions) {
+    this.subscriptions = subscriptions;
+  }
+
+  public Topic getSubscriptions() {
+    return subscriptions;
   }
 
   public void setBio(String bio) {

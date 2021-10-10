@@ -19,11 +19,20 @@ import com.example.witsly.Activities.PostActivity;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Topic;
 import com.example.witsly.R;
+import com.example.witsly.Utils.FirebaseUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHolder>{
 
@@ -31,6 +40,9 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
     private ArrayList<Topic> subscribed_Topic;
     private final Context mContext;
     private static ArrayList<Topic> topic_subs;
+    private  FirebaseDatabase firebaseDatabase;
+    private FirebaseUser currentUser;
+
 
     public static class TopicViewHolder extends RecyclerView.ViewHolder{
         TextView mTVTopics;
@@ -67,12 +79,16 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                topic_subs = new ArrayList<>();
+                //topic_subs = new ArrayList<>();
                 //subscribe to topic
                 FirebaseActions.subscribe(topic,mContext);
 
-            }
-        });
+                }
+
+            });
+
+
+
 
     }
 

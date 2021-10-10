@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.witsly.Adapters.RecyclerAdapter;
+import com.example.witsly.Adapters.SubscriptionAdapter;
 import com.example.witsly.Adapters.TopicAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.R;
@@ -19,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class SubscriptionFragment extends Fragment {
     private TopicAdapter mmAdapter;
+    private SubscriptionAdapter adapterm;
     private final FirebaseActions firebaseActions = new FirebaseActions();
     public FloatingActionButton mFab;
 
@@ -30,25 +32,27 @@ public class SubscriptionFragment extends Fragment {
         RecyclerView mRecyclerView = view.findViewById(R.id.subscription_rv);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
-        /*firebaseActions.getTopicsSubscribedTo(
-                topics -> {
-                    mmAdapter = new TopicAdapter(topics,getContext());
+        firebaseActions.getSubscriptions(
+                t -> {
+                    adapterm = new SubscriptionAdapter(t, getContext());
                     mRecyclerView.setLayoutManager(mRecyclerManager);
-                    mRecyclerView.setAdapter(mmAdapter);
-                });*/
+                    mRecyclerView.setAdapter(adapterm);
 
-        mFab = view.findViewById(R.id.btn_add_sub);
 
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_frag, new AddSubscriptionFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+                    mFab = view.findViewById(R.id.btn_add_sub);
 
-        return view;
+                    mFab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.container_frag, new AddSubscriptionFragment())
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+
+                    });
+                });
+
+                return view;
     }
 }

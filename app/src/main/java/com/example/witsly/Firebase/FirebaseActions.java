@@ -23,6 +23,7 @@ import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetPostsSubscribedTo;
 import com.example.witsly.Interfaces.GetReputation;
+import com.example.witsly.Interfaces.GetSubscriptions;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.GetTopics;
 import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
@@ -55,16 +56,16 @@ import java.util.ArrayList;
 public class FirebaseActions {
   private static final String TAG = "LOG";
     private static ArrayList<Topic> topic_subs;
-    private final FirebaseDatabase firebaseDatabase;
+    private static  FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
   private ArrayList<Answer> answersArrayList;
   private ArrayList<Comment> commentsArrayList;
   private ArrayList<Tag> tagArrayList;
   private ArrayList<Topic> topicArrayList;
-  private ArrayList<Topic> subscribedTopicArrayList;
+  private static ArrayList<Topic> subscribedTopicArrayList;
   private ArrayList<Post> subscribedPostArrayList;
   private FirebaseStorage storage;
-  private FirebaseUser currentUser;
+  private static FirebaseUser currentUser;
 
   public FirebaseActions() {
     firebaseDatabase = FirebaseDatabase.getInstance();
@@ -488,7 +489,12 @@ public class FirebaseActions {
     }
 
     public static void subscribe(Topic topic, Context mContext){
-        topic_subs = new ArrayList<>();
+        subscribedTopicArrayList = new ArrayList<>();
+        DatabaseReference rep = firebaseDatabase
+                .getReference(FirebaseUtils.USERS)
+                .child(currentUser.getUid())
+                .child(FirebaseUtils.SUBSCRIPTIONS);
+
         FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(topic))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -496,17 +502,57 @@ public class FirebaseActions {
                         //String msg = getString(R.string.msg_subscribed);
 
                         Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
-                        topic_subs.add(topic);
+                        subscribedTopicArrayList.add(topic);
+
+
+                        rep.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                rep.setValue(topic);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                         if (!task.isSuccessful()) {
                             // msg = getString(R.string.msg_subscribe_failed);
                             Toast.makeText(mContext, "failed to subscribe to "+ topic, Toast.LENGTH_SHORT).show();
                         }
-                        Log.d(TAG, "subscribed topics : "+  topic_subs);
+                        Log.d(TAG, "subscribed topics : "+  subscribedTopicArrayList);
 
                     }
+
                 });
     }
-  public void getBio(GetBio b) {
+
+
+    public void getSubscriptions(GetSubscriptions t) {
+        subscribedTopicArrayList = new ArrayList<>();
+        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS).child(FirebaseUtils.SUBSCRIPTIONS);
+        databaseReference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        subscribedTopicArrayList.clear();
+                        for (DataSnapshot subsSnapshot : snapshot.getChildren()) {
+
+                            Topic topic = subsSnapshot.child("topic").getValue(Topic.class);
+                            assert topic != null;
+                            topic.setTopicID(subsSnapshot.getKey());
+                            subscribedTopicArrayList.add(topic);
+                        }
+                        t.processResponse(subscribedTopicArrayList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
+    }
+
+    public void getBio(GetBio b) {
     DatabaseReference mDatabaseReference =
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
     mDatabaseReference

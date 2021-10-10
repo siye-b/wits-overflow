@@ -24,4 +24,5 @@ public interface FirebaseUtils {
 
   //Notifications
   final String CHANNEL_ID = "Channel_1";
+    String SUBSCRIPTIONS = "subscriptions";
 }
