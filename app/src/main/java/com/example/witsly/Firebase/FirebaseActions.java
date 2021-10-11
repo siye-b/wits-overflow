@@ -22,6 +22,7 @@ import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetPostsSubscribedTo;
+import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
 import com.example.witsly.Interfaces.GetReputation;
 import com.example.witsly.Interfaces.GetSubscriptions;
 import com.example.witsly.Interfaces.GetTags;
@@ -626,6 +627,7 @@ public class FirebaseActions {
                             public void onCancelled(@NonNull DatabaseError error) {}
                         });
     }
+
 
     public static void subscribe(Topic topic, Context mContext){
         subscribedTopicArrayList = new ArrayList<>();

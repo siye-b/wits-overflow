@@ -21,6 +21,7 @@ import com.example.witsly.Managers.UserManager;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 

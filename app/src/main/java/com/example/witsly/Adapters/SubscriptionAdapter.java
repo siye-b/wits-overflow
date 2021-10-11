@@ -32,6 +32,8 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
             mTVSubs = itemView.findViewById(R.id.txt_subscription);
             card = itemView.findViewById(R.id.sub_card);
             mDelete = itemView.findViewById(R.id.delete_sub);
+
+
         }
     }
 

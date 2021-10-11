@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.witsly.Adapters.RecyclerAdapter;
+import com.example.witsly.Adapters.SubscriptionAdapter;
 import com.example.witsly.Adapters.TopicAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.R;
 
 
 public class MyFeedFragment extends Fragment {
-    private RecyclerAdapter mAdapter;
+    private SubscriptionAdapter mAdapter;
     private final FirebaseActions firebaseActions = new FirebaseActions();
 
     @Override
@@ -29,9 +30,9 @@ public class MyFeedFragment extends Fragment {
         RecyclerView mRecyclerView = view.findViewById(R.id.my_feed_rv);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mRecyclerManager = new LinearLayoutManager(view.getContext());
-        firebaseActions.getPostsSubscribedTo(
+        firebaseActions.getSubscriptions(
                 posts -> {
-                    mAdapter = new RecyclerAdapter(posts,getContext());
+                    mAdapter = new SubscriptionAdapter(posts,getContext());
                     mRecyclerView.setLayoutManager(mRecyclerManager);
                     mRecyclerView.setAdapter(mAdapter);
                 });
