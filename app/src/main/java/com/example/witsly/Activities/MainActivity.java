@@ -26,6 +26,7 @@ import com.example.witsly.Fragments.AchievementFragment;
 import com.example.witsly.Fragments.HomeFragment;
 import com.example.witsly.Fragments.MyFeedFragment;
 import com.example.witsly.Fragments.ProfileFragment;
+import com.example.witsly.Fragments.SettingsFragment;
 import com.example.witsly.Fragments.SubscriptionFragment;
 import com.example.witsly.ProDialog;
 import com.example.witsly.R;
@@ -182,6 +183,12 @@ public class MainActivity extends AppCompatActivity
       fragmentManager = getSupportFragmentManager();
       fragmentTransaction = fragmentManager.beginTransaction();
       fragmentTransaction.replace(R.id.container_frag, new SubscriptionFragment());
+      fragmentTransaction.commit();
+    }
+    if (item.getItemId() == R.id.user_settings) {
+      fragmentManager = getSupportFragmentManager();
+      fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(R.id.container_frag, new SettingsFragment());
       fragmentTransaction.commit();
     }
     if (item.getItemId() == R.id.user_logout) {
