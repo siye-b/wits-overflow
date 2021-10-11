@@ -22,12 +22,16 @@ import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetPostsSubscribedTo;
+import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
 import com.example.witsly.Interfaces.GetReputation;
 import com.example.witsly.Interfaces.GetSubscriptions;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.GetTopics;
 import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
+import com.example.witsly.Interfaces.GetUser;
 import com.example.witsly.Interfaces.MarkPost;
+import com.example.witsly.Interfaces.UpdateBio;
+import com.example.witsly.Interfaces.UploadImg;
 import com.example.witsly.Interfaces.UserDetails;
 import com.example.witsly.Interfaces.getProfileImage;
 import com.example.witsly.Models.Answer;
@@ -55,7 +59,8 @@ import java.util.ArrayList;
 
 public class FirebaseActions {
   private static final String TAG = "LOG";
-    private static ArrayList<Topic> topic_subs;
+    private static ArrayList<String> subs_topic;
+    private static ArrayList<String> subs_topic1;
     private static  FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
   private ArrayList<Answer> answersArrayList;
@@ -71,6 +76,26 @@ public class FirebaseActions {
     firebaseDatabase = FirebaseDatabase.getInstance();
     currentUser = FirebaseAuth.getInstance().getCurrentUser();
     storage = FirebaseStorage.getInstance();
+  }
+
+  public void getUser(GetUser user) {
+    DatabaseReference mDatabaseReference =
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
+    mDatabaseReference
+        .child(currentUser.getUid())
+        .addListenerForSingleValueEvent(
+            new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User value = snapshot.getValue(User.class);
+                user.processResponse(value, true);
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {
+                user.processResponse(null, false);
+              }
+            });
   }
 
   public void addPost(Post post, AddPost a) {
@@ -228,16 +253,53 @@ public class FirebaseActions {
                           assert post != null;
                           post.setPID(postSnapshot.getKey());
                           String uid = postSnapshot.child("uid").getValue(String.class);
+                          String topic1 = postSnapshot.child("topic").getValue(String.class);
+
+                           //if you want it to also display the post you posted ,uncomment the following if statement and
+                          // g.processResponse
+                          /*
                           if(uid.equals(currentUser.getUid())) {
+
                               subscribedPostArrayList.add(post);
                           }
+                          */
+
+                          subs_topic1 = new ArrayList<>();
+                          DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS).child(currentUser.getUid()).child(FirebaseUtils.SUBSCRIPTIONS);
+                          databaseReference.addValueEventListener(
+                                  new ValueEventListener() {
+                                      @Override
+                                      public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                          subs_topic1.clear();
+                                          for (DataSnapshot subsSnapshot : snapshot.getChildren()) {
+
+                                              String topic = subsSnapshot.child("topic").getValue(String.class);
+                                              assert topic != null;
+                                              //topic.setTopicID(subsSnapshot.getKey());
+                                              //subs_topic.add(topic);
+                                              if (topic1.equals(topic)) {
+                                                  subscribedPostArrayList.add(post);
+                                              }
+                                              //Log.d(TAG, "subscribed topics : " + subs_topic);
+
+                                          }
+                                          g.processResponse(subscribedPostArrayList);
+                                      }
+                                     //
+                                      @Override
+                                      public void onCancelled(@NonNull DatabaseError error) {}
+                                  });
                       }
-                      g.processResponse(subscribedPostArrayList);
+
+                     // g.processResponse(subscribedPostArrayList);
                   }
+
+
 
                   @Override
                   public void onCancelled(@NonNull DatabaseError error) {}
               });
+
 
   }
 
@@ -368,6 +430,29 @@ public class FirebaseActions {
         });
   }
 
+  public void UpdateBIO(String userBio, UpdateBio b) {
+
+    DatabaseReference bio =
+        firebaseDatabase
+            .getReference(FirebaseUtils.USERS)
+            .child(currentUser.getUid())
+            .child(FirebaseUtils.BIO);
+
+    bio.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            bio.setValue(userBio);
+            b.processResponse(true);
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+            b.processResponse(false);
+          }
+        });
+  }
+
   public void AddBio(String userBio) {
     DatabaseReference bio =
         firebaseDatabase
@@ -379,6 +464,7 @@ public class FirebaseActions {
         new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
+
             bio.setValue(userBio);
           }
 
@@ -424,52 +510,53 @@ public class FirebaseActions {
                 });
     }
 
-    public String getUid() {
-        return currentUser.getUid();
-    }
+  public String getUid() {
+    return currentUser.getUid();
+  }
 
-    public void AddReputation(){
-        DatabaseReference rep =
-                firebaseDatabase
-                        .getReference(FirebaseUtils.USERS)
-                        .child(currentUser.getUid())
-                        .child(FirebaseUtils.REPUTATION);
+  public void AddReputation() {
+    DatabaseReference rep =
+        firebaseDatabase
+            .getReference(FirebaseUtils.USERS)
+            .child(currentUser.getUid())
+            .child(FirebaseUtils.REPUTATION);
 
-        //reputation (Answers)
-        votesGlobalVar.totsum=0;
+    // reputation (Answers)
+    votesGlobalVar.totsum = 0;
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
-      reference.addValueEventListener(new ValueEventListener() {
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Answers");
+    reference.addValueEventListener(
+        new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
-              votesGlobalVar.Asum = 0;
+            votesGlobalVar.Asum = 0;
 
-              for(DataSnapshot answersnapshot : snapshot.getChildren()) {
-                  int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
-                  String uid = answersnapshot.child("uid").getValue(String.class);
+            for (DataSnapshot answersnapshot : snapshot.getChildren()) {
+              int vote = Integer.parseInt(String.valueOf(answersnapshot.child("vote").getValue()));
+              String uid = answersnapshot.child("uid").getValue(String.class);
 
-                  if (uid.equals(currentUser.getUid())) {
-                      votesGlobalVar.Asum += vote;
-                  }
-              }
+              if (uid.equals(currentUser.getUid())) votesGlobalVar.Asum += vote;
+            }
 
-              //reputation (questions)
-              DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child("Posts");
-              reference2.addValueEventListener(new ValueEventListener() {
+            // reputation (questions)
+            DatabaseReference reference2 =
+                FirebaseDatabase.getInstance().getReference().child("Posts");
+            reference2.addValueEventListener(
+                new ValueEventListener() {
                   @Override
                   public void onDataChange(@NonNull DataSnapshot snapshot) {
-                      votesGlobalVar.Psum=0;
-                      for(DataSnapshot postsnapshot : snapshot.getChildren()){
-                          int qvote = Integer.parseInt(String.valueOf(postsnapshot.child("vote").getValue()));
-                          String quid = postsnapshot.child("uid").getValue(String.class);
+                    votesGlobalVar.Psum = 0;
+                    for (DataSnapshot postsnapshot : snapshot.getChildren()) {
+                      int qvote =
+                          Integer.parseInt(String.valueOf(postsnapshot.child("vote").getValue()));
+                      String quid = postsnapshot.child("uid").getValue(String.class);
 
-                          if(quid.equals(currentUser.getUid())){
-                              votesGlobalVar.Psum += qvote;
-                          }
-                      }
-                      votesGlobalVar.totsum=0;
-                      votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
-                      rep.addListenerForSingleValueEvent(new ValueEventListener() {
+                      if (quid.equals(currentUser.getUid())) votesGlobalVar.Psum += qvote;
+                    }
+                    votesGlobalVar.totsum = 0;
+                    votesGlobalVar.totsum = votesGlobalVar.Asum + votesGlobalVar.Psum;
+                    rep.addListenerForSingleValueEvent(
+                        new ValueEventListener() {
                           @Override
                           public void onDataChange(@NonNull DataSnapshot snapshot) {
                               rep.setValue(votesGlobalVar.totsum+ " points");
@@ -490,19 +577,35 @@ public class FirebaseActions {
                   }
 
                   @Override
-                  public void onCancelled(@NonNull DatabaseError error) {
-
-                  }
-              });
+                  public void onCancelled(@NonNull DatabaseError error) {}
+                });
           }
 
           @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-
-          }
-      });
-
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
   }
+
+  /*public void getReputation(GetReputation a) {
+    DatabaseReference mDatabaseReference =
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
+    mDatabaseReference
+        .child(currentUser.getUid())
+        .addListenerForSingleValueEvent(
+            new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                  User userB = snapshot.getValue(User.class);
+                  assert userB != null;
+                  a.processResponse(userB);
+                }
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {}
+            });
+  }*/
     public void getReputation(GetReputation a){
         DatabaseReference mDatabaseReference =
                 FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
@@ -525,12 +628,13 @@ public class FirebaseActions {
                         });
     }
 
+
     public static void subscribe(Topic topic, Context mContext){
         subscribedTopicArrayList = new ArrayList<>();
         DatabaseReference rep = firebaseDatabase
                 .getReference(FirebaseUtils.USERS)
                 .child(currentUser.getUid())
-                .child(FirebaseUtils.SUBSCRIPTIONS);
+                .child(FirebaseUtils.SUBSCRIPTIONS).push();
 
         FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(topic))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -558,7 +662,7 @@ public class FirebaseActions {
                             // msg = getString(R.string.msg_subscribe_failed);
                             Toast.makeText(mContext, "failed to subscribe to "+ topic, Toast.LENGTH_SHORT).show();
                         }
-                        Log.d(TAG, "subscribed topics : "+  subscribedTopicArrayList);
+                        //Log.d(TAG, "subscribed topics : "+  subscribedTopicArrayList);
 
                     }
 
@@ -567,21 +671,23 @@ public class FirebaseActions {
 
 
     public void getSubscriptions(GetSubscriptions t) {
-        subscribedTopicArrayList = new ArrayList<>();
-        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS).child(FirebaseUtils.SUBSCRIPTIONS);
+        subs_topic = new ArrayList<>();
+        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS).child(currentUser.getUid()).child(FirebaseUtils.SUBSCRIPTIONS);
         databaseReference.addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        subscribedTopicArrayList.clear();
+                        subs_topic.clear();
                         for (DataSnapshot subsSnapshot : snapshot.getChildren()) {
 
-                            Topic topic = subsSnapshot.child("topic").getValue(Topic.class);
+                            String topic = subsSnapshot.child("topic").getValue(String.class);
                             assert topic != null;
-                            topic.setTopicID(subsSnapshot.getKey());
-                            subscribedTopicArrayList.add(topic);
+                            //topic.setTopicID(subsSnapshot.getKey());
+                            subs_topic.add(topic);
+
                         }
-                        t.processResponse(subscribedTopicArrayList);
+                        Log.d(TAG, "subscribed topics : "+  subs_topic);
+                        t.processResponse(subs_topic);
                     }
 
                     @Override
@@ -589,7 +695,9 @@ public class FirebaseActions {
                 });
     }
 
-    public void getBio(GetBio b) {
+  
+
+  public void getBio(GetBio b) {
     DatabaseReference mDatabaseReference =
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
     mDatabaseReference
@@ -690,40 +798,40 @@ public class FirebaseActions {
         });
   }
 
-    public void addTopic(Topic topic, AddTopic t) {
+  public void addTopic(Topic topic, AddTopic t) {
 
-        DatabaseReference rel = firebaseDatabase.getReference(FirebaseUtils.TOPICS).push();
+    DatabaseReference rel = firebaseDatabase.getReference(FirebaseUtils.TOPICS).push();
 
-        rel.setValue(topic)
-                .addOnCompleteListener(
-                        c -> {
-                            if (c.isSuccessful()) t.processResponse(rel.getKey());
-                        })
-                .addOnFailureListener(e -> t.processResponse(null));
-    }
+    rel.setValue(topic)
+        .addOnCompleteListener(
+            c -> {
+              if (c.isSuccessful()) t.processResponse(rel.getKey());
+            })
+        .addOnFailureListener(e -> t.processResponse(null));
+  }
 
-    public void getTopics(GetTopics t) {
-        topicArrayList = new ArrayList<>();
-        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.TOPICS);
-        databaseReference.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        topicArrayList.clear();
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+  public void getTopics(GetTopics t) {
+    topicArrayList = new ArrayList<>();
+    DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.TOPICS);
+    databaseReference.addValueEventListener(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            topicArrayList.clear();
+            for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
-                            Topic topic = postSnapshot.getValue(Topic.class);
-                            assert topic != null;
-                            topic.setTopicID(postSnapshot.getKey());
-                            topicArrayList.add(topic);
-                        }
-                        t.processResponse(topicArrayList);
-                    }
+              Topic topic = postSnapshot.getValue(Topic.class);
+              assert topic != null;
+              topic.setTopicID(postSnapshot.getKey());
+              topicArrayList.add(topic);
+            }
+            t.processResponse(topicArrayList);
+          }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
-                });
-    }
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {}
+        });
+  }
 
   public void isCurrentUserAdmin(FirebaseAuthHandler f) {
 
@@ -783,7 +891,7 @@ public class FirebaseActions {
         });
   }
 
-  public void uploadPicture(Uri uri) {
+  public void uploadPicture(Uri uri, UploadImg img) {
 
     DatabaseReference imgUrl =
         firebaseDatabase
@@ -805,13 +913,18 @@ public class FirebaseActions {
                         reference
                             .getDownloadUrl()
                             .addOnSuccessListener(
-                                downloadUrl -> imgUrl.setValue(downloadUrl.toString()));
+                                downloadUrl -> {
+                                  imgUrl.setValue(downloadUrl.toString());
+                                  img.processResponse(downloadUrl.toString());
+                                });
                       }
 
                       @Override
-                      public void onCancelled(@NonNull DatabaseError error) {}
+                      public void onCancelled(@NonNull DatabaseError error) {
+                        img.processResponse(null);
+                      }
                     }))
-        .addOnFailureListener(e -> {});
+        .addOnFailureListener(e -> img.processResponse(null));
   }
 
   public void getProfilePic(getProfileImage image) {

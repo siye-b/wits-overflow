@@ -38,6 +38,8 @@ public class SubscriptionFragment extends Fragment {
                     mRecyclerView.setLayoutManager(mRecyclerManager);
                     mRecyclerView.setAdapter(adapterm);
 
+                });
+
 
                     mFab = view.findViewById(R.id.btn_add_sub);
 
@@ -50,7 +52,7 @@ public class SubscriptionFragment extends Fragment {
                                     .commit();
                         }
 
-                    });
+
                 });
 
                 return view;

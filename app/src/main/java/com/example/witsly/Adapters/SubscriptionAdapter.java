@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.Models.Topic;
 import com.example.witsly.R;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
             mTVSubs = itemView.findViewById(R.id.txt_subscription);
             card = itemView.findViewById(R.id.sub_card);
             mDelete = itemView.findViewById(R.id.delete_sub);
+
+
         }
     }
 
@@ -50,6 +53,8 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SubscriptionViewHolder holder, int position) {
+        String topic = mSubscriptionList.get(position);
+        holder.mTVSubs.setText(topic);
 
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
