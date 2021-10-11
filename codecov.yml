@@ -4,6 +4,10 @@ ignore:
   - "app/src/main/java/com/example/witsly/Adapters/TopicAdapter.java"
   - "app/src/main/java/com/example/witsly/Adapters/RecyclerAdapter.java"
   - "app/src/main/java/com/example/witsly/Adapters/TopicsAdapter.java"
+  - "app/src/main/java/com/example/witsly/Adapters/SubscriptionAdapter.java"
+  - "app/src/main/java/com/example/witsly/Adapters/AchievementAdapter.java"
+
+
 
   
   
