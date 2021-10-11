@@ -26,6 +26,7 @@ import com.example.witsly.Interfaces.GetReputation;
 import com.example.witsly.Interfaces.GetSubscriptions;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.GetTopics;
+import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
 import com.example.witsly.Interfaces.GetUser;
 import com.example.witsly.Interfaces.MarkPost;
 import com.example.witsly.Interfaces.UpdateBio;
@@ -584,7 +585,7 @@ public class FirebaseActions {
         });
   }
 
-  public void getReputation(GetReputation a) {
+  /*public void getReputation(GetReputation a) {
     DatabaseReference mDatabaseReference =
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
     mDatabaseReference
@@ -603,7 +604,7 @@ public class FirebaseActions {
               @Override
               public void onCancelled(@NonNull DatabaseError error) {}
             });
-  }
+  }*/
     public void getReputation(GetReputation a){
         DatabaseReference mDatabaseReference =
                 FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
