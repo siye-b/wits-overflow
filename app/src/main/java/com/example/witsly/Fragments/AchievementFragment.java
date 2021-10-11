@@ -125,6 +125,9 @@ public class AchievementFragment extends Fragment {
         return view;
     }
 
+    /**
+     * st NOW WORKING FINE
+     */
     ArrayList<Achievement> check(int points) {
         ArrayList<Achievement> achievementList = new ArrayList<>();
 
@@ -158,7 +161,7 @@ public class AchievementFragment extends Fragment {
             }if (points >= 50) {
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_asker,
+                                R.drawable.ic_topquestion,
                                 "Top Question",
                                 "Get 50 upvotes on your question",
                                 true));
@@ -181,48 +184,52 @@ public class AchievementFragment extends Fragment {
 
                     achievementList.add(
                             new Achievement(
-                                    R.drawable.ic_goodquestion,
+                                    R.drawable.ic_grey_goodquestion,
                                     "Good Question",
                                     "Get 5 upvotes on your question",
                                     false));
 
                 }
-                achievementList.add(
-                        new Achievement(
-                                R.drawable.ic_greatquestion,
-                                "Great Question",
-                                "Get 10 upvote on your question",
-                                false));
-                achievementList.add(
-                        new Achievement(
-                                R.drawable.ic_asker,
-                                "Top Question",
-                                "Get 50 upvotes on your question",
-                                false));
+                if (points < 10) {
+                    achievementList.add(
+                            new Achievement(
+                                    R.drawable.ic_grey_greatquestion,
+                                    "Great Question",
+                                    "Get 10 upvote on your question",
+                                    false));
+                }
+                if(points < 50) {
+                    achievementList.add(
+                            new Achievement(
+                                    R.drawable.ic_grey_topquestion,
+                                    "Top Question",
+                                    "Get 50 upvotes on your question",
+                                    false));
+                }
             }
         } else {
             if (points < 1) {
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_asker,
+                                R.drawable.ic_grey_asker,
                                 "Asker",
                                 "Post a question and get an upvote",
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_goodquestion,
+                                R.drawable.ic_grey_goodquestion,
                                 "Good Question",
                                 "Get 5 upvotes on your question",
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_greatquestion,
+                                R.drawable.ic_grey_greatquestion,
                                 "Great Question",
                                 "Get 10 upvote on your question",
                                 false));
                 achievementList.add(
                         new Achievement(
-                                R.drawable.ic_asker,
+                                R.drawable.ic_grey_topquestion,
                                 "Top Question",
                                 "Get 50 upvotes on your question",
                                 false));
