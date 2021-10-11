@@ -34,21 +34,14 @@ public class FirebaseAuthentication {
     return mAuth.getCurrentUser().isEmailVerified();
   }
 
-  /**
-   * if email is verified return 0 -> login ;
-   *
-   * <p>if email (registered) and not verified return 1 ->verify;
-   *
-   * <p>if not email return 2 -> register
-   */
   public void login(String email, String password, LoginHandler f) {
     mAuth
         .signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(
             task -> {
-              if (task.isSuccessful())
-                if (isVerified()) f.processAuth(0, "Logging in");
-                else f.processAuth(1, "Account not verified");
+              if (task.isSuccessful()) if (isVerified()) f.processAuth(0, "Logging in");
+              else
+                f.processAuth(1, "Account not verified");
             })
         .addOnFailureListener(e -> f.processAuth(2, e.getMessage()));
   }
@@ -67,19 +60,18 @@ public class FirebaseAuthentication {
         .createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener(
             task -> {
-              if (task.isSuccessful())
-                addUser(
-                    email,
-                    name,
-                    surname,
-                    (response, msg) -> {
-                      if (response) {
-                        sendVerificationEmail();
-                        logout();
-                        f.processAuth(true, msg);
+              if (task.isSuccessful()) addUser(
+                      email,
+                      name,
+                      surname,
+                      (response, msg) -> {
+                        if (response) {
+                          sendVerificationEmail();
+                          logout();
+                          f.processAuth(true, msg);
 
-                      } else f.processAuth(false, msg);
-                    });
+                        } else f.processAuth(false, msg);
+                      });
             })
         .addOnFailureListener(e -> f.processAuth(false, e.getMessage()));
   }

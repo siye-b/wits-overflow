@@ -2,7 +2,6 @@ package com.example.witsly.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,18 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 import com.example.witsly.Firebase.FirebaseActions;
+import com.example.witsly.Managers.UiManager;
+import com.example.witsly.Managers.UserManager;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.database.DatabaseReference;
-import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
@@ -36,44 +34,31 @@ public class ProfileFragment extends Fragment {
   private final String currentUser = firebaseActions.getUid();
 
   public static int IMAGE_VERIFY = 1;
-  private Activity headerView;
-  //private NavigationView navigationView;
 
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_profile, container, false);
+    super.onCreate(savedInstanceState);
 
-
+    UserManager.userManager(getContext());
 
     profilePic = view.findViewById(R.id.userProfilePicture);
     btnImageUploader = view.findViewById(R.id.uploadProfilePicture);
-
     btnImageUploader.setOnClickListener(img -> choosePicture());
     btnSave = view.findViewById(R.id.btnSave);
     UserBio = view.findViewById(R.id.bio);
     UserName = view.findViewById(R.id.prof_name);
     UserSurname = view.findViewById(R.id.prof_surname);
     tvBio = view.findViewById(R.id.headerBio);
-    //setContentView();
-    //tvBio = headerView.findViewById(R.id.profile_bio);
 
-    // Get the current user to return a model
-    // since there is a built in function user.getBio
-    // UserBio.setText(user.getBio);
-      super.onCreate(savedInstanceState);
-      //setContentView(R.layout.fragment_profile);
+    UiManager.setImage(getContext(), profilePic);
+    UiManager.setBio(getContext(), UserBio, null);
 
-    btnSave.setOnClickListener(v -> {
-      saveChanges();
-      UserBio.getText().toString();
-
-    });
-    firebaseActions.getBio(
-        value -> {
-          //UserBio.setHint(value.getBio());
-          UserBio.setText(value.getBio());
-
+    btnSave.setOnClickListener(
+        v -> {
+          String bio = UserBio.getText().toString().trim();
+          if (!bio.equals("")) UiManager.updateBio(getContext(), UserBio, bio);
         });
 
     if (currentUser != null){
@@ -87,15 +72,6 @@ public class ProfileFragment extends Fragment {
     firebaseActions.getProfilePic(img -> Picasso.get().load(img).into(profilePic));
 
     return view;
-
-  }
-
-
-  @Override
-  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    // after the view has been created we want to get all the profile image
-
   }
 
   private void choosePicture() {
@@ -115,6 +91,10 @@ public class ProfileFragment extends Fragment {
         .setActivityTitle("Select an Image")
         .start(getContext(), this);
   }*/
+
+  private void updateChanges(String string, TextInputEditText textInputEditText) {
+    UiManager.updateBio(getContext(), textInputEditText, string);
+  }
 
   private void saveChanges() {
 
@@ -139,8 +119,7 @@ public class ProfileFragment extends Fragment {
         && data.getData() != null) {
       imgUri = data.getData();
       profilePic.setBackground(null);
-      Picasso.get().load(imgUri).into(profilePic);
-      firebaseActions.uploadPicture(imgUri);
+      UiManager.uploadImage(getContext(), imgUri, profilePic);
     }
 
     // The Code below still works for physical devices, do not remove the code

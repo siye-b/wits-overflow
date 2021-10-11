@@ -22,7 +22,6 @@ public class User {
     subscriptions = new Topic();
   }
 
-
   public void setImage(String image) {
     this.image = image;
   }
@@ -86,5 +85,4 @@ public class User {
   public void setBio(String bio) {
     this.bio = bio;
   }
-
 }

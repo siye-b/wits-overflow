@@ -2,6 +2,10 @@ package com.example.witsly.Utils;
 
 public interface FirebaseUtils {
 
+  String EMAIL = "Email";
+  String USER = "User";
+  String BIO_UPDATED = "Bio updated";
+  String BIO_NOT_UPDATED = "Bio not updated";
   String COMMENTS = "Comments";
   String POSTS = "Posts";
   String ANSWERS = "Answers";
@@ -23,8 +27,9 @@ public interface FirebaseUtils {
   String REPUTATION = "reputation";
   String NAME = "name";
   String SURNAME = "surname";
+  String IMG_UPLOADED = "Image uploaded";
 
-  //Notifications
+  // Notifications
   final String CHANNEL_ID = "Channel_1";
     String SUBSCRIPTIONS = "subscriptions";
 }
