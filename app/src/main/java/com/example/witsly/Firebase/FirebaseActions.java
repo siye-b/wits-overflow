@@ -55,7 +55,7 @@ import java.util.ArrayList;
 
 public class FirebaseActions {
   private static final String TAG = "LOG";
-    private static ArrayList<Topic> topic_subs;
+    private static ArrayList<String> subs_topic;
     private static  FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
   private ArrayList<Answer> answersArrayList;
@@ -530,7 +530,7 @@ public class FirebaseActions {
         DatabaseReference rep = firebaseDatabase
                 .getReference(FirebaseUtils.USERS)
                 .child(currentUser.getUid())
-                .child(FirebaseUtils.SUBSCRIPTIONS);
+                .child(FirebaseUtils.SUBSCRIPTIONS).push();
 
         FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(topic))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -558,7 +558,7 @@ public class FirebaseActions {
                             // msg = getString(R.string.msg_subscribe_failed);
                             Toast.makeText(mContext, "failed to subscribe to "+ topic, Toast.LENGTH_SHORT).show();
                         }
-                        Log.d(TAG, "subscribed topics : "+  subscribedTopicArrayList);
+                        //Log.d(TAG, "subscribed topics : "+  subscribedTopicArrayList);
 
                     }
 
@@ -567,21 +567,23 @@ public class FirebaseActions {
 
 
     public void getSubscriptions(GetSubscriptions t) {
-        subscribedTopicArrayList = new ArrayList<>();
-        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS).child(FirebaseUtils.SUBSCRIPTIONS);
+        subs_topic = new ArrayList<>();
+        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS).child(currentUser.getUid()).child(FirebaseUtils.SUBSCRIPTIONS);
         databaseReference.addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        subscribedTopicArrayList.clear();
+                        subs_topic.clear();
                         for (DataSnapshot subsSnapshot : snapshot.getChildren()) {
 
-                            Topic topic = subsSnapshot.child("topic").getValue(Topic.class);
+                            String topic = subsSnapshot.child("topic").getValue(String.class);
                             assert topic != null;
-                            topic.setTopicID(subsSnapshot.getKey());
-                            subscribedTopicArrayList.add(topic);
+                            //topic.setTopicID(subsSnapshot.getKey());
+                            subs_topic.add(topic);
+
                         }
-                        t.processResponse(subscribedTopicArrayList);
+                        Log.d(TAG, "subscribed topics : "+  subs_topic);
+                        t.processResponse(subs_topic);
                     }
 
                     @Override
