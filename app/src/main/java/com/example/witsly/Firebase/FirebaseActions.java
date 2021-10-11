@@ -56,6 +56,7 @@ import java.util.ArrayList;
 public class FirebaseActions {
   private static final String TAG = "LOG";
     private static ArrayList<String> subs_topic;
+    private static ArrayList<String> subs_topic1;
     private static  FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
   private ArrayList<Answer> answersArrayList;
@@ -228,16 +229,52 @@ public class FirebaseActions {
                           assert post != null;
                           post.setPID(postSnapshot.getKey());
                           String uid = postSnapshot.child("uid").getValue(String.class);
+                          String topic1 = postSnapshot.child("topic").getValue(String.class);
+
+                           //if you want it to also display the post you posted ,uncomment this if statement
+                          /*
                           if(uid.equals(currentUser.getUid())) {
+
                               subscribedPostArrayList.add(post);
                           }
+                          */
+
+                          subs_topic1 = new ArrayList<>();
+                          DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS).child(currentUser.getUid()).child(FirebaseUtils.SUBSCRIPTIONS);
+                          databaseReference.addValueEventListener(
+                                  new ValueEventListener() {
+                                      @Override
+                                      public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                          subs_topic1.clear();
+                                          for (DataSnapshot subsSnapshot : snapshot.getChildren()) {
+
+                                              String topic = subsSnapshot.child("topic").getValue(String.class);
+                                              assert topic != null;
+                                              //topic.setTopicID(subsSnapshot.getKey());
+                                              //subs_topic.add(topic);
+                                              if (topic1.equals(topic)) {
+                                                  subscribedPostArrayList.add(post);
+                                              }
+                                              //Log.d(TAG, "subscribed topics : " + subs_topic);
+
+                                          }
+                                          g.processResponse(subscribedPostArrayList);
+                                      }
+                                     //
+                                      @Override
+                                      public void onCancelled(@NonNull DatabaseError error) {}
+                                  });
                       }
-                      g.processResponse(subscribedPostArrayList);
+
+                     // g.processResponse(subscribedPostArrayList);
                   }
+
+
 
                   @Override
                   public void onCancelled(@NonNull DatabaseError error) {}
               });
+
 
   }
 
