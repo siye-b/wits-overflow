@@ -141,7 +141,7 @@ public class AchievementFragment extends Fragment {
                                 "Get 5 upvotes on your question",
                                 true));
 
-            } else if (points >= 10 && points < 50) {
+            }if (points >= 10 && points < 50) {
                 achievementList.add(
                         new Achievement(
                                 R.drawable.ic_greatquestion,
@@ -155,7 +155,7 @@ public class AchievementFragment extends Fragment {
                                 "Get 5 upvotes on your question",
                                 true));
 
-            } else if (points >= 50) {
+            }if (points >= 50) {
                 achievementList.add(
                         new Achievement(
                                 R.drawable.ic_asker,
@@ -176,12 +176,17 @@ public class AchievementFragment extends Fragment {
                                 true));
 
             } else {
-                achievementList.add(
-                        new Achievement(
-                                R.drawable.ic_goodquestion,
-                                "Good Question",
-                                "Get 5 upvotes on your question",
-                                false));
+
+                if (points < 5 ) {
+
+                    achievementList.add(
+                            new Achievement(
+                                    R.drawable.ic_goodquestion,
+                                    "Good Question",
+                                    "Get 5 upvotes on your question",
+                                    false));
+
+                }
                 achievementList.add(
                         new Achievement(
                                 R.drawable.ic_greatquestion,
