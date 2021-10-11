@@ -29,11 +29,11 @@ public class ProfileFragment extends Fragment {
   private AppCompatImageView profilePic;
   private FloatingActionButton btnImageUploader;
   private AppCompatButton btnSave;
-  private TextInputEditText UserBio;
+  private TextInputEditText UserBio, UserName, UserSurname;
   private TextView tvBio;
   Uri imgUri;
   FirebaseActions firebaseActions = new FirebaseActions();
-  DatabaseReference ref;
+  private final String currentUser = firebaseActions.getUid();
 
   public static int IMAGE_VERIFY = 1;
   private Activity headerView;
@@ -52,6 +52,8 @@ public class ProfileFragment extends Fragment {
     btnImageUploader.setOnClickListener(img -> choosePicture());
     btnSave = view.findViewById(R.id.btnSave);
     UserBio = view.findViewById(R.id.bio);
+    UserName = view.findViewById(R.id.prof_name);
+    UserSurname = view.findViewById(R.id.prof_surname);
     tvBio = view.findViewById(R.id.headerBio);
     //setContentView();
     //tvBio = headerView.findViewById(R.id.profile_bio);
@@ -73,6 +75,14 @@ public class ProfileFragment extends Fragment {
           UserBio.setText(value.getBio());
 
         });
+
+    if (currentUser != null){
+      firebaseActions.getUserDetails(currentUser, response ->
+      {
+          UserName.setHint(response.getName());
+          UserSurname.setHint(response.getSurname());
+      });
+    }
 
     firebaseActions.getProfilePic(img -> Picasso.get().load(img).into(profilePic));
 
@@ -110,6 +120,12 @@ public class ProfileFragment extends Fragment {
 
     String bio = UserBio.getText().toString().trim();
     firebaseActions.AddBio(bio);
+    if(UserName.getText() != null){
+      firebaseActions.SetName(UserName.getText().toString().trim());
+    }
+    if(UserSurname.getText() != null){
+      firebaseActions.SetSurname(UserSurname.getText().toString().trim());
+    }
 
   }
 

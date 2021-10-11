@@ -21,6 +21,8 @@ public interface FirebaseUtils {
   String TOPICS = "Topics";
   String TOPIC = "topic";
   String REPUTATION = "reputation";
+  String NAME = "name";
+  String SURNAME = "surname";
 
   //Notifications
   final String CHANNEL_ID = "Channel_1";

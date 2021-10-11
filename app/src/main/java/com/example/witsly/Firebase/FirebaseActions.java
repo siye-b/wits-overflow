@@ -386,6 +386,43 @@ public class FirebaseActions {
           public void onCancelled(@NonNull DatabaseError error) {}
         });
   }
+    public void SetName(String userName) {
+        DatabaseReference name =
+                firebaseDatabase
+                        .getReference(FirebaseUtils.USERS)
+                        .child(currentUser.getUid())
+                        .child(FirebaseUtils.NAME);
+
+        name.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        name.setValue(userName);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
+    }
+
+    public void SetSurname(String userSurname) {
+        DatabaseReference surname =
+                firebaseDatabase
+                        .getReference(FirebaseUtils.USERS)
+                        .child(currentUser.getUid())
+                        .child(FirebaseUtils.SURNAME);
+
+        surname.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        surname.setValue(userSurname);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
+    }
 
     public String getUid() {
         return currentUser.getUid();
