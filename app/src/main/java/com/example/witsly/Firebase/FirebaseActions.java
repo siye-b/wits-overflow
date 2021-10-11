@@ -231,7 +231,8 @@ public class FirebaseActions {
                           String uid = postSnapshot.child("uid").getValue(String.class);
                           String topic1 = postSnapshot.child("topic").getValue(String.class);
 
-                           //if you want it to also display the post you posted ,uncomment this if statement
+                           //if you want it to also display the post you posted ,uncomment the following if statement and
+                          // g.processResponse
                           /*
                           if(uid.equals(currentUser.getUid())) {
 
