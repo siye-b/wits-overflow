@@ -21,6 +21,7 @@ import com.example.witsly.Fragments.AchievementFragment;
 import com.example.witsly.Fragments.HomeFragment;
 import com.example.witsly.Fragments.MyFeedFragment;
 import com.example.witsly.Fragments.ProfileFragment;
+import com.example.witsly.Fragments.SettingsFragment;
 import com.example.witsly.Fragments.SubscriptionFragment;
 import com.example.witsly.Managers.UiManager;
 import com.example.witsly.Managers.UserManager;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity
     if (item.getItemId() == R.id.user_achievements) loadFragment(new AchievementFragment());
     if (item.getItemId() == R.id.user_feed) loadFragment(new MyFeedFragment());
     if (item.getItemId() == R.id.user_subscriptions) loadFragment(new SubscriptionFragment());
+    if (item.getItemId() == R.id.user_settings) loadFragment(new SettingsFragment());
     if (item.getItemId() == R.id.user_logout) UiManager.logOut(this);
     return true;
   }
