@@ -17,8 +17,10 @@ ignore:
   - "app/src/main/java/com/example/witsly/Fragments/AchievementFragment.java"
   - "app/src/main/java/com/example/witsly/Fragments/AddSubscriptionFragment.java"
   - "app/src/main/java/com/example/witsly/Fragments/MyFeedFragment.java"
-  - "app/src/main/java/com/example/witsly/Fragments/ SubscriptionFragment.java"
+  - "app/src/main/java/com/example/witsly/Fragments/SubscriptionFragment.java"
   - "app/src/main/java/com/example/witsly/Fragments/AddSubscriptionFragment.java"
+  - "app/src/main/java/com/example/witsly/Fragments/SettingsFragment.java"
+
 
   
 
