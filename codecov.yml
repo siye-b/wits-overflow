@@ -27,7 +27,7 @@ ignore:
   
   
   - "app/src/main/java/com/example/witsly/Models/Topic.java"
-  - "app/src/main/java/com/example/witsly/Models/Achievement.java.java"
+  - "app/src/main/java/com/example/witsly/Models/Achievement.java"
 
   
   
@@ -42,7 +42,7 @@ ignore:
   - "app/src/main/java/com/example/witsly/NotificationService.java"
 
 
-  - "app/src/main/java/com/example/witsly/Managers/UserManager.java"
+  - "app/src/main/java/com/example/witsly/Managers/UiManager.java"
 
 
 
