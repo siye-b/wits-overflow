@@ -55,9 +55,31 @@ public class UiManager {
         });
   }
 
+  public static void setUserProfile(
+      Context context,
+      TextInputEditText name,
+      TextInputEditText surname,
+      TextInputEditText bio,
+      ImageView imageView) {
+    UserManager.userManager(context);
+    bio.setText(UserManager.getBIO());
+    name.setText(UserManager.getFirstName());
+    surname.setText(UserManager.getLastName());
+
+    if (!UserManager.getProfileImage().equals("")) {
+      imageView.setBackground(null);
+      Picasso.get().load(UserManager.getProfileImage()).into(imageView);
+    }
+  }
+
   public static void setImage(Context context, ImageView view) {
     UserManager.userManager(context);
     Picasso.get().load(UserManager.getProfileImage()).into(view);
+  }
+
+  public static void setFullName(Context context, TextView fullName) {
+    UserManager.userManager(context);
+    fullName.setText(String.format("%s %s", UserManager.getFirstName(), UserManager.getLastName()));
   }
 
   public static void setBio(Context context, TextInputEditText textEditText, TextView textView) {
@@ -79,7 +101,11 @@ public class UiManager {
     email.setText(UserManager.getEMAIL());
     reputation.setText(UserManager.getReputation());
     bio.setText(UserManager.getBIO());
-    Picasso.get().load(UserManager.getProfileImage()).into(imageView);
+
+    if (!UserManager.getProfileImage().equals("")) {
+      imageView.setBackground(null);
+      Picasso.get().load(UserManager.getProfileImage()).into(imageView);
+    }
   }
 
   public static void updateBio(Context context, TextInputEditText view, String bio) {
@@ -90,8 +116,21 @@ public class UiManager {
           if (bool) {
             UserManager.setBIO(bio);
             view.setText(bio);
-            Toast.makeText(context, FirebaseUtils.BIO_UPDATED, Toast.LENGTH_LONG).show();
-          } else Toast.makeText(context, FirebaseUtils.BIO_NOT_UPDATED, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Updated", Toast.LENGTH_LONG).show();
+          } else Toast.makeText(context, "Not updated", Toast.LENGTH_LONG).show();
         });
+  }
+
+  public static void updateUsername(
+      Context context, TextInputEditText firstName, TextInputEditText lastName) {
+    UserManager.userManager(context);
+    if (!firstName.equals(UserManager.getFirstName())) {
+      UserManager.setFirstName(firstName.getText().toString().trim());
+      firebaseActions.SetName(firstName.getText().toString().trim());
+    }
+    if (!lastName.equals(UserManager.getFirstName())) {
+      firebaseActions.SetSurname(firstName.getText().toString().trim());
+      UserManager.setLastName(lastName.getText().toString().trim());
+    }
   }
 }

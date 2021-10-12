@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -21,7 +20,6 @@ import com.example.witsly.Managers.UserManager;
 import com.example.witsly.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
@@ -29,10 +27,8 @@ public class ProfileFragment extends Fragment {
   private FloatingActionButton btnImageUploader;
   private AppCompatButton btnSave;
   private TextInputEditText UserBio, UserName, UserSurname;
-  private TextView tvBio;
   Uri imgUri;
   FirebaseActions firebaseActions = new FirebaseActions();
-  private final String currentUser = firebaseActions.getUid();
 
   public static int IMAGE_VERIFY = 1;
 
@@ -51,26 +47,18 @@ public class ProfileFragment extends Fragment {
     UserBio = view.findViewById(R.id.bio);
     UserName = view.findViewById(R.id.prof_name);
     UserSurname = view.findViewById(R.id.prof_surname);
-    tvBio = view.findViewById(R.id.headerBio);
 
-    UiManager.setImage(getContext(), profilePic);
-    UiManager.setBio(getContext(), UserBio, null);
+    UiManager.setUserProfile(getContext(), UserName, UserSurname, UserBio, profilePic);
 
     btnSave.setOnClickListener(
         v -> {
           String bio = UserBio.getText().toString().trim();
+          String surname = UserSurname.getText().toString().trim();
+          String name = UserName.getText().toString().trim();
           if (!bio.equals("")) UiManager.updateBio(getContext(), UserBio, bio);
+          if (!name.equals("") && !surname.equals(""))
+            UiManager.updateUsername(getContext(), UserName, UserSurname);
         });
-
-    if (currentUser != null){
-      firebaseActions.getUserDetails(currentUser, response ->
-      {
-          UserName.setHint(response.getName());
-          UserSurname.setHint(response.getSurname());
-      });
-    }
-
-    firebaseActions.getProfilePic(img -> Picasso.get().load(img).into(profilePic));
 
     return view;
   }
@@ -93,21 +81,16 @@ public class ProfileFragment extends Fragment {
         .start(getContext(), this);
   }*/
 
-  private void updateChanges(String string, TextInputEditText textInputEditText) {
-    UiManager.updateBio(getContext(), textInputEditText, string);
-  }
-
   private void saveChanges() {
 
     String bio = UserBio.getText().toString().trim();
     firebaseActions.AddBio(bio);
-    if(UserName.getText() != null){
+    if (UserName.getText() != null) {
       firebaseActions.SetName(UserName.getText().toString().trim());
     }
-    if(UserSurname.getText() != null){
+    if (UserSurname.getText() != null) {
       firebaseActions.SetSurname(UserSurname.getText().toString().trim());
     }
-
   }
 
   @Override

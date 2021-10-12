@@ -21,11 +21,9 @@ import com.example.witsly.Fragments.AchievementFragment;
 import com.example.witsly.Fragments.HomeFragment;
 import com.example.witsly.Fragments.MyFeedFragment;
 import com.example.witsly.Fragments.ProfileFragment;
-import com.example.witsly.Fragments.SettingsFragment;
 import com.example.witsly.Fragments.SubscriptionFragment;
 import com.example.witsly.Managers.UiManager;
 import com.example.witsly.Managers.UserManager;
-import com.example.witsly.ProDialog;
 import com.example.witsly.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,7 +34,6 @@ public class MainActivity extends AppCompatActivity
   private DrawerLayout drawerLayout;
   private TextView fullName, email, reputation, bio;
   private ImageView profileImage;
-  private ProDialog proDialog;
   private NavigationView navigationView;
 
   @SuppressLint("SetTextI18n")
@@ -96,6 +93,8 @@ public class MainActivity extends AppCompatActivity
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     if (key.equals(UserManager.PROFILE_IMG_LINK)) UiManager.setImage(this, profileImage);
     if (key.equals(UserManager.BIO)) UiManager.setBio(this, null, bio);
+    if (key.equals(UserManager.FIRST_NAME) || key.equals(UserManager.LAST_NAME))
+      UiManager.setFullName(this, fullName);
   }
 
   @Override
@@ -111,5 +110,4 @@ public class MainActivity extends AppCompatActivity
     UserManager.userManager(this);
     UserManager.UnRegisterPref(this, this);
   }
-
 }

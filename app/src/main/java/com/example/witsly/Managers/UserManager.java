@@ -19,7 +19,7 @@ public class UserManager {
   public static String EMPTY_STRING = "";
 
   public static String BIO = "Bio";
-  public static String PROFILE_IMG_LINK = "Link";
+  public static String PROFILE_IMG_LINK = "";
   public static String FIRST_NAME = "First Name";
   public static String LAST_NAME = "Last Name";
   public static String REPUTATION = "Reputation";
