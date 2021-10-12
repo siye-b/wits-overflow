@@ -30,8 +30,7 @@ To run tests we used TravisCI as well as Coverals for our Test Driven Developmen
 To run tests we used TravisCI as well as Coverals for our Test Driven Development.
 
 [![Build Status](https://app.travis-ci.com/Bonisiwe/wits-overflow.svg?branch=main)](https://app.travis-ci.com/Bonisiwe/wits-overflow)
-[![codecov](https://codecov.io/gh/umair-b/wits-overflow/branch/main/graph/badge.svg?token=Q4FIUY0ZKU)](https://codecov.io/gh/umair-b/wits-overflow)
-
+[![codecov](https://codecov.io/gh/Bonisiwe/wits-overflow/branch/main/graph/badge.svg?token=Q4FIUY0ZKU)](https://codecov.io/gh/Bonisiwe/wits-overflow)
 # Contributors
 
 Ntwanano Rikhotso -[insert social media links here]
