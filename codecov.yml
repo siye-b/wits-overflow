@@ -20,11 +20,6 @@ ignore:
   - "app/src/main/java/com/example/witsly/Fragments/SubscriptionFragment.java"
   - "app/src/main/java/com/example/witsly/Fragments/AddSubscriptionFragment.java"
   - "app/src/main/java/com/example/witsly/Fragments/SettingsFragment.java"
-
-
-  
-
-
   
   
   - "app/src/main/java/com/example/witsly/Firebase/FirebaseActions.java"
