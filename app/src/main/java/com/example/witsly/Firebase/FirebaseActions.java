@@ -695,9 +695,56 @@ public class FirebaseActions {
                 });
     }
 
-  
+    public static void unsubscribe(String topic, Context mContext){
+        //subscribedTopicArrayList = new ArrayList<>();
+        DatabaseReference rep = firebaseDatabase
+                .getReference(FirebaseUtils.USERS)
+                .child(currentUser.getUid())
+                .child(FirebaseUtils.SUBSCRIPTIONS);
 
-  public void getBio(GetBio b) {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(String.valueOf(topic))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //String msg = getString(R.string.msg_subscribed);
+
+                        Toast.makeText(mContext, "unsubscribed to " + topic, Toast.LENGTH_SHORT).show();
+                        //subscribedTopicArrayList.add(topic);
+
+                        rep.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot subSnapshot : snapshot.getChildren()){
+                                    String topic_name = subSnapshot.child("topic").getValue(String.class);
+
+                                    if(topic_name.equals(topic)){
+                                        rep.child(subSnapshot.getKey()).removeValue();
+                                    }
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        if (!task.isSuccessful()) {
+                            // msg = getString(R.string.msg_subscribe_failed);
+                            Toast.makeText(mContext, "failed to unsubscribe to "+ topic, Toast.LENGTH_SHORT).show();
+                        }
+                        //Log.d(TAG, "subscribed topics : "+  subscribedTopicArrayList);
+
+                    }
+
+                });
+    }
+
+
+
+
+    public void getBio(GetBio b) {
     DatabaseReference mDatabaseReference =
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
     mDatabaseReference

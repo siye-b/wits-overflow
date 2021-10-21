@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Topic;
 import com.example.witsly.R;
 
@@ -60,8 +61,9 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
             @Override
             public void onClick(View v) {
                 //TODO: Remove the subscription from firebase at current pos i.e. add firebase actions here
+                FirebaseActions.unsubscribe(topic,mContext);
 
-                mSubscriptionList.remove(holder.getAdapterPosition());
+                //mSubscriptionList.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
         });
