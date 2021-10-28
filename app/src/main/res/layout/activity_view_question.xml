@@ -65,9 +65,23 @@
                             app:backgroundTint="@color/Red"
                             android:clickable="true"
                             android:foreground="?attr/selectableItemBackgroundBorderless"
-                            android:visibility="invisible"
+                            android:visibility="visible"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/ic_baseline_delete_24" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_question_closed"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:backgroundTint="@color/Red"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackgroundBorderless"
+                            android:visibility="visible"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/ic_question_closed"/>
+
+
+
                     </LinearLayout>
 
                     <RelativeLayout
