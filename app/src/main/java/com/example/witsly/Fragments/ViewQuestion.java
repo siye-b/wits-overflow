@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.widget.NestedScrollView;
@@ -17,10 +18,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.witsly.Activities.LoginActivity;
 import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
 import com.example.witsly.R;
+import com.example.witsly.databinding.ForgotDialogBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,8 +40,9 @@ public class ViewQuestion extends Fragment {
   private RecyclerView.Adapter mAdapter;
   private RecyclerView.LayoutManager mLayout;
   private ArrayList<String> mAnswerList; // Change to model for answer
-  private AppCompatButton add_btn;
+  private AppCompatButton add_btn, btn_question_closed ;
   private AppCompatEditText add_comment;
+
   private FirebaseActions firebaseActions;
   private String questionID, userID;
   private TextView vote;
@@ -65,6 +69,7 @@ public class ViewQuestion extends Fragment {
     vote = view.findViewById(R.id.txt_vote);
     like = view.findViewById(R.id.btn_like);
     delete = view.findViewById(R.id.btn_delete);
+    btn_question_closed = view.findViewById(R.id.btn_question_closed);
 
     mRecyclerView = view.findViewById(R.id.rv_answers);
     add_btn = view.findViewById(R.id.add_comment_btn);
@@ -88,6 +93,13 @@ public class ViewQuestion extends Fragment {
           mHolder.setVisibility(View.GONE);
           add_comment.setText("");
         });
+
+    btn_question_closed.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            closeQuestion();
+        }
+    });
 
     add_comment.setOnFocusChangeListener(
         (v, hasFocus) -> {
@@ -195,5 +207,22 @@ public class ViewQuestion extends Fragment {
     }
 
     return view;
+  }
+
+
+  void closeQuestion(){
+      AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
+
+      ForgotDialogBinding binding =
+              ForgotDialogBinding.inflate(LayoutInflater.from(getView().getContext()));
+      builder.setView(binding.getRoot());
+
+      binding.tvTitle.setText("Reason for closing:");
+      binding.etForgotPW.setHint("Please provide a reason for closing the post.");
+        
+
+
+      builder.create();
+      builder.show();
   }
 }
