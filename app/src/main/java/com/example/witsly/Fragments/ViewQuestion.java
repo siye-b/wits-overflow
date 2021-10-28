@@ -22,6 +22,7 @@ import com.example.witsly.Activities.LoginActivity;
 import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
+import com.example.witsly.Models.User;
 import com.example.witsly.R;
 import com.example.witsly.databinding.ForgotDialogBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -94,12 +95,7 @@ public class ViewQuestion extends Fragment {
           add_comment.setText("");
         });
 
-    btn_question_closed.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            closeQuestion();
-        }
-    });
+
 
     add_comment.setOnFocusChangeListener(
         (v, hasFocus) -> {
@@ -110,6 +106,25 @@ public class ViewQuestion extends Fragment {
             add_comment.setText("");
           }
         });
+      if (bundle != null) {
+          String postID = bundle.getString("postID");
+
+          firebaseActions.isCurrentUserAdmin(
+                  (isAdmin, resp) -> {
+                      if (isAdmin) {
+                          btn_question_closed.setVisibility(View.VISIBLE);
+                          btn_question_closed.setOnClickListener(new View.OnClickListener() {
+                              @Override
+                              public void onClick(View view) {
+                                  closeQuestion(postID);
+
+                              }
+                          }
+                          );
+                      }
+                  });
+      }
+
 
     assert mUser != null;
 
@@ -170,18 +185,22 @@ public class ViewQuestion extends Fragment {
           v -> {
             String comment = add_comment.getText().toString().trim();
 
-            if (!comment.isEmpty())
-              firebaseActions.addAnswer(
-                  new Answer(comment, mUser.getUid(), postID),
-                  r -> {
-                    if (r) {
-                      add_comment.setText("");
-                      Toast.makeText(getActivity(), "added", Toast.LENGTH_SHORT).show();
-                    } else Toast.makeText(getActivity(), "not added", Toast.LENGTH_SHORT).show();
-                  });
-            else
-              Toast.makeText(getActivity(), "the comment section is empty", Toast.LENGTH_SHORT)
-                  .show();
+            if (!comment.isEmpty()) {
+                firebaseActions.addAnswer(
+                        new Answer(comment, mUser.getUid(), postID),
+                        r -> {
+                            if (r) {
+                                add_comment.setText("");
+                                Toast.makeText(getActivity(), "added", Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(getActivity(), "not added", Toast.LENGTH_SHORT).show();
+                        });
+            }
+            else {
+
+                Toast.makeText(getActivity(), "the comment section is empty YES", Toast.LENGTH_SHORT)
+                        .show();
+            }
           });
 
       firebaseActions.getAnswers(
@@ -210,19 +229,27 @@ public class ViewQuestion extends Fragment {
   }
 
 
-  void closeQuestion(){
+  void closeQuestion(String piD){
       AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
 
       ForgotDialogBinding binding =
               ForgotDialogBinding.inflate(LayoutInflater.from(getView().getContext()));
       builder.setView(binding.getRoot());
-
       binding.tvTitle.setText("Reason for closing:");
       binding.etForgotPW.setHint("Please provide a reason for closing the post.");
-        
+      builder.setPositiveButton(
+              "Next",
+              (dialog, which) -> {
+                  String reason = binding.etForgotPW.getText().toString().trim();
+                  firebaseActions.ADDReason(reason,piD );
+                  dialog.dismiss();
 
+              });
+
+      builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
       builder.create();
       builder.show();
   }
+
 }

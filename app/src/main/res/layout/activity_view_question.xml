@@ -65,7 +65,7 @@
                             app:backgroundTint="@color/Red"
                             android:clickable="true"
                             android:foreground="?attr/selectableItemBackgroundBorderless"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/ic_baseline_delete_24" />
 
@@ -76,7 +76,7 @@
                             android:backgroundTint="@color/Red"
                             android:clickable="true"
                             android:foreground="?attr/selectableItemBackgroundBorderless"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/ic_question_closed"/>
 

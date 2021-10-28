@@ -11,6 +11,7 @@ public interface FirebaseUtils {
   String ANSWERS = "Answers";
   String USERS = "Users";
   String IMAGE = "image";
+  String REASON = "reason";
   String BIO = "bio";
   String LIKES = "Likes";
   String DISLIKES = "Dislikes";

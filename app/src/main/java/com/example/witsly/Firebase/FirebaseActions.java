@@ -17,6 +17,7 @@ import com.example.witsly.Interfaces.AddTopic;
 import com.example.witsly.Interfaces.DeletePost;
 import com.example.witsly.Interfaces.FirebaseAuthHandler;
 import com.example.witsly.Interfaces.GetAllPosts;
+import com.example.witsly.Interfaces.GetAllUsers;
 import com.example.witsly.Interfaces.GetAnswers;
 import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
@@ -63,6 +64,7 @@ public class FirebaseActions {
     private static ArrayList<String> subs_topic1;
     private static  FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
+  private ArrayList<User> userArrayList;
   private ArrayList<Answer> answersArrayList;
   private ArrayList<Comment> commentsArrayList;
   private ArrayList<Tag> tagArrayList;
@@ -210,6 +212,27 @@ public class FirebaseActions {
           public void onCancelled(@NonNull DatabaseError error) {}
         });
   }
+    public void getAllUser(GetAllUsers g) {
+
+        userArrayList = new ArrayList<>();
+        DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS);
+        databaseReference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        userArrayList.clear();
+                        for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                            User user = userSnapshot.getValue(User.class);
+
+                            userArrayList.add(user);
+                        }
+                        g.processResponse(userArrayList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
+    }
   public void getTopicsSubscribedTo(GetTopicsSubscribedTo g){
 
       subscribedTopicArrayList = new ArrayList<>();
@@ -472,6 +495,26 @@ public class FirebaseActions {
           public void onCancelled(@NonNull DatabaseError error) {}
         });
   }
+    public void ADDReason(String Reason, String piD) {
+        DatabaseReference reason =
+                firebaseDatabase
+                        .getReference(FirebaseUtils.POSTS)
+                        .child(piD)
+                        .child(FirebaseUtils.REASON);
+
+        reason.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        reason.setValue(Reason);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
+    }
+
     public void SetName(String userName) {
         DatabaseReference name =
                 firebaseDatabase
