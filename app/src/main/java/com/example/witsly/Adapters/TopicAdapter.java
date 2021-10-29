@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.witsly.Activities.PostActivity;
 import com.example.witsly.Firebase.FirebaseActions;
+import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
 import com.example.witsly.Models.Topic;
 import com.example.witsly.R;
 import com.example.witsly.Utils.FirebaseUtils;
@@ -56,6 +57,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
     }
 
     public TopicAdapter(ArrayList<Topic> TopicList, Context mContext) {
+       // topic_subs = TopicSubscribedTo;
         mTopicList = TopicList;
         this.mContext = mContext;
     }

@@ -29,7 +29,6 @@ import com.example.witsly.Interfaces.GetReputation;
 import com.example.witsly.Interfaces.GetSubscriptions;
 import com.example.witsly.Interfaces.GetTags;
 import com.example.witsly.Interfaces.GetTopics;
-import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
 import com.example.witsly.Interfaces.GetUser;
 import com.example.witsly.Interfaces.MarkPost;
 import com.example.witsly.Interfaces.UpdateBio;
@@ -61,7 +60,7 @@ import java.util.ArrayList;
 
 public class FirebaseActions {
   private static final String TAG = "LOG";
-    private static ArrayList<String> subs_topic;
+    private static ArrayList<String> subs_topic ;
     private static ArrayList<String> subs_topic1;
     private static  FirebaseDatabase firebaseDatabase;
   private ArrayList<Post> postArrayList;
@@ -686,14 +685,19 @@ public class FirebaseActions {
                     public void onComplete(@NonNull Task<Void> task) {
                         //String msg = getString(R.string.msg_subscribed);
 
-                        Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
-                        subscribedTopicArrayList.add(topic);
+                       // Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
+                       // subscribedTopicArrayList.add(topic);
 
 
                         rep.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
+                                subscribedTopicArrayList.add(topic);
                                 rep.setValue(topic);
+
 
                             }
 
@@ -715,7 +719,7 @@ public class FirebaseActions {
 
 
     public void getSubscriptions(GetSubscriptions t) {
-        subs_topic = new ArrayList<>();
+        subs_topic = new ArrayList<String>();
         DatabaseReference databaseReference = firebaseDatabase.getReference(FirebaseUtils.USERS).child(currentUser.getUid()).child(FirebaseUtils.SUBSCRIPTIONS);
         databaseReference.addValueEventListener(
                 new ValueEventListener() {
@@ -723,13 +727,32 @@ public class FirebaseActions {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         subs_topic.clear();
                         for (DataSnapshot subsSnapshot : snapshot.getChildren()) {
+                           String topics = subsSnapshot.child("topic").getValue(String.class);
+                            if(subsSnapshot.child("topics").exists()) {
+                                subs_topic.remove(topics);
+                                databaseReference.child((String) subsSnapshot.getValue()).removeValue();
+                                Log.d(TAG, " already subscribed to : "+  subs_topic);
 
-                            String topic = subsSnapshot.child("topic").getValue(String.class);
-                            assert topic != null;
-                            //topic.setTopicID(subsSnapshot.getKey());
-                            subs_topic.add(topic);
+                            }
+                            subs_topic.add(topics);
 
                         }
+                        System.out.println(snapshot);
+
+
+                        for(int i=0; i<subs_topic.size(); i++){
+                            for(int j=0; j<subs_topic.size(); j++){
+
+                                if(subs_topic.get(i).equals(subs_topic.get(j))) {
+                                    subs_topic.remove(j);
+                                }
+
+                            }
+                        }
+
+
+
+
                         Log.d(TAG, "subscribed topics : "+  subs_topic);
                         t.processResponse(subs_topic);
                     }

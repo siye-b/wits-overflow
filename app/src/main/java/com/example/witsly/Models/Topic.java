@@ -1,6 +1,10 @@
 package com.example.witsly.Models;
 
-public class Topic {
+import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
+
+import java.util.ArrayList;
+
+public class Topic implements GetTopicsSubscribedTo {
     String Topic, TopicID;
 
     public Topic(){}
@@ -21,6 +25,8 @@ public class Topic {
 
     public void setTopicID(String topicID) {TopicID = topicID;}
 
+    public String isTopicSubscribed(){return Topic;}
+
     public String getTopic() {
         return Topic;
     }
@@ -32,5 +38,10 @@ public class Topic {
     @Override
     public String toString() {
         return Topic;
+    }
+
+    @Override
+    public void processResponse(ArrayList arrayList) {
+
     }
 }
