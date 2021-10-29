@@ -685,8 +685,8 @@ public class FirebaseActions {
                     public void onComplete(@NonNull Task<Void> task) {
                         //String msg = getString(R.string.msg_subscribed);
 
-                       // Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
-                       // subscribedTopicArrayList.add(topic);
+                       Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
+                        subscribedTopicArrayList.add(topic);
 
 
                         rep.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -694,12 +694,11 @@ public class FirebaseActions {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-                                Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
-                                subscribedTopicArrayList.add(topic);
+                                //Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
+                                //subscribedTopicArrayList.add(topic);
                                 rep.setValue(topic);
-
-
                             }
+
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
@@ -726,17 +725,21 @@ public class FirebaseActions {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         subs_topic.clear();
+                       // String topics = snapshot.child("topic").getValue(String.class);
                         for (DataSnapshot subsSnapshot : snapshot.getChildren()) {
                            String topics = subsSnapshot.child("topic").getValue(String.class);
+                            subs_topic.add(topics);
                             if(subsSnapshot.child("topics").exists()) {
                                 subs_topic.remove(topics);
                                 databaseReference.child((String) subsSnapshot.getValue()).removeValue();
                                 Log.d(TAG, " already subscribed to : "+  subs_topic);
 
                             }
-                            subs_topic.add(topics);
+                            //databaseReference.child((String) subsSnapshot.getValue()).removeValue();
+                            //subs_topic.add(topics);
 
                         }
+                        //subs_topic.add(topics);
                         System.out.println(snapshot);
 
 
