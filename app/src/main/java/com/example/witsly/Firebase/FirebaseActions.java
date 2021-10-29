@@ -737,14 +737,14 @@ public class FirebaseActions {
                             }
                             //databaseReference.child((String) subsSnapshot.getValue()).removeValue();
                             //subs_topic.add(topics);
-
                         }
                         //subs_topic.add(topics);
                         System.out.println(snapshot);
 
-
+                        /*
                         for(int i=0; i<subs_topic.size(); i++){
                             for(int j=0; j<subs_topic.size(); j++){
+
 
                                 if(subs_topic.get(i).equals(subs_topic.get(j))) {
                                     subs_topic.remove(j);
@@ -753,9 +753,8 @@ public class FirebaseActions {
                             }
                         }
 
-
-
-
+                         */
+                        System.out.println(snapshot);
                         Log.d(TAG, "subscribed topics : "+  subs_topic);
                         t.processResponse(subs_topic);
                     }
