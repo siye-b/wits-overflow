@@ -22,6 +22,7 @@ import com.example.witsly.Activities.LoginActivity;
 import com.example.witsly.Adapters.AnswerAdapter;
 import com.example.witsly.Firebase.FirebaseActions;
 import com.example.witsly.Models.Answer;
+import com.example.witsly.Models.Post;
 import com.example.witsly.Models.User;
 import com.example.witsly.R;
 import com.example.witsly.databinding.ForgotDialogBinding;
@@ -52,6 +53,7 @@ public class ViewQuestion extends Fragment {
   private FloatingActionButton fab;
   private RelativeLayout mHolder;
   private NestedScrollView nScrollView;
+  private String reason;
 
   @SuppressLint("SetTextI18n")
   @Override
@@ -109,23 +111,40 @@ public class ViewQuestion extends Fragment {
       if (bundle != null) {
           String postID = bundle.getString("postID");
 
-          firebaseActions.isCurrentUserAdmin(
-                  (isAdmin, resp) -> {
-                      if (isAdmin) {
-                          btn_question_closed.setVisibility(View.VISIBLE);
-                          btn_question_closed.setOnClickListener(new View.OnClickListener() {
-                              @Override
-                              public void onClick(View view) {
-                                  closeQuestion(postID);
+          firebaseActions.getPost(
+                  postID,
+                  (post, user) -> {
 
-                              }
-                          }
-                          );
-                      }
+                      firebaseActions.isCurrentUserAdmin(
+                              (isAdmin, resp) -> {
+                                  if (isAdmin) {
+                                      btn_question_closed.setVisibility(View.VISIBLE);
+                                      btn_question_closed.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View view) {
+                                              closeQuestion(postID, post);
+
+                                          }
+                                      }
+                                      );
+                                  }
+                              });
                   });
       }
+      if (bundle != null) {
+          String postID = bundle.getString("postID");
 
+          firebaseActions.getPost(
+                  postID,
+                  (post, user) -> {
 
+                      if(!post.getReason().equals("")) {
+                          Toast.makeText(getActivity(), "The Post Was Closed Reason Being : " + post.getReason(), Toast.LENGTH_LONG).show();
+                          fab.setVisibility(View.INVISIBLE);
+                      }
+                  }
+          );
+      }
     assert mUser != null;
 
     @SuppressLint("CutPasteId")
@@ -151,7 +170,8 @@ public class ViewQuestion extends Fragment {
             details.setText(post.getBody());
             vote.setText(String.valueOf(post.getVote()));
 
-            // only the owner of the post can mark the question as solved
+
+              // only the owner of the post can mark the question as solved
 
             if (mUser.getUid().equals(userID)) {}
 
@@ -229,7 +249,7 @@ public class ViewQuestion extends Fragment {
   }
 
 
-  void closeQuestion(String piD){
+  void closeQuestion(String piD, Post post){
       AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
 
       ForgotDialogBinding binding =
@@ -240,8 +260,10 @@ public class ViewQuestion extends Fragment {
       builder.setPositiveButton(
               "Next",
               (dialog, which) -> {
-                  String reason = binding.etForgotPW.getText().toString().trim();
+                  reason = binding.etForgotPW.getText().toString().trim();
                   firebaseActions.ADDReason(reason,piD );
+                  post.setReason(reason);
+                  Toast.makeText(getActivity(), "Question closed Successfully ", Toast.LENGTH_SHORT).show();
                   dialog.dismiss();
 
               });

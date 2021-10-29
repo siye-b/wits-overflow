@@ -23,6 +23,7 @@ import com.example.witsly.Interfaces.GetBio;
 import com.example.witsly.Interfaces.GetComments;
 import com.example.witsly.Interfaces.GetPost;
 import com.example.witsly.Interfaces.GetPostsSubscribedTo;
+import com.example.witsly.Interfaces.GetReason;
 import com.example.witsly.Interfaces.GetTopicsSubscribedTo;
 import com.example.witsly.Interfaces.GetReputation;
 import com.example.witsly.Interfaces.GetSubscriptions;
