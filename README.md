@@ -37,7 +37,7 @@ Ntwanano Rikhotso -[insert social media links here]
 
 Ramovha Molvin -[insert social media links here]
 
-Dimakatso Caroline -[insert social media links here]
+Dimakatso Khwerana-[insert social media links here]
 
 Umair Bham -[insert social media links here]
 
