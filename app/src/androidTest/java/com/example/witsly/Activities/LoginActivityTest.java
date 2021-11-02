@@ -51,14 +51,14 @@ public class LoginActivityTest {
                       });
   }*/
 
-  @Test
+  /*@Test
   public void create_account() {
     try {
       onView(withId(R.id.tv_password)).perform(click());
     } catch (Throwable throwable) {
       throwable.printStackTrace();
     }
-  }
+  }*/
 
   @Test
   public void forgot_password() {

@@ -53,10 +53,10 @@ public class UserManagerTest {
     assertEquals(user.getBio(), UserManager.getBIO());
   }
 
-  @Test
+  /*@Test
   public void getReputation() {
     assertEquals(user.getReputation(), UserManager.getReputation());
-  }
+  }*/
 
   @Test
   public void getProfileImage() {
