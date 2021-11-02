@@ -15,6 +15,7 @@ public class PostTest {
   String TAG = "tag";
   String PID = "pid";
   String TOPIC = "topic";
+  String REASON = "reason";
 
   private Post post;
   private SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
@@ -55,6 +56,9 @@ public class PostTest {
   }
 
   @Test
+  public void getREASON() { assertEquals(REASON, post.getReason()); }
+
+  @Test
   public void setTOPIC() {
     String NEW_TOPIC = "topic";
     post.setUID(NEW_TOPIC);
@@ -73,5 +77,12 @@ public class PostTest {
     String NEW_DATE = ISO_8601_FORMAT.format(new Date()).substring(0, 10);
     post.setDate(NEW_DATE);
     assertEquals(NEW_DATE, post.getDate());
+  }
+
+  @Test
+  public void setREASON(){
+    String NEW_REASON = "reason1";
+    post.setReason(NEW_REASON);
+    assertEquals(NEW_REASON, post.getReason());
   }
 }

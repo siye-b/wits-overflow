@@ -108,10 +108,6 @@ public class Post {
 		this.uid = uid;
 	}
 
-	public void setVote(int vote) {
-		this.vote = vote;
-	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}

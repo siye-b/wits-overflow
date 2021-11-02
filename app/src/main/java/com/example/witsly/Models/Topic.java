@@ -25,8 +25,6 @@ public class Topic implements GetTopicsSubscribedTo {
 
     public void setTopicID(String topicID) {TopicID = topicID;}
 
-    public String isTopicSubscribed(){return Topic;}
-
     public String getTopic() {
         return Topic;
     }
