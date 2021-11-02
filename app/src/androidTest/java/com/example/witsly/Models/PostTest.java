@@ -56,7 +56,10 @@ public class PostTest {
   }
 
   @Test
-  public void getREASON() { assertEquals(REASON, post.getReason()); }
+  public void getREASON() {
+    post.setReason(REASON);
+    assertEquals(REASON, post.getReason());
+  }
 
   @Test
   public void setTOPIC() {

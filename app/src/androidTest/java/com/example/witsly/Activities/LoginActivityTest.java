@@ -60,7 +60,7 @@ public class LoginActivityTest {
     }
   }*/
 
-  @Test
+  /*@Test
   public void forgot_password() {
     try {
       onView(withId(R.id.tv_register)).perform(click());
@@ -68,5 +68,5 @@ public class LoginActivityTest {
     } catch (Throwable throwable) {
       throwable.printStackTrace();
     }
-  }
+  }*/
 }
