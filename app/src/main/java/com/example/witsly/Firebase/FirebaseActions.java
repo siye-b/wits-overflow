@@ -629,26 +629,7 @@ public class FirebaseActions {
         });
   }
 
-  /*public void getReputation(GetReputation a) {
-    DatabaseReference mDatabaseReference =
-        FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
-    mDatabaseReference
-        .child(currentUser.getUid())
-        .addListenerForSingleValueEvent(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                  User userB = snapshot.getValue(User.class);
-                  assert userB != null;
-                  a.processResponse(userB);
-                }
-              }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {}
-            });
-  }*/
     public void getReputation(GetReputation a){
         DatabaseReference mDatabaseReference =
                 FirebaseDatabase.getInstance().getReference(FirebaseUtils.USERS);
@@ -693,9 +674,6 @@ public class FirebaseActions {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
-                                //Toast.makeText(mContext, "subscribed to " + topic, Toast.LENGTH_SHORT).show();
-                                //subscribedTopicArrayList.add(topic);
                                 rep.setValue(topic);
                             }
 
@@ -735,25 +713,9 @@ public class FirebaseActions {
                                 Log.d(TAG, " already subscribed to : "+  subs_topic);
 
                             }
-                            //databaseReference.child((String) subsSnapshot.getValue()).removeValue();
-                            //subs_topic.add(topics);
-                        }
-                        //subs_topic.add(topics);
-                        System.out.println(snapshot);
 
-                        /*
-                        for(int i=0; i<subs_topic.size(); i++){
-                            for(int j=0; j<subs_topic.size(); j++){
-
-
-                                if(subs_topic.get(i).equals(subs_topic.get(j))) {
-                                    subs_topic.remove(j);
-                                }
-
-                            }
                         }
 
-                         */
                         System.out.println(snapshot);
                         Log.d(TAG, "subscribed topics : "+  subs_topic);
                         t.processResponse(subs_topic);
