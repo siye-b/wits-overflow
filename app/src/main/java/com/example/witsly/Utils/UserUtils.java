@@ -8,7 +8,7 @@ public interface UserUtils {
   String ERROR = " !ERROR! ";
   String CANCEL = "Cancel";
   String NEXT = "Next";
-
+  String DISMISS = "Dismiss";
   String FIRST_NAME = "First Name";
   String LAST_NAME = "Last Name";
   String REPUTATION = "Reputation";

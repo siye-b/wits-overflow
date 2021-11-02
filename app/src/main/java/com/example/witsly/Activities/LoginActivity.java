@@ -15,6 +15,7 @@ import com.example.witsly.Managers.UiManager;
 import com.example.witsly.Managers.UserManager;
 import com.example.witsly.ProDialog;
 import com.example.witsly.R;
+import com.example.witsly.Utils.UserUtils;
 import com.example.witsly.Verifier;
 import com.example.witsly.databinding.ForgotDialogBinding;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
   public TextView tv_register, tv_forgotPW;
   private final FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
   private final Verifier verifier = new Verifier();
-  private ProDialog proDialog = new ProDialog(this);
+  private final ProDialog proDialog = new ProDialog(this);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +48,9 @@ public class LoginActivity extends AppCompatActivity {
     UserManager.userManager(this);
 
     if (UserManager.loggedIn()) {
-        startActivity(
-            new Intent(this, MainActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+      startActivity(
+          new Intent(this, MainActivity.class)
+              .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
 
     if (intent1 != null) {
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
           String email = loginEmail.getEditText().getText().toString().trim();
           String password = loginPassword.getEditText().getText().toString().trim();
           if (validateFields(email, password)) {
-              login(email, password);
+            login(email, password);
           }
         });
     tv_register.setOnClickListener(
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
           .show();
       return false;
     } else {
-        return true;
+      return true;
     }
   }
 
@@ -95,34 +96,35 @@ public class LoginActivity extends AppCompatActivity {
             UiManager.logIn(this);
             proDialog.stop();
           } else if (response.equals(1)) {
-              new AlertDialog.Builder(LoginActivity.this)
-                  .setTitle("Email verification")
-                  .setMessage(msg)
-                  .setPositiveButton(
-                      "Resend link",
-                      (dialogInterface, i) -> {
-                        mAuth = FirebaseAuth.getInstance();
-                        mAuth
-                            .getCurrentUser()
-                            .sendEmailVerification()
-                            .addOnSuccessListener(
-                                sent -> {
-                                  Toast.makeText(LoginActivity.this, "Link Sent", Toast.LENGTH_LONG)
-                                      .show();
-                                })
-                            .addOnFailureListener(
-                                failure ->
-                                    Toast.makeText(
-                                            LoginActivity.this, "Link not sent", Toast.LENGTH_LONG)
-                                        .show());
-  
-                        loginPassword.getEditText().getText().clear();
-                        firebaseAuthentication.logout();
-                        Toast.makeText(LoginActivity.this, "Link Sent", Toast.LENGTH_LONG).show();
-                      })
-                  .setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss())
-                  .create()
-                  .show();
+            new AlertDialog.Builder(LoginActivity.this)
+                .setTitle("Email verification")
+                .setMessage(msg)
+                .setPositiveButton(
+                    "Resend link",
+                    (dialogInterface, i) -> {
+                      mAuth = FirebaseAuth.getInstance();
+                      mAuth
+                          .getCurrentUser()
+                          .sendEmailVerification()
+                          .addOnSuccessListener(
+                              sent -> {
+                                Toast.makeText(LoginActivity.this, "Link Sent", Toast.LENGTH_LONG)
+                                    .show();
+                              })
+                          .addOnFailureListener(
+                              failure ->
+                                  Toast.makeText(
+                                          LoginActivity.this, "Link not sent", Toast.LENGTH_LONG)
+                                      .show());
+
+                      loginPassword.getEditText().getText().clear();
+                      firebaseAuthentication.logout();
+                      Toast.makeText(LoginActivity.this, "Link Sent", Toast.LENGTH_LONG).show();
+                    })
+                .setNegativeButton(
+                    UserUtils.DISMISS, (dialogInterface, i) -> dialogInterface.dismiss())
+                .create()
+                .show();
           }
         });
   }
@@ -143,22 +145,20 @@ public class LoginActivity extends AppCompatActivity {
               email,
               (response, msg) -> {
                 if (response) {
-                    Toast.makeText(
-                            LoginActivity.this,
-                            "Reset link is sent to your email: " + email,
-                            Toast.LENGTH_LONG)
-                        .show();
+                  Toast.makeText(
+                          LoginActivity.this, UserUtils.RESET_LINK_SENT + email, Toast.LENGTH_LONG)
+                      .show();
                 } else {
-                    Toast.makeText(
-                            LoginActivity.this, "ERROR ! Reset link is not sent ,", Toast.LENGTH_LONG)
-                        .show();
+                  Toast.makeText(
+                          LoginActivity.this, UserUtils.RESET_LINK_NOT_SENT, Toast.LENGTH_LONG)
+                      .show();
                 }
               });
 
           dialog.dismiss();
         });
 
-    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+    builder.setNegativeButton(UserUtils.CANCEL, (dialog, which) -> dialog.dismiss());
 
     builder.create();
     builder.show();
